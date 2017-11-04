@@ -6,7 +6,7 @@
     }
 
     var gameList = [];
-    gameList[0] = new Game("1to25", "http://web.present.kim/1to25/");
+    gameList[0] = new Game("1to25", "http://web.present.kim/game/1to25/");
 
     return gameList;
   })();
