@@ -12,66 +12,102 @@ html, body {
   cursor: default;
 }
 
-.container {
-  visibility: hidden;
+@media (1vh > 1vw) {
+  html, body {
+    background: #000000;
+    color: #777777;
+  }
+}
+
+#container {
+  height: 98vmin;
   width: 98vmin;
   margin: 1vmin auto;
 }
 
-#main-container {
-  visibility: visible;
-}
-
 #title {
-  margin: 0 auto 5vmin;
+  margin: 0;
   color: #555555;
-  font-size: 10vmin;
+  font-size: 7vmin;
   line-height: 10vmin;
   font-weight: bold;
   text-align: center;
 }
 
-#logo-image {
-  height: 40vmin;
-  width: 40vmin;
-}
-
-#buttons {
-  /*temp*/
-  border: 1vmin dashed #998877;
-  ;
-  /*temp*/
-  height: 40vmin;
-  width: 40vmin;
-  justify-content: space-around;
-}
-
-.button {
-  color: #eeeeee;
-  background-color: #998877;
-  text-decoration: none;
-  height: 5vmin;
-  width: 30vmin;
-  text-align: center;
-  font-size: 4vmin;
-  line-height: 5vmin;
-  cursor: pointer;
-}
-
-.button:hover {
-  box-shadow: 0 0 10vmin rgba(255, 255, 255, 0.7);
-  animation-name: wriggle;
-  animation-duration: 1.5s;
+#title:hover {
+  animation-name: pulse;
+  animation-duration: 1s;
   animation-iteration-count: infinite;
 }
 
+.panel {
+  position: relative;
+  text-align: center;
+  background: #998877;
+  height: 5vmin;
+  width: 46vmin;
+  margin: 0.5vmin;
+  padding: 0.5vmin;
+  color: #eeeeee;
+  font-size: 4.5vmin;
+  line-height: 4.5vmin;
+  text-align: center;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+#intro {
+  font-size: 4vmin;
+  line-height: 4vmin;
+}
+
+#grid-container {
+  background: #bbada0;
+  height: 68vmin;
+  width: 68vmin;
+  margin: auto;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.grid-row {
+  flex: 1;
+  height: 27vmin;
+  width: 68vmin;
+  margin: auto;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.grid-cell {
+  background: #eee4da;
+  height: 27vmin;
+  width: 27vmin;
+  max-width: 27vmin;
+  font-size: 10vmin;
+  font-weight: bold;
+  line-height: 27vmin;
+  text-align: center;
+}
+
+.grid-cell:hover {
+  box-shadow: 0 0 10vmin rgba(255, 255, 255, 0.7);
+}
+
+.grid-cell:active {
+  box-shadow: 0 0 10vmin rgba(255, 255, 0, 0.2);
+}
+
 .bordered {
-  border-radius: 5vmin;
+  border-radius: 1vmin;
+}
+
+.grid-cell {
+  cursor: pointer;
 }
 
 .flex-row, .flex-column {
   display: flex;
-  align-items: center;
 }
 
 .flex-row {
@@ -80,9 +116,4 @@ html, body {
 
 .flex-column {
   flex-flow: column;
-}
-
-iframe {
-  width: 90vmin;
-  height: 90vmin;
 }

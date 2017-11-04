@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>PresentKim's Games</title>
+
+  <link href="style/main.css" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="meta/favicon.ico">
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+
+<body>
+  <div id="container" class="flex-column">
+    <div id="title-container" class="flex-column">
+      <div id="title">PresentKim's Games</div>
+      <div class="flex-row">
+        <a id="github-panel" class="panel bordered" href="https://github.com/PresentKim/presentkim.github.io">GitHub</a>
+      </div>
+      <div id="intro">● Choose the game! (1/4)</div>
+    </div>
+    <div id="grid-container" class="flex-column bordered">
+      <script>
+        let index = 0;
+
+        for (let i = 0; i < 2; i++) {
+          let gridRow = document.createElement("div");
+          gridRow.setAttribute("class", "grid-row flex-row");
+
+          for (let j = 0; j < 2; index++, j++) {
+            let gridCell = document.createElement("div");
+            gridCell.setAttribute("id", "cell-" + index);
+            gridCell.setAttribute("class", "grid-cell bordered");
+            gridRow.appendChild(gridCell);
+          }
+          document.getElementById("grid-container").appendChild(gridRow);
+        }
+      </script>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
