@@ -1,0 +1,86 @@
+@keyframes wriggle {
+  0% {
+    border-radius: 40% 40% 20% 40%;
+  }
+  25% {
+    border-radius: 40% 40% 40% 20%;
+  }
+  50% {
+    border-radius: 20% 40% 40% 40%;
+  }
+  75% {
+    border-radius: 40% 20% 40% 40%;
+  }
+  100% {
+    border-radius: 40% 40% 20% 40%;
+  }
+}
+
+@keyframes dash-move {
+  0% {
+    border-width: thin;
+  }
+  50% {
+    border-width: medium;
+  }
+  100% {
+    border-width: thick;
+  }
+}
+
+@keyframes cell-change {
+  from {
+    opacity: 0.3;
+    font-size: 0;
+    transform: rotateY( 0deg);
+    animation-timing-function: ease-out;
+  }
+  50% {
+    font-size: 0;
+    animation-timing-function: ease-out;
+  }
+  80% {
+    font-size: 8vmin;
+  }
+  to {
+    opacity: 1;
+    transform: rotateY( 360deg);
+    animation-timing-function: ease-in;
+  }
+}
+
+@keyframes cell-remove {
+  from {
+    opacity: 1;
+    font-size: 0;
+    transform: rotateY( 0deg);
+    animation-timing-function: ease-out;
+  }
+  70% {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    font-size: 0;
+    transform: rotateY( 360deg);
+    cursor: default;
+    animation-timing-function: ease-in;
+  }
+}
+
+@keyframes pulse {
+  from {
+    transform: scale3d(1, 1, 1);
+    animation-timing-function: ease-out;
+  }
+  50% {
+    transform: scale3d(1.05, 1.05, 1.05);
+    animation-timing-function: ease-in;
+  }
+  to {
+    transform: scale3d(1, 1, 1);
+    animation-timing-function: ease-out;
+  }
+}

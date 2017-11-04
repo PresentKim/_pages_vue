@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>1 to 25</title>
+
+  <link href="style/1to25.css" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="meta/favicon.ico">
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+
+<body>
+  <div id="container" class="flex-column">
+    <div id="title-container" class="flex-column">
+      <div id="title">1 to 25</div>
+      <div class="flex-row">
+        <div id="play-time-panel" class="panel titled-panel flex-column bordered">
+          <div class="text-before">TIME</div>
+          <div id="play-time-text" class="time-text">00:00:00</div>
+        </div>
+        <div id="best-time-panel" class="panel titled-panel flex-column bordered">
+          <div class="text-before">BEST</div>
+          <div id="best-time-text" class="time-text">00:00:00</div>
+        </div>
+      </div>
+      <div class="flex-row">
+        <div id="target-panel" class="panel titled-panel flex-column bordered">
+          <div class="flex-row">
+            <div class="text-before">TARGET to </div>
+            <div id="target-before-num" class="text-before">25</div>
+          </div>
+          <div id="target-text" class="time-text">0</div>
+        </div>
+        <div id="restart-button" class="panel bordered">NewGame</div>
+      </div>
+      <div id="intro">● Remove panel from 1 to 25 in order!</div>
+    </div>
+    <div id="grid-container" class="flex-column bordered">
+      <script>
+        let index = 0;
+
+        for (let i = 0; i < 5; i++) {
+          let gridRow = document.createElement("div");
+          gridRow.setAttribute("class", "grid-row flex-row");
+
+          for (let j = 0; j < 5; index++, j++) {
+            let gridCell = document.createElement("div");
+            gridCell.setAttribute("id", "cell-" + index);
+            gridCell.setAttribute("class", "grid-cell bordered");
+            gridRow.appendChild(gridCell);
+          }
+          document.getElementById("grid-container").appendChild(gridRow);
+        }
+      </script>
+    </div>
+  </div>
+  <script src="js/1to25.js"></script>
+</body>
+
+</html>
