@@ -1,2 +1,3 @@
-# PresentKim.github.io
-Redirect to <a href="http://web.present.kim/" target="_blank"><b>HERE</b><a>
+# [PresentKim.github.io](http://web.present.kim)
+
+## First game is [1to25](http://web.present.kim/1to25)
