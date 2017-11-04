@@ -1,4 +1,6 @@
 (function() {
+  const CELL_COUNT = 4;
+
   var gameList = (function() {
     var Game = function(name, link) {
       this.name = name;
@@ -31,13 +33,11 @@
     };
 
     var cellList = [];
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < CELL_COUNT; i++)
       cellList[i] = new Cell(i, gameList[i]);
 
     return cellList;
   })();
-
-  var cellLength = cellList.length;
 
   var i;
   var cell, cellData, cellElement;

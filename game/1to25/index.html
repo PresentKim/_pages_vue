@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title>1 to 25</title>
 
-  <link href="style/main.css" rel="stylesheet" type="text/css">
+  <link href="style/main-container.css" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" href="meta/favicon.ico">
 
   <meta name="HandheldFriendly" content="True">
@@ -31,7 +31,7 @@
         <div id="target-panel" class="panel titled-panel flex-column bordered">
           <div class="flex-row">
             <div class="text-before">TARGET to </div>
-            <div id="target-before-num" class="text-before">25</div>
+            <div id="target-before-num">25</div>
           </div>
           <div id="target-text" class="time-text">0</div>
         </div>
@@ -42,14 +42,15 @@
     </div>
     <div id="grid-container" class="flex-column bordered">
       <script>
-        let index = 0;
+        var index = 0,
+          i, gridRow, gridCell;
 
-        for (let i = 0; i < 5; i++) {
-          let gridRow = document.createElement("div");
+        for (i = 0; i < 5; i++) {
+          gridRow = document.createElement("div");
           gridRow.setAttribute("class", "grid-row flex-row");
 
           for (let j = 0; j < 5; index++, j++) {
-            let gridCell = document.createElement("div");
+            gridCell = document.createElement("div");
             gridCell.setAttribute("id", "cell-" + index);
             gridCell.setAttribute("class", "grid-cell bordered");
             gridRow.appendChild(gridCell);

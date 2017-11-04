@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title>PresentKim's Games</title>
 
-  <link href="style/main.css" rel="stylesheet" type="text/css">
+  <link href="style/main-container.css" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" href="meta/favicon.ico">
 
   <meta name="HandheldFriendly" content="True">
@@ -15,23 +15,27 @@
 
 <body>
   <div id="container" class="flex-column">
+
     <div id="title-container" class="flex-column">
-      <div id="title">PresentKim's Games</div>
-      <div class="flex-row">
+      <div id="title-text">PresentKim's Games</div>
+      <div id="pannels" class="flex-row">
         <a id="github-panel" class="panel bordered" href="https://github.com/PresentKim/presentkim.github.io">GitHub</a>
+        <a id="telegram-panel" class="panel bordered" href="https://t.me/PresentKim">Telegram</a>
       </div>
-      <div id="intro">● Choose the game! (1/4)</div>
+      <div id="intro" class=" bordered">● Choose the game! (1/4)</div>
     </div>
+
     <div id="grid-container" class="flex-column bordered">
       <script>
-        let index = 0;
+        var index = 0,
+          i, gridRow, gridCell;
 
-        for (let i = 0; i < 2; i++) {
-          let gridRow = document.createElement("div");
+        for (i = 0; i < 2; i++) {
+          gridRow = document.createElement("div");
           gridRow.setAttribute("class", "grid-row flex-row");
 
           for (let j = 0; j < 2; index++, j++) {
-            let gridCell = document.createElement("div");
+            gridCell = document.createElement("div");
             gridCell.setAttribute("id", "cell-" + index);
             gridCell.setAttribute("class", "grid-cell bordered");
             gridRow.appendChild(gridCell);
@@ -40,6 +44,7 @@
         }
       </script>
     </div>
+
   </div>
   <script src="js/main.js"></script>
 </body>

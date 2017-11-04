@@ -1,4 +1,6 @@
 (function() {
+  const CELL_COUNT = 25;
+
   var ElementControl = function(elementId, data) {
     this.element = document.getElementById(elementId);
     this.data = data;
@@ -16,7 +18,7 @@
   };
 
   TimeElementControl.prototype = {
-    set: function(data) {
+    set: function(data, apply) {
       function toText(time) {
         function pad2(number) {
           for (result = number + ''; 2 > result.length; result = '0' + result);
@@ -25,6 +27,8 @@
         return pad2(Math.floor(time % (1000 * 60 * 60) / (1000 * 60))) + ':' + pad2(Math.floor(time % (1000 * 60) / 1000)) + ':' + pad2(Math.floor(time % 1000 / 10));
       }
       this.element.innerHTML = toText(data);
+      if (apply)
+        this.data = data;
     }
   };
 
@@ -42,11 +46,10 @@
       this.number.element.addEventListener('click', clickCell.bind(null, i), false);
     };
     var cellList = [];
-    for (i = 0; i < 25; i++)
+    for (i = 0; i < CELL_COUNT; i++)
       cellList[i] = new Cell(i, 0);
     return cellList;
   })();
-  var cellLength = cellList.length;
 
   var started = false;
   var intervalId = null;
@@ -55,7 +58,7 @@
   var i, rand, pre_target, complete, time, result, nums;
   var cellNumber, cellData, cellElement, targetData, goalData;
 
-  goal.element.addEventListener('click', function() {
+  target.element.addEventListener('click', function() {
     goalData = goal.data;
     if (!started) goal.set(goalData >= 100 ? 25 : goalData + 25);
   }, false);
@@ -77,7 +80,6 @@
       if (targetData == cellData) {
         cellElement = cellNumber.element;
         goalData = goal.data;
-        bestTime.date = bestTime.data;
         pre_target = targetData - targetData % 25 + 25;
         if (targetData != goalData - 25 && goalData == pre_target || goalData == cellData) {
           cellElement.setAttribute('style', 'color: #e4dad0; background: #b2a89e;');
@@ -87,7 +89,7 @@
           complete = false;
           replace: while (!complete) {
             rand = (targetData != goalData - 25 ? pre_target : pre_target - 25) + Math.ceil(Math.random() * 25);
-            for (i = 0; i < cellLength; i++) {
+            for (i = 0; i < CELL_COUNT; i++) {
               if (cellData == rand) continue replace;
             }
             cellNumber.set(rand);
@@ -100,8 +102,7 @@
           target.set(targetData + 1);
         else {
           if (bestTime.date == 0 || bestTime.date > playTime.data) {
-            bestTime.set(time);
-            bestTime.data = time;
+            bestTime.set(time, true);
           }
           stop();
         }
@@ -113,21 +114,20 @@
     if (intervalId == null) intervalId = setInterval(function() {
       if (started) {
         time = new Date().getTime() - countDownDate;
-        playTime.set(time);
-        playTime.data = time;
+        playTime.set(time, true);
         if (bestTime.data == 0)
-          bestTime.set(time);
+          bestTime.set(time, false);
       }
     }, 10);
     target.set(1);
     started = true;
     countDownDate = new Date().getTime();
     nums = [];
-    while (nums.length < cellLength) {
+    while (nums.length < CELL_COUNT) {
       rand = Math.ceil(Math.random() * 25);
       if (nums.indexOf(rand) == -1) nums[nums.length] = rand;
     }
-    for (i = 0; i < cellLength; i++) {
+    for (i = 0; i < CELL_COUNT; i++) {
       cellNumber = cellList[i].number;
       cellElement = cellNumber.element;
 
@@ -146,7 +146,7 @@
     target.set(0);
     restartButton.set('NewGame');
     target.set('Stop!');
-    for (i = 0; i < cellLength; i++)
+    for (i = 0; i < CELL_COUNT; i++)
       cellList[i].number.set(0);
   }
 })();

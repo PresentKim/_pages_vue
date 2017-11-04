@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @keyframes wriggle {
   0% {
     border-radius: 40% 40% 20% 40%;
@@ -16,15 +17,18 @@
   }
 }
 
-@keyframes dash-move {
-  0% {
-    border-width: thin;
+@keyframes pulse {
+  from {
+    transform: scale3d(1, 1, 1);
+    animation-timing-function: ease-out;
   }
   50% {
-    border-width: medium;
+    transform: scale3d(1.05, 1.05, 1.05);
+    animation-timing-function: ease-in;
   }
-  100% {
-    border-width: thick;
+  to {
+    transform: scale3d(1, 1, 1);
+    animation-timing-function: ease-out;
   }
 }
 
@@ -67,20 +71,5 @@
     transform: rotateY( 360deg);
     cursor: default;
     animation-timing-function: ease-in;
-  }
-}
-
-@keyframes pulse {
-  from {
-    transform: scale3d(1, 1, 1);
-    animation-timing-function: ease-out;
-  }
-  50% {
-    transform: scale3d(1.05, 1.05, 1.05);
-    animation-timing-function: ease-in;
-  }
-  to {
-    transform: scale3d(1, 1, 1);
-    animation-timing-function: ease-out;
   }
 }
