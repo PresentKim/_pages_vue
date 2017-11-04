@@ -60,7 +60,8 @@
 
   target.element.addEventListener('click', function() {
     goalData = goal.data;
-    if (!started) goal.set(goalData >= 100 ? 25 : goalData + 25);
+    if (!started)
+      goal.set(goalData >= 100 ? 25 : goalData + 25);
   }, false);
 
   restartButton.element.addEventListener('click', function() {
@@ -89,9 +90,9 @@
           complete = false;
           replace: while (!complete) {
             rand = (targetData != goalData - 25 ? pre_target : pre_target - 25) + Math.ceil(Math.random() * 25);
-            for (i = 0; i < CELL_COUNT; i++) {
-              if (cellData == rand) continue replace;
-            }
+            for (i = 0; i < CELL_COUNT; i++)
+              if (cellList[i].number.data == rand)
+                continue replace;
             cellNumber.set(rand);
             cellElement.disabled = 'true';
             cellElement.style.animation = 'cell-change 2s forwards';
@@ -101,9 +102,8 @@
         if (targetData < goalData)
           target.set(targetData + 1);
         else {
-          if (bestTime.date == 0 || bestTime.date > playTime.data) {
+          if (bestTime.date == 0 || bestTime.date > playTime.data)
             bestTime.set(time, true);
-          }
           stop();
         }
       }
@@ -125,12 +125,12 @@
     nums = [];
     while (nums.length < CELL_COUNT) {
       rand = Math.ceil(Math.random() * 25);
-      if (nums.indexOf(rand) == -1) nums[nums.length] = rand;
+      if (nums.indexOf(rand) == -1)
+        nums[nums.length] = rand;
     }
     for (i = 0; i < CELL_COUNT; i++) {
       cellNumber = cellList[i].number;
       cellElement = cellNumber.element;
-
       cellNumber.set(nums[i]);
       cellElement.setAttribute('style', 'color: #777777; background: #' + (i % 2 ? 'e4dad0' : 'eee4da') + ';');
       cellElement.disabled = 'false';
