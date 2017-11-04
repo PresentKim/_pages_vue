@@ -50,6 +50,7 @@ html, body {
 .titled-panel {
   position: relative;
   text-align: center;
+  padding-left: 3vmin;
   background: #998877;
 }
 
@@ -65,7 +66,7 @@ html, body {
 #target-before-num {
   font-size: 3vmin;
   line-height: 3.5vmin;
-  left: 14vmin;
+  left: 13.5vmin;
 }
 
 .time-text {
@@ -84,9 +85,9 @@ html, body {
 #restart-button, #goback-button {
   background: #8f7a66;
   height: 4vmin;
-  width: 25vmin;
+  width: 21.5vmin;
   color: #eeeeee;
-  font-size: 5vmin;
+  font-size: 4vmin;
   line-height: 3.5vmin;
   text-align: center;
   border-style: dashed;
