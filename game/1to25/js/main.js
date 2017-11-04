@@ -5,31 +5,26 @@
   };
 
   ElementControl.prototype = {
-    get: function() {
-      return this.data;
-    },
     set: function(data) {
-      return this.element.innerHTML = this.data = data;
+      this.element.innerHTML = this.data = data;
     }
   };
 
   var TimeElementControl = function(elementId, data) {
     this.element = document.getElementById(elementId);
     this.data = data;
-    this.text = data + '';
   };
 
   TimeElementControl.prototype = {
     set: function(data) {
       function toText(time) {
         function pad2(number) {
-          for (result = number; 2 > result.length; result = '0' + result);
+          for (result = number + ''; 2 > result.length; result = '0' + result);
           return result;
         }
         return pad2(Math.floor(time % (1000 * 60 * 60) / (1000 * 60))) + ':' + pad2(Math.floor(time % (1000 * 60) / 1000)) + ':' + pad2(Math.floor(time % 1000 / 10));
       }
       this.element.innerHTML = toText(data);
-      return this.data = data;
     }
   };
 
@@ -104,8 +99,10 @@
         if (targetData < goalData)
           target.set(targetData + 1);
         else {
-          if (bestTime.date == 0 || bestTime.date > playTime.data)
+          if (bestTime.date == 0 || bestTime.date > playTime.data) {
             bestTime.set(time);
+            bestTime.data = time;
+          }
           stop();
         }
       }
@@ -117,6 +114,7 @@
       if (started) {
         time = new Date().getTime() - countDownDate;
         playTime.set(time);
+        playTime.data = time;
         if (bestTime.data == 0)
           bestTime.set(time);
       }
