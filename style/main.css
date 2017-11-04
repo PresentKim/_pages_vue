@@ -1,0 +1,88 @@
+@charset "UTF-8";
+@import url(animation.css);
+html, body {
+  background: #fff9ee;
+  color: #777777;
+  font-family: Arial, sans-serif;
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+.container {
+  visibility: hidden;
+  width: 98vmin;
+  margin: 1vmin auto;
+}
+
+#main-container {
+  visibility: visible;
+}
+
+#title {
+  margin: 0 auto 5vmin;
+  color: #555555;
+  font-size: 10vmin;
+  line-height: 10vmin;
+  font-weight: bold;
+  text-align: center;
+}
+
+#logo-image {
+  height: 40vmin;
+  width: 40vmin;
+}
+
+#buttons {
+  /*temp*/
+  border: 1vmin dashed #998877;
+  ;
+  /*temp*/
+  height: 40vmin;
+  width: 40vmin;
+  justify-content: space-around;
+}
+
+.button {
+  color: #eeeeee;
+  background-color: #998877;
+  text-decoration: none;
+  height: 5vmin;
+  width: 30vmin;
+  text-align: center;
+  font-size: 4vmin;
+  line-height: 5vmin;
+  cursor: pointer;
+}
+
+.button:hover {
+  box-shadow: 0 0 10vmin rgba(255, 255, 255, 0.7);
+  animation-name: wriggle;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+}
+
+.bordered {
+  border-radius: 5vmin;
+}
+
+.flex-row, .flex-column {
+  display: flex;
+  align-items: center;
+}
+
+.flex-row {
+  flex-flow: row;
+}
+
+.flex-column {
+  flex-flow: column;
+}
+
+iframe {
+  width: 90vmin;
+  height: 90vmin;
+}

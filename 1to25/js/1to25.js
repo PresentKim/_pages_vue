@@ -38,6 +38,7 @@
   var target = new ElementControl('target-text', 0);
   var goal = new ElementControl('target-before-num', 25);
   var restartButton = new ElementControl('restart-button', 0);
+  var gobackButton = new ElementControl('goback-button', 0);
 
   var cellList = (function() {
     var Cell = function Cell(index, number) {
@@ -59,14 +60,18 @@
   var i, rand, pre_target, complete, time, result, nums;
   var cellNumber, cellData, cellElement, targetData, goalData;
 
+  goal.element.addEventListener('click', function() {
+    goalData = goal.data;
+    if (!started) goal.set(goalData >= 100 ? 25 : goalData + 25);
+  }, false);
+
   restartButton.element.addEventListener('click', function() {
     if (started) stop();
     else start();
   }, false);
 
-  goal.element.addEventListener('click', function() {
-    goalData = goal.data;
-    if (!started) goal.set(goalData >= 100 ? 25 : goalData + 25);
+  gobackButton.element.addEventListener('click', function() {
+    location.href = "http://web.present.kim";
   }, false);
 
   function clickCell(index) {
