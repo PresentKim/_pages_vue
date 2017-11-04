@@ -1,2 +1,2 @@
 # PresentKim.github.io
-Redirect to [**HERE**](http://web.present.kim)
+Redirect to <a href="http://web.present.kim/" target="_blank"><b>HERE</b><a>
