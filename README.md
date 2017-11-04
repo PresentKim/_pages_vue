@@ -1,2 +1,2 @@
 # PresentKim.github.io
-Redirect to [https://web.present.kim](https://web.present.kim)
+Redirect to [**HERE**](http://web.present.kim)
