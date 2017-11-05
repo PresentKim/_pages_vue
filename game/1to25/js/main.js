@@ -8,7 +8,8 @@
 
   ElementControl.prototype = {
     set: function(data) {
-      this.element.innerHTML = this.data = data;
+      this.data = data;
+      this.element.innerHTML = data == 0 ? '' : data;
     }
   };
 
