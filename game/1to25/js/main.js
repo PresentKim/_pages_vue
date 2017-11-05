@@ -71,7 +71,7 @@
   }, false);
 
   gobackButton.element.addEventListener('click', function() {
-    location.href = "http://web.present.kim";
+    location.href = 'http://web.present.kim';
   }, false);
 
   function clickCell(index) {

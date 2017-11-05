@@ -45,16 +45,16 @@
         (function() {
           var index = 0,
             i, gridRow, gridCell;
-          var gridContainer = document.getElementById("grid-container");
+          var gridContainer = document.getElementById('grid-container');
 
           for (i = 0; i < 5; i++) {
-            gridRow = document.createElement("div");
-            gridRow.setAttribute("class", "grid-row flex-row");
+            gridRow = document.createElement('div');
+            gridRow.setAttribute('class', 'grid-row flex-row');
 
             for (let j = 0; j < 5; index++, j++) {
-              gridCell = document.createElement("div");
-              gridCell.setAttribute("id", "cell-" + index);
-              gridCell.setAttribute("class", "grid-cell bordered");
+              gridCell = document.createElement('div');
+              gridCell.setAttribute('id', 'cell-' + index);
+              gridCell.setAttribute('class', 'grid-cell bordered');
               gridRow.appendChild(gridCell);
             }
             gridContainer.appendChild(gridRow);
