@@ -24,7 +24,7 @@
   height: inherit;
   width: 12vmin;
   max-width: 12vmin;
-  font-size: 9vw;
+  font-size: 9vmin;
   font-weight: bold;
   line-height: 12vmin;
   text-align: center;
@@ -33,19 +33,19 @@
 
 @media screen and (max-width: 520px) {
   #grid-container {
-    height: 80vw;
-    width: 80vw;
-    min-height: 80vw;
-    min-width: 80vw;
+    height: 90vw;
+    width: 90vw;
+    min-height: 90vw;
+    min-width: 90vw;
   }
   .grid-row {
-    height: 14vw;
+    height: 16vw;
   }
   .grid-cell {
-    width: 14vw;
-    max-width: 14vw;
+    width: 16vw;
+    max-width: 16vw;
     font-size: 12vw;
-    line-height: 14vw;
+    line-height: 16vw;
   }
 }
 
