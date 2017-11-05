@@ -16,7 +16,7 @@
 <body>
   <div id="container" class="flex-column">
     <div id="title-container" class="flex-column">
-      <div id="title">1 to 25</div>
+      <div id="title-text">1 to 25</div>
       <div class="flex-row">
         <div id="play-time-panel" class="panel titled-panel flex-column bordered">
           <div class="text-before">TIME</div>
@@ -42,21 +42,24 @@
     </div>
     <div id="grid-container" class="flex-column bordered">
       <script>
-        var index = 0,
-          i, gridRow, gridCell;
+        (function() {
+          var index = 0,
+            i, gridRow, gridCell;
+          var gridContainer = document.getElementById("grid-container");
 
-        for (i = 0; i < 5; i++) {
-          gridRow = document.createElement("div");
-          gridRow.setAttribute("class", "grid-row flex-row");
+          for (i = 0; i < 5; i++) {
+            gridRow = document.createElement("div");
+            gridRow.setAttribute("class", "grid-row flex-row");
 
-          for (let j = 0; j < 5; index++, j++) {
-            gridCell = document.createElement("div");
-            gridCell.setAttribute("id", "cell-" + index);
-            gridCell.setAttribute("class", "grid-cell bordered");
-            gridRow.appendChild(gridCell);
+            for (let j = 0; j < 5; index++, j++) {
+              gridCell = document.createElement("div");
+              gridCell.setAttribute("id", "cell-" + index);
+              gridCell.setAttribute("class", "grid-cell bordered");
+              gridRow.appendChild(gridCell);
+            }
+            gridContainer.appendChild(gridRow);
           }
-          document.getElementById("grid-container").appendChild(gridRow);
-        }
+        })();
       </script>
     </div>
   </div>
