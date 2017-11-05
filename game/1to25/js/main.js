@@ -103,7 +103,6 @@
         if (targetData < goalData)
           target.set(targetData + 1);
         else {
-          if (bestTime.date == 0 || bestTime.date > playTime.data)
             bestTime.set(time, true);
           stop();
         }
@@ -112,14 +111,15 @@
   }
 
   function start() {
-    if (intervalId == null) intervalId = setInterval(function() {
-      if (started) {
-        time = new Date().getTime() - countDownDate;
-        playTime.set(time, true);
-        if (bestTime.data == 0)
-          bestTime.set(time, false);
-      }
-    }, 10);
+    if (intervalId == null)
+      intervalId = setInterval(function() {
+        if (started) {
+          time = new Date().getTime() - countDownDate;
+          playTime.set(time, true);
+          if (bestTime.data == 0)
+            bestTime.set(time, false);
+        }
+      }, 10);
     target.set(1);
     started = true;
     countDownDate = new Date().getTime();
