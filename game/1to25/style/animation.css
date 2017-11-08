@@ -62,6 +62,8 @@
   }
   70% {
     opacity: 0.7;
+    color: #e4dad0;
+    background: #b2a89e;
   }
   to {
     opacity: 0;

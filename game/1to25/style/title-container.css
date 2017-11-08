@@ -26,6 +26,7 @@
 }
 
 .panel {
+  background: #998877;
   height: 5vmin;
   width: 46vmin;
   margin: 0.5vmin;
@@ -38,7 +39,6 @@
 
 .titled-panel {
   position: relative;
-  background: #998877;
 }
 
 .text-before {
@@ -98,4 +98,10 @@
   line-height: 3vmin;
   font-weight: bold;
   text-align: left;
+}
+
+#cheat-panel {
+  position: absolute;
+  width: 5vmin;
+  height: 5vmin;
 }

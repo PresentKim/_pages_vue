@@ -1,5 +1,5 @@
 (function() {
-  const CELL_COUNT = 25;
+  var CELL_COUNT = 25;
 
   var ElementControl = function(elementId, data) {
     this.element = document.getElementById(elementId);
@@ -55,8 +55,9 @@
   var started = false;
   var intervalId = null;
   var countDownDate = new Date().getTime();
+  var pre_goal = 25;
 
-  var i, rand, pre_target, complete, time, result, nums;
+  var i, rand, pre_target, time, result, nums;
   var cellNumber, cellData, cellElement, targetData, goalData;
 
   target.element.addEventListener('click', function() {
@@ -80,29 +81,33 @@
       cellData = cellNumber.data;
       targetData = target.data;
       if (targetData == cellData) {
+
         cellElement = cellNumber.element;
         goalData = goal.data;
-        pre_target = targetData - targetData % 25 + 25;
-        if (targetData != goalData - 25 && goalData == pre_target || goalData == cellData) {
-          cellElement.setAttribute('style', 'color: #e4dad0; background: #b2a89e;');
+        if (goalData == pre_goal && cellData <= pre_goal) {
           cellElement.disabled = 'true';
           cellElement.style.animation = 'cell-remove 2s forwards';
         } else {
-          complete = false;
-          replace: while (!complete) {
-            rand = (targetData != goalData - 25 ? pre_target : pre_target - 25) + Math.ceil(Math.random() * 25);
+          replace: while (true) {
+            rand = Math.ceil(Math.random() * 25) + pre_goal;
             for (i = 0; i < CELL_COUNT; i++)
               if (cellList[i].number.data == rand)
                 continue replace;
             cellNumber.set(rand);
             cellElement.disabled = 'true';
-            cellElement.style.animation = 'cell-change 2s forwards';
-            complete = true;
+            cellElement.style.animation = '';
+            setTimeout(function() {
+              cellElement.style.animation = 'cell-change 2s forwards';
+            }, 10);
+            break replace;
           }
         }
-        if (targetData < goalData)
-          target.set(targetData + 1);
-        else {
+
+        target.set(targetData + 1);
+        if (targetData == pre_goal)
+          pre_goal += 25;
+        if (targetData == goalData) {
+          if (bestTime.data == 0 || bestTime.data > playTime.data)
             bestTime.set(time, true);
           stop();
         }
@@ -144,10 +149,22 @@
       intervalId = null;
     }
     started = false;
+    pre_goal = 25;
     target.set(0);
     restartButton.set('NewGame');
     target.set('Stop!');
     for (i = 0; i < CELL_COUNT; i++)
       cellList[i].number.set(0);
   }
+
+
+  document.getElementById('cheat-panel').addEventListener('click', function() {
+    targetData = target.data;
+    for (i = 0; i < CELL_COUNT; i++) {
+      cellData = cellList[i].number.data;
+      if (targetData == cellData) {
+        clickCell(i);
+      }
+    }
+  }, false);
 })();

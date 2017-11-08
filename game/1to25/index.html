@@ -39,6 +39,7 @@
         <div id="goback-button" class="panel bordered">Back</div>
       </div>
       <div id="intro">● Remove panel from 1 to 25 in order!</div>
+      <div id="cheat-panel" class="panel bordered">C</div>
     </div>
     <div id="grid-container" class="flex-column bordered">
       <script>
@@ -51,7 +52,7 @@
             gridRow = document.createElement('div');
             gridRow.setAttribute('class', 'grid-row flex-row');
 
-            for (let j = 0; j < 5; index++, j++) {
+            for (var j = 0; j < 5; index++, j++) {
               gridCell = document.createElement('div');
               gridCell.setAttribute('id', 'cell-' + index);
               gridCell.setAttribute('class', 'grid-cell bordered');

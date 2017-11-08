@@ -1,5 +1,5 @@
 (function() {
-  const CELL_COUNT = 4;
+  var CELL_COUNT = 4;
 
   var gameList = (function() {
     var Game = function(name, link) {
@@ -46,7 +46,7 @@
     cell = cellList[index];
     game = gameList[index];
     if (game != undefined) {
-      location.href= game.link;
+      location.href = game.link;
     }
   }
 })();
