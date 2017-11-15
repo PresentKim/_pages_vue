@@ -2,69 +2,54 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
+  <meta charset='utf-8'>
   <title>1 to 25</title>
 
-  <link href="style/main-container.css" rel="stylesheet" type="text/css">
-  <link rel="shortcut icon" href="meta/favicon.ico">
+  <link href='style/main-container.css' rel='stylesheet' type='text/css'>
+  <link rel='shortcut icon' href='meta/favicon.ico'>
 
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+  <meta name='HandheldFriendly' content='True'>
+  <meta name='MobileOptimized' content='320'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui'>
 </head>
 
 <body>
-  <div id="container" class="flex-column">
-    <div id="title-container" class="flex-column">
-      <div id="title-text">1 to 25</div>
-      <div class="flex-row">
-        <div id="play-time-panel" class="panel titled-panel flex-column bordered">
-          <div class="text-before">TIME</div>
-          <div id="play-time-text" class="time-text">00:00:00</div>
+  <div id='cheat-panel' class='panel'>C</div>
+  <div id='container' class='flex-column'>
+    <div id='title-container' class='flex-column'>
+      <div id='title-text'>1 to 25</div>
+      <div class='flex-row'>
+        <div id='play-time-panel' class='panel'>
+          <div class='titled-before'>TIME</div>
+          <span id='play-time-text' class='titled-text'></span>
         </div>
-        <div id="best-time-panel" class="panel titled-panel flex-column bordered">
-          <div class="text-before">BEST</div>
-          <div id="best-time-text" class="time-text">00:00:00</div>
+        <div id='best-time-panel' class='panel'>
+          <div class='titled-before'>BEST</div>
+          <span id='best-time-text' class='titled-text'></span>
         </div>
       </div>
-      <div class="flex-row">
-        <div id="target-panel" class="panel titled-panel flex-column bordered">
-          <div class="flex-row">
-            <div class="text-before">TARGET to </div>
-            <div id="target-before-num">25</div>
-          </div>
-          <div id="target-text" class="time-text">0</div>
+      <div class='flex-row'>
+        <div id='target-panel' class='panel'>
+          <div id='goal-text' class='titled-before'></div>
+          <div id='target-text' class='titled-text'></div>
         </div>
-        <div id="restart-button" class="panel bordered">NewGame</div>
-        <div id="goback-button" class="panel bordered">Back</div>
+        <div id='button-container' class='flex-row'>
+          <div id='restart-button' class='panel button'></div>
+          <div id='goback-button' class='panel button'></div>
+        </div>
       </div>
-      <div id="intro">● Remove panel from 1 to 25 in order!</div>
-      <div id="cheat-panel" class="panel bordered">C</div>
+      <span id='intro'>● Remove panel from 1 to 25 in order!</span>
     </div>
-    <div id="grid-container" class="flex-column bordered">
-      <script>
-        (function() {
-          var index = 0,
-            i, gridRow, gridCell;
-          var gridContainer = document.getElementById('grid-container');
-
-          for (i = 0; i < 5; i++) {
-            gridRow = document.createElement('div');
-            gridRow.setAttribute('class', 'grid-row flex-row');
-
-            for (var j = 0; j < 5; index++, j++) {
-              gridCell = document.createElement('div');
-              gridCell.setAttribute('id', 'cell-' + index);
-              gridCell.setAttribute('class', 'grid-cell bordered');
-              gridRow.appendChild(gridCell);
-            }
-            gridContainer.appendChild(gridRow);
-          }
-        })();
-      </script>
+    <div id='grid-container' class='flex-column'>
+      <div id='grid-cover' class='flex-column'>
+        <div id='cover-restart-button' class='panel button'></div>
+      </div>
     </div>
   </div>
-  <script src="js/main.js"></script>
+  <script src='js/element_control.js'></script>
+  <script src='js/grid.js'></script>
+  <script src='js/game.js'></script>
+  <script src='js/app.js'></script>
 </body>
 
 </html>

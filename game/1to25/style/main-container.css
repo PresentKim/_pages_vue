@@ -2,9 +2,10 @@
 @import url(animation.css);
 @import url(title-container.css);
 @import url(grid-container.css);
+@import url(mobile/title-container.css) only screen and (max-width: 1025px);
+@import url(mobile/grid-container.css) only screen and (max-width: 1025px);
 * {
-  /* DimGray; */
-  color: #696969;
+  color: #EEEEEE;
   font-family: Arial, sans-serif;
   cursor: default;
   -ms-user-select: none;
@@ -21,9 +22,8 @@ body {
 }
 
 #container {
-  height: 98vmin;
-  width: 98vmin;
-  margin: 1vmin auto;
+  width: 500px;
+  margin: 10px auto;
 }
 
 .flex-row, .flex-column {
@@ -33,13 +33,9 @@ body {
 }
 
 .flex-row {
-  flex-flow: row;
+  flex-direction: row;
 }
 
 .flex-column {
-  flex-flow: column;
-}
-
-.bordered {
-  border-radius: 1vmin;
+  flex-direction: column;
 }
