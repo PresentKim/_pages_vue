@@ -58,9 +58,6 @@
     }
 
     function generate() {
-      if (timeout)
-        timeout = clearTimeout(timeout);
-
       balls = [];
       var count = 50;
       var tryTime = 0;
@@ -87,18 +84,10 @@
           tryTime++;
         }
       }
-      move();
-    }
-
-    function rand(min, max) {
-      return Math.floor(Math.random() * (max - min + 1) + min);
+      render();
     }
 
     function move() {
-      canvas.width = canvas.clientWidth;
-      canvas.height = canvas.clientHeight;
-      context.clearRect(0, 0, canvas.width, canvas.height);
-
       for (index in balls) {
         var ball = balls[index];
         var radius = ball.relativeRadius();
@@ -122,20 +111,40 @@
             ball.dY *= -1;
           }
         }
+      }
+      timeout = setTimeout(onTick, 1);
+    }
+
+    function render() {
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (index in balls) {
+        var ball = balls[index];
+
         context.beginPath();
         context.fillStyle = ball.color;
-        context.arc(ball.x, ball.y, radius, 0, Math.PI * 2, true);
+        context.arc(ball.x, ball.y, ball.relativeRadius(), 0, Math.PI * 2, true);
         context.closePath();
         context.fill();
       }
-      timeout = setTimeout(move, 1);
+    }
+
+    function onTick() {
+      move();
+      render();
     }
 
     function toggle() {
       if (timeout)
         timeout = clearTimeout(timeout);
       else
-        move();
+        onTick();
+    }
+
+    function rand(min, max) {
+      return Math.floor(Math.random() * (max - min + 1) + min);
     }
   </script>
 </body>
