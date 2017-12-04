@@ -3,8 +3,8 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Bouncing Ball 2.4</title>
-  <meta name="description" content="[Bouncing Ball v2.4] 공 여러개 + 상대적크기 + 생성겹칩방지 + 공충돌시튕김">
+  <title>Bouncing Ball 2.5</title>
+  <meta name="description" content="[Bouncing Ball v2.5] 공 여러개 + 상대적크기 + 생성겹칩방지 + 공충돌시튕김">
   <style>
     #buttons {
       margin: 0;
@@ -100,20 +100,21 @@
           var ball2 = balls[index];
           if (ball != ball2 && ball.colision(ball2)) {
             colision = true;
-            break;
+            var angle = Math.atan2(ball.y - ball2.y, ball.x - ball2.x) * 180 / Math.PI;
+            var speed = Math.sqrt(ball2.x + ball2.y);
+            ball2.dX = -Math.sin(angle);
+            ball2.dY = -Math.cos(angle);
           }
         }
-        if (!colision) {
-          ball.x += ball.dX;
-          ball.y += ball.dY;
-          if (ball.x < radius || ball.x > canvas.width - radius) {
-            ball.x = ball.x < radius ? radius : canvas.width - radius;
-            ball.dX *= -1;
-          }
-          if (ball.y < radius || ball.y > canvas.height - radius) {
-            ball.y = ball.y < radius ? radius : canvas.height - radius;
-            ball.dY *= -1;
-          }
+        ball.x += ball.dX;
+        ball.y += ball.dY;
+        if (ball.x < radius || ball.x > canvas.width - radius) {
+          ball.x = ball.x < radius ? radius : canvas.width - radius;
+          ball.dX *= -1;
+        }
+        if (ball.y < radius || ball.y > canvas.height - radius) {
+          ball.y = ball.y < radius ? radius : canvas.height - radius;
+          ball.dY *= -1;
         }
       }
       timeout = setTimeout(onTick, 1);
