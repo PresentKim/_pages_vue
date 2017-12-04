@@ -16,12 +16,10 @@
   background: #eee4da;
   height: inherit;
   width: 30vmin;
-  max-width: 30vmin;
   max-height: 30vmin;
   font-size: 10vmin;
   font-weight: bold;
   margin: 1vmin;
-  line-height: 30vmin;
   text-align: center;
   cursor: pointer;
   justify-content: space-around;
