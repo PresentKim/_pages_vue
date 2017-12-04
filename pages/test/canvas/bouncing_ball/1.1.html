@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Bouncing Ball 1.1</title>
+  <meta name="description" content="[Bouncing Ball v1.1] 공 한개 + 경계 딜레이">
+  <style>
+    #buttons {
+      margin: 0;
+      position: absolute;
+    }
+
+    button {
+      width: 80px;
+      height: 20px;
+    }
+
+    canvas {
+      background: #FFFAF0;
+      border: 1px dotted black;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="buttons">
+    <button onClick="location.href='1.0.html'">Prev</button>
+    <button onClick="toggle()">Toggle</button>
+    <button onClick="location.href='2.0.html'">Next</button>
+  </div>
+  <script>
+    var Point = function(x, y) {
+      this.x = x;
+      this.y = y;
+    }
+    var canvas = new Point(1000, 500);
+    var ball = {
+      position: new Point(200, 200),
+      direction: new Point(5, 5),
+      size: 50
+    };
+    document.write("<canvas id=\"canvas_ball\" width=\"" + canvas.x + "\" height=\"" + canvas.y + "\"></canvas>");
+
+    var context = document.getElementById('canvas_ball').getContext('2d');
+    var timeout = null;
+
+    function move() {
+      var crash = false;
+      ball.position.x += ball.direction.x;
+      ball.position.y += ball.direction.y;
+      if (ball.position.x < ball.size || ball.position.x > canvas.x - ball.size) {
+        ball.direction.x *= -1;
+        crash = true;
+      }
+      if (ball.position.y < ball.size || ball.position.y > canvas.y - ball.size) {
+        ball.direction.y *= -1;
+        crash = true;
+      }
+      context.clearRect(0, 0, canvas.x, canvas.y);
+      context.beginPath();
+
+      if (crash) {
+        timeout = setTimeout(move, 500);
+        context.fillStyle = "red";
+      } else {
+        timeout = setTimeout(move, 1);
+        context.fillStyle = "blue";
+      }
+      context.arc(ball.position.x, ball.position.y, ball.size, 0, Math.PI * 2, true);
+      context.closePath();
+      context.fill();
+    }
+    toggle();
+
+    function toggle() {
+      if (timeout)
+        timeout = clearTimeout(timeout);
+      else
+        move();
+    }
+  </script>
+</body>
+
+</html>

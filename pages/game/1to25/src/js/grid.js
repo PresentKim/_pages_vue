@@ -1,3 +1,5 @@
+// minifyOnSave, filenamePattern: ../../min/js/$1.$2, minifier: gcc, buffer: 8388608, minifierOptions: "charset = utf-8 nomunge"
+
 var Cell = function(index, data) {
   this.index = index;
   this.control = new ElementControl('cell-' + index, data, CellFomatter);

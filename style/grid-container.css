@@ -10,27 +10,26 @@
   flex-wrap: wrap;
 }
 
-.grid-row {
-  flex: 1;
-  height: 30vmin;
-  width: inherit;
-  margin: auto;
-  justify-content: space-around;
-  align-items: center;
-}
-
 .grid-cell {
+  flex: 1;
   display: inherit;
   background: #eee4da;
   height: inherit;
   width: 30vmin;
   max-width: 30vmin;
+  max-height: 30vmin;
   font-size: 10vmin;
   font-weight: bold;
+  margin: 1vmin;
   line-height: 30vmin;
   text-align: center;
   cursor: pointer;
+  justify-content: space-around;
+  align-items: center;
+  animation: wriggle 1.5s infinite;
 }
+
+.grid-cell i {}
 
 @media screen and (max-width: 520px) {
   #grid-container {

@@ -1,11 +1,7 @@
-@charset "UTF-8";
-@import url(animation.css);
-@import url(title-container.css);
-@import url(grid-container.css);
-@import url(mobile/title-container.css) only screen and (max-width: 1025px);
-@import url(mobile/grid-container.css) only screen and (max-width: 1025px);
+@bg-color : #EEEDDD;
+
 * {
-  color: #EEEEEE;
+  color: @bg-color;
   font-family: Arial, sans-serif;
   cursor: default;
   -ms-user-select: none;
@@ -17,8 +13,7 @@
 }
 
 body {
-  /* FloralWhite; */
-  background: #FFFAF0;
+  background: @bg-color;
 }
 
 #container {
@@ -26,7 +21,8 @@ body {
   margin: 10px auto;
 }
 
-.flex-row, .flex-column {
+.flex-column,
+.flex-row {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -38,4 +34,8 @@ body {
 
 .flex-column {
   flex-direction: column;
+}
+
+.bordered {
+  border-radius: 10px;
 }

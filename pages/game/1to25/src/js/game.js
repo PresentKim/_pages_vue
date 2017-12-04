@@ -1,3 +1,5 @@
+// minifyOnSave, filenamePattern: ../../min/js/$1.$2, minifier: gcc, buffer: 8388608, minifierOptions: "charset = utf-8 nomunge"
+
 var Game = function(xSize, ySize) {
   this.canStart = true;
   this.started = false;
@@ -31,7 +33,7 @@ var Game = function(xSize, ySize) {
   }, false);
 
   this.gobackButton.getElement().addEventListener('click', function() {
-    location.href = 'http://web.present.kim';
+    location.href = '../../game.html';
   }, false);
 
   document.getElementById('cheat-panel').addEventListener('click', function() {

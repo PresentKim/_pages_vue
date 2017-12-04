@@ -3,16 +3,16 @@
 
 <head>
   <meta charset="utf-8">
-  <title>PresentKim's Web</title>
+  <title>PresentKim's Game</title>
 
-  <link href="style/main-container.css" type="text/css" rel="stylesheet">
+  <link href="../style/main-container.css" type="text/css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-  <link rel="icon" type="image/png" sizes="32x32" href="meta/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="meta/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="meta/favicon-16x16.png">
-  <link rel="shortcut icon" href="meta/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../meta/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="../meta/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../meta/favicon-16x16.png">
+  <link rel="shortcut icon" href="../meta/favicon.ico">
   <meta name="theme-color" content="#FFFAF0">
 
   <meta name="HandheldFriendly" content="True">
@@ -23,10 +23,11 @@
 <body>
   <div id="container" class="flex-column">
     <div id="title-container" class="flex-column">
-      <div id="title-text">PresentKim's Web</div>
+      <div id="title-text">PresentKim's Game</div>
       <div id="pannels" class="flex-row">
         <a id="github-panel" class="panel bordered " href="https://github.com/PresentKim/presentkim.github.io">GitHub</a>
         <a id="telegram-panel" class="panel bordered" href="https://t.me/PresentKim">Telegram</a>
+        <a id="goback-panel" class="panel bordered" href="../index.html">Back</a>
       </div>
       <div id="intro" class=" bordered">● Choose the category! (1/4)</div>
     </div>
@@ -35,10 +36,11 @@
   </div>
   <script>
     var pageList = [
-      ['Game', 'pages/game.html', '<i class=\"material-icons\">mouse</i>'],
+      ['1to25', 'game/1to25/1to25.html', '<i class=\"material-icons\">mouse</i>'],
+      ['', '#']
     ];
   </script>
-  <script src="js/pageList.js"></script>
+  <script src="../js/pageList.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Bouncing Ball 2.2</title>
+  <meta name="description" content="[Bouncing Ball v2.2] 공 여러개 + 상대적크기 + 경계 딜레이">
+  <style>
+    #buttons {
+      margin: 0;
+      position: absolute;
+    }
+
+    button {
+      width: 80px;
+      height: 20px;
+    }
+
+    canvas {
+      background: #FFFAF0;
+      width: 95vw;
+      height: 95vh;
+      border: 1px dotted black;
+      margin-top: 2vh;
+      margin-left: 2vw;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="buttons">
+    <button onClick="location.href='2.1.html'">Prev</button>
+    <button onClick="toggle()">Toggle</button>
+    <button onClick="location.href='2.3.html'">Next</button>
+  </div>
+  <script>
+    document.write("<canvas id=\"canvas_ball\"></canvas>");
+    var canvas = document.getElementById('canvas_ball');
+    var context = canvas.getContext('2d');
+    var timeout = null;
+
+    var Ball = function(x, y, dX, dY, radius, color) {
+      this.x = Math.max(radius, x);
+      this.y = Math.max(radius, y);
+      this.dX = dX;
+      this.dY = dY;
+      this.radius = radius;
+      this.color = color;
+      this.delay = 0;
+    }
+    Ball.prototype.relativeRadius = function() {
+      return this.radius * Math.sqrt(canvas.clientWidth * canvas.clientHeight, 2) / 100;
+    }
+
+
+    var balls = [];
+    var count = 50;
+    while (balls.length <= count) {
+      var x = rand(0, canvas.clientWidth);
+      var y = rand(0, canvas.clientHeight);
+      var dX = rand(1, 10) * (rand(0, 1) ? 1 : -1);
+      var dY = rand(1, 10) * (rand(0, 1) ? 1 : -1);
+      var radius = rand(1, 5);
+      var color = "rgb(" + [rand(0, 255), rand(0, 255), rand(0, 255)] + ")";
+
+      balls.push(new Ball(x, y, dX, dY, radius, color));
+    }
+
+    function rand(min, max) {
+      return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    function move() {
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (index in balls) {
+        var ball = balls[index];
+        var radius = ball.relativeRadius();
+        if (ball.delay > 0) {
+          ball.delay--;
+        } else {
+          ball.x += ball.dX;
+          ball.y += ball.dY;
+          if (ball.x < radius || ball.x > canvas.width - radius) {
+            ball.x = ball.x < radius ? radius : canvas.width - radius;
+            ball.dX *= -1;
+            ball.delay += 50;
+          }
+          if (ball.y < radius || ball.y > canvas.height - radius) {
+            ball.y = ball.y < radius ? radius : canvas.height - radius;
+            ball.dY *= -1;
+            ball.delay += 50;
+          }
+        }
+        context.beginPath();
+        context.fillStyle = ball.color;
+        context.arc(ball.x, ball.y, radius, 0, Math.PI * 2, true);
+        context.closePath();
+        context.fill();
+      }
+      timeout = setTimeout(move, 1);
+    }
+    toggle();
+
+    function toggle() {
+      if (timeout)
+        timeout = clearTimeout(timeout);
+      else
+        move();
+    }
+  </script>
+</body>
+
+</html>

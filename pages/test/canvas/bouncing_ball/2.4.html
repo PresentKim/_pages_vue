@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Bouncing Ball 2.4</title>
+  <meta name="description" content="[Bouncing Ball v2.4] 공 여러개 + 상대적크기 + 공충돌시정지 + 생성겹칩방지">
+  <style>
+    #buttons {
+      margin: 0;
+      position: absolute;
+    }
+
+    button {
+      width: 80px;
+      height: 20px;
+    }
+
+    canvas {
+      background: #FFFAF0;
+      width: 95vw;
+      height: 95vh;
+      border: 1px dotted black;
+      margin-top: 2vh;
+      margin-left: 2vw;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="buttons">
+    <button onClick="location.href='2.3.html'">Prev</button>
+    <button onClick="generate()">Gen</button>
+    <button onClick="toggle()">Toggle</button>
+    <button onClick="location.href='2.5.html'">Next</button>
+  </div>
+  <script>
+    document.write("<canvas id=\"canvas_ball\"></canvas>");
+    var canvas = document.getElementById('canvas_ball');
+    var context = canvas.getContext('2d');
+    var balls = [];
+    var timeout = null;
+
+    var Ball = function(x, y, dX, dY, radius, color) {
+      this.x = Math.max(radius, x);
+      this.y = Math.max(radius, y);
+      this.dX = dX;
+      this.dY = dY;
+      this.radius = radius;
+      this.color = color;
+    }
+    Ball.prototype.relativeRadius = function() {
+      return this.radius * Math.sqrt(canvas.clientWidth * canvas.clientHeight, 2) / 100;
+    }
+    Ball.prototype.colision = function(ball) {
+      return Math.sqrt(Math.pow(this.x - ball.x, 2) + Math.pow(this.y - ball.y, 2)) < (this.relativeRadius() + ball.relativeRadius());
+    }
+
+
+    function generate() {
+      if (timeout)
+        timeout = clearTimeout(timeout);
+
+      balls = [];
+      var count = 50;
+      var tryTime = 0;
+      while (balls.length <= count && tryTime < 100) {
+        var x = rand(0, canvas.clientWidth);
+        var y = rand(0, canvas.clientHeight);
+        var dX = rand(1, 10) * (rand(0, 1) ? 1 : -1);
+        var dY = rand(1, 10) * (rand(0, 1) ? 1 : -1);
+        var radius = rand(1, 5);
+        var color = "rgb(" + [rand(0, 255), rand(0, 255), rand(0, 255)] + ")";
+
+        var ball = new Ball(x, y, dX, dY, radius + 1, color);
+        var colision = false;
+        for (index in balls) {
+          if (ball.colision(balls[index])) {
+            colision = true;
+            break;
+          }
+        }
+        if (!colision) {
+          ball.radius--;
+          balls.push(ball);
+        } else {
+          tryTime++;
+        }
+      }
+      move();
+    }
+
+    function rand(min, max) {
+      return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    function move() {
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (index in balls) {
+        var ball = balls[index];
+        var radius = ball.relativeRadius();
+        var colision = false;
+        for (index in balls) {
+          var ball2 = balls[index];
+          if (ball != ball2 && ball.colision(ball2)) {
+            colision = true;
+            break;
+          }
+        }
+        if (!colision) {
+          ball.x += ball.dX;
+          ball.y += ball.dY;
+          if (ball.x < radius || ball.x > canvas.width - radius) {
+            ball.x = ball.x < radius ? radius : canvas.width - radius;
+            ball.dX *= -1;
+          }
+          if (ball.y < radius || ball.y > canvas.height - radius) {
+            ball.y = ball.y < radius ? radius : canvas.height - radius;
+            ball.dY *= -1;
+          }
+        }
+        context.beginPath();
+        context.fillStyle = ball.color;
+        context.arc(ball.x, ball.y, radius, 0, Math.PI * 2, true);
+        context.closePath();
+        context.fill();
+      }
+      timeout = setTimeout(move, 1);
+    }
+
+    function toggle() {
+      if (timeout)
+        timeout = clearTimeout(timeout);
+      else
+        move();
+    }
+  </script>
+</body>
+
+</html>
