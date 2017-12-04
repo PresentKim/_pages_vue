@@ -43,8 +43,8 @@
     var balls = [];
 
     var Ball = function(x, y, dX, dY, radius, color) {
-      this.x = Math.max(radius, x);
-      this.y = Math.max(radius, y);
+      this.x = x;
+      this.y = y;
       this.dX = dX;
       this.dY = dY;
       this.radius = radius;
@@ -70,11 +70,15 @@
         var color = "rgb(" + [rand(0, 255), rand(0, 255), rand(0, 255)] + ")";
 
         var ball = new Ball(x, y, dX, dY, radius + 1, color);
-        var colision = false;
-        for (index in balls) {
-          if (ball.colision(balls[index])) {
-            colision = true;
-            break;
+        var relativeRadius = radius * Math.sqrt(canvas.clientWidth * canvas.clientHeight, 2) / 100;
+        var colision = ball.x < relativeRadius || ball.x > canvas.width - relativeRadius || ball.y < relativeRadius || ball.y > canvas.height - relativeRadius;
+
+        if (!colision) {
+          for (index in balls) {
+            if (ball.colision(balls[index])) {
+              colision = true;
+              break;
+            }
           }
         }
         if (!colision) {
