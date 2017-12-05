@@ -8,14 +8,26 @@
 <body w3-include-html="http://web.present.kim/import/pageForm_body.html">
   <script>
     w3.includeHTML();
+    console.log("w3.includeHTML()");
   </script>
   <script src="http://web.present.kim/import/min/js/pageList.js"></script>
   <script>
-    addCell([
-      ['Game', 'pages/game.html', '<i class=\"material-icons\">mouse</i>'],
-      ['Test', 'pages/test.html']
-    ]);
-    renderCell();
+    (function() {
+      var timeout = null;
+
+      function tryAddCell() {
+        try {
+          addCell([
+            ['Game', 'pages/game.html', '<i class=\"material-icons\">mouse</i>'],
+            ['Test', 'pages/test.html']
+          ]);
+          renderCell();
+        } catch (e) {
+          timeout = setTimeout(tryAddCell, 10);
+        }
+      };
+      tryAddCell();
+    })();
   </script>
 </body>
 

@@ -10,7 +10,7 @@ var pageList = [];
 
 function addCell(pages) {
   for (var index in pages)
-    pageList[index] = new Page(...pages[index]);
+    pageList[index] = new Page(pages[index][0], pages[index][1], pages[index][2]);
 }
 
 function renderCell() {
