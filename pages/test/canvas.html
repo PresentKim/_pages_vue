@@ -7,26 +7,13 @@
 
 <body w3-include-html="http://web.present.kim/import/pageForm_body.html">
   <script>
-    w3.includeHTML();
-  </script>
-  <script src="http://web.present.kim/import/min/js/pageList.js"></script>
-  <script>
-    (function() {
-      var timeout = null;
-
-      function tryAddCell() {
-        try {
-          addCell([
-            ['Bouncing\nBall', 'canvas/bouncing_ball/bouncing_ball.html', '<i class="material-icons">group_work</i>']
-          ]);
-          renderCell();
-          document.getElementById('title-text').innerText = document.title = 'Test - Canvas';
-        } catch (e) {
-          timeout = setTimeout(tryAddCell, 10);
-        }
-      };
-      tryAddCell();
-    })();
+    w3.includeHTML(function() {
+      addCell([
+        ['Bouncing\nBall', 'canvas/bouncing_ball/bouncing_ball.html', '<i class="material-icons">group_work</i>']
+      ]);
+      renderCell();
+      document.getElementById('title-text').innerText = document.title = 'Test - Canvas';
+    });
   </script>
 </body>
 

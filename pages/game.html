@@ -7,26 +7,13 @@
 
 <body w3-include-html="http://web.present.kim/import/pageForm_body.html">
   <script>
-    w3.includeHTML();
-  </script>
-  <script src="http://web.present.kim/import/min/js/pageList.js"></script>
-  <script>
-    (function() {
-      var timeout = null;
-
-      function tryAddCell() {
-        try {
-          addCell([
-            ['1to25', 'game/1to25/1to25.html', '<i class=\"material-icons\">mouse</i>']
-          ]);
-          renderCell();
-          document.getElementById('title-text').innerText = document.title = 'PresentKim\'s Game';
-        } catch (e) {
-          timeout = setTimeout(tryAddCell, 10);
-        }
-      };
-      tryAddCell();
-    })();
+    w3.includeHTML(function() {
+      addCell([
+        ['1to25', 'game/1to25/1to25.html', '<i class=\"material-icons\">mouse</i>']
+      ]);
+      renderCell();
+      document.getElementById('title-text').innerText = document.title = 'PresentKim\'s Game';
+    });
   </script>
 </body>
 
