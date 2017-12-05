@@ -3,20 +3,19 @@
 
 <head>
   <link rel="import" href="import/pageForm.html">
-  <script>
-    addCell([
-      ['Game', 'pages/game.html', '<i class=\"material-icons\">mouse</i>'],
-      ['Test', 'pages/test.html']
-    ]);
-    renderCell();
-  </script>
 </head>
 
 <body>
   <div id="container" class="flex-column">
     <script>
       //https://www.html5rocks.com/ko/tutorials/webcomponents/imports/
-    document.querySelector('#container').appendChild(document.importNode(document.querySelector('link[rel="import"]').import.querySelector('template').content, true));
+      document.querySelector('#container').appendChild(document.importNode(document.querySelector('link[rel="import"]').import.querySelector('template').content, true));
+
+      addCell([
+        ['Game', 'pages/game.html', '<i class=\"material-icons\">mouse</i>'],
+        ['Test', 'pages/test.html']
+      ]);
+      renderCell();
     </script>
 </body>
 
