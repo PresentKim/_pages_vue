@@ -1,0 +1,62 @@
+@cell-bg-color : #E4DAD0;
+@grid-bg-color : darken(@cell-bg-color, 25%);
+
+#grid-container {
+  background: @grid-bg-color;
+  height: 500px;
+  width: 500px;
+  margin: 5px auto;
+  .bordered;
+}
+
+.grid-row {
+  flex: 1;
+  margin: 5px 0;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.grid-cell {
+  flex: 1;
+  color: #777777;
+  background: @cell-bg-color;
+  margin: 5px;
+  cursor: pointer;
+  .bordered;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 70px;
+  font-weight: bold;
+
+  &:before {
+    content: '';
+    float: left;
+    padding-top: 100%;
+  }
+
+  &hover {
+    box-shadow: 0 0 10vmin rgba(255,255,255,0.7);
+  }
+
+  &:active {
+    box-shadow: 0 0 10vmin rgba(255,255,0,0.2);
+  }
+}
+
+#grid-cover {
+  z-index: 100;
+  position: absolute;
+  background: #777777;
+  opacity: 0;
+  height: inherit;
+  width: inherit;
+  .bordered;
+  pointer-events: none;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#cover-restart-button {
+  pointer-events: visibleFill;
+}
