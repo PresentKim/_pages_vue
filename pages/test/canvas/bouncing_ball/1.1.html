@@ -40,7 +40,7 @@
       direction: new Point(5, 5),
       size: 50
     };
-    document.write("<canvas id=\"canvas_ball\" width=\"" + canvas.x + "\" height=\"" + canvas.y + "\"></canvas>");
+    document.write('<canvas id="canvas_ball" width="' + canvas.x + '" height="' + canvas.y + '"></canvas>');
 
     var context = document.getElementById('canvas_ball').getContext('2d');
     var timeout = null;
@@ -62,10 +62,10 @@
 
       if (crash) {
         timeout = setTimeout(move, 500);
-        context.fillStyle = "red";
+        context.fillStyle = 'red';
       } else {
         timeout = setTimeout(move, 1);
-        context.fillStyle = "blue";
+        context.fillStyle = 'blue';
       }
       context.arc(ball.position.x, ball.position.y, ball.size, 0, Math.PI * 2, true);
       context.closePath();

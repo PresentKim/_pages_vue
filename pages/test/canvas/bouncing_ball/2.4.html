@@ -35,8 +35,8 @@
     <button onClick="toggle()">Toggle</button>
     <button onClick="location.href='2.5.html'">Next</button>
   </div>
+  <canvas id="canvas_ball"></canvas>
   <script>
-    document.write("<canvas id=\"canvas_ball\"></canvas>");
     var canvas = document.getElementById('canvas_ball');
     var context = canvas.getContext('2d');
     var balls = [];
@@ -71,7 +71,7 @@
         var dX = rand(1, 10) * (rand(0, 1) ? 1 : -1);
         var dY = rand(1, 10) * (rand(0, 1) ? 1 : -1);
         var radius = rand(1, 5);
-        var color = "rgb(" + [rand(0, 255), rand(0, 255), rand(0, 255)] + ")";
+        var color = 'rgb(' + [rand(0, 255), rand(0, 255), rand(0, 255)] + ')';
 
         var ball = new Ball(x, y, dX, dY, radius + 1, color);
         var colision = false;

@@ -26,7 +26,7 @@
 
 <body>
   <div id="buttons">
-    <button onClick="location.href='1.1.html'">Prev</button>
+    <button onClick="location.href'1.1.html'">Prev</button>
     <button onClick="toggle()">Toggle</button>
     <button onClick="location.href='2.1.html'">Next</button>
   </div>
@@ -36,7 +36,7 @@
       this.y = y;
     }
     var canvas = new Point(1000, 500);
-    document.write("<canvas id=\"canvas_ball\" width=\"" + canvas.x + "\" height=\"" + canvas.y + "\"></canvas>");
+    document.write('<canvas id="canvas_ball" width="' + canvas.x + '" height="' + canvas.y + '"></canvas>');
 
     var context = document.getElementById('canvas_ball').getContext('2d');
     var timeout = null;
@@ -54,7 +54,7 @@
       var size = rand(10, 50);
       var position = new Point(rand(size, canvas.x), rand(size, canvas.y));
       var direction = new Point(rand(1, 5), rand(1, 5));
-      var color = "rgb(" + rand(0, 255) + ", " + rand(0, 255) + ", " + rand(0, 255) + ")";
+      var color = 'rgb(' + rand(0, 255) + ', ' + rand(0, 255) + ', ' + rand(0, 255) + ')';
 
       balls.push(new Ball(size, position, direction, color));
     }
