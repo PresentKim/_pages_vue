@@ -2,12 +2,14 @@
 <html>
 
 <head>
-  <link rel="import" href="import/pageForm.html">
+  <script src="https://www.w3schools.com/lib/w3.js"></script>
+  <div w3-include-html="import/pageForm.html"></div>
 </head>
 
 <body>
   <div id="container" class="flex-column">
     <script>
+      w3.includeHTML();
       //https://www.html5rocks.com/ko/tutorials/webcomponents/imports/
       document.querySelector('#container').appendChild(document.importNode(document.querySelector('link[rel="import"]').import.querySelector('template').content, true));
 
