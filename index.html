@@ -3,22 +3,21 @@
 
 <head>
   <script src="https://www.w3schools.com/lib/w3.js"></script>
-  <div w3-include-html="import/pageForm.html"></div>
 </head>
 
 <body>
-  <div id="container" class="flex-column">
-    <script>
-      w3.includeHTML();
-    </script>
-    <script src="import/min/js/pageList.js"></script>
-    <script>
-      addCell([
-        ['Game', 'pages/game.html', '<i class=\"material-icons\">mouse</i>'],
-        ['Test', 'pages/test.html']
-      ]);
-      renderCell();
-    </script>
+  <div id="container" class="flex-column" w3-include-html="import/pageForm.html"></div>
+  <script>
+    w3.includeHTML();
+  </script>
+  <script src="import/min/js/pageList.js"></script>
+  <script>
+    addCell([
+      ['Game', 'pages/game.html', '<i class=\"material-icons\">mouse</i>'],
+      ['Test', 'pages/test.html']
+    ]);
+    renderCell();
+  </script>
 </body>
 
 </html>
