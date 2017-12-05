@@ -10,9 +10,9 @@
   <div id="container" class="flex-column">
     <script>
       w3.includeHTML();
-      //https://www.html5rocks.com/ko/tutorials/webcomponents/imports/
-      document.querySelector('#container').appendChild(document.importNode(document.querySelector('link[rel="import"]').import.querySelector('template').content, true));
-
+    </script>
+    <script src="min/js/pageList.js"></script>
+    <script>
       addCell([
         ['Game', 'pages/game.html', '<i class=\"material-icons\">mouse</i>'],
         ['Test', 'pages/test.html']
