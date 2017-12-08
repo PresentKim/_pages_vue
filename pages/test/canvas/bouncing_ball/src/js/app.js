@@ -57,11 +57,10 @@ function move() {
         var direction = angleToDirection(Math.atan2(distX, distY));
         var sumRadius = relativeRadius + balls[j].relativeRadius;
         var distance = Math.sqrt(Math.pow(Math.abs(distX), 2) + Math.pow(Math.abs(distY), 2));
-        balls[i].velocityY = direction.y * (sumRadius - distance);
-        balls[i].velocityX = direction.x * (sumRadius - distance);
-
-        balls[j].velocityY += -direction.y;
-        balls[j].velocityX += -direction.x;
+        balls[i].velocityX += direction.x * (sumRadius - distance);
+        balls[i].velocityY += direction.y * (sumRadius - distance);
+        balls[j].velocityX -= direction.x;
+        balls[j].velocityY -= direction.y;
       }
     }
     if (next.x < relativeRadius) {
