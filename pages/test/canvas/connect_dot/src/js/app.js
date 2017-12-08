@@ -15,10 +15,8 @@ function generate() {
   while (dots.length < count) {
     var x = rand(0, canvas.width);
     var y = rand(0, canvas.height);
-    var speed = rand(100, 300) / 100;
-    var direction = angleToDirection(rand(0, 314) / 100);
-    var velocityX = direction.x * speed * (rand(0, 1) == 1 ? 1 : -1);
-    var velocityY = direction.y * speed * (rand(0, 1) == 1 ? 1 : -1);
+    var velocityX = rand(100, 300) / 100 * (rand(0, 1) == 1 ? 1 : -1);
+    var velocityY = rand(100, 300) / 100 * (rand(0, 1) == 1 ? 1 : -1);
     var color = new ColorHSLA(rand(0, 360));
 
     dots.push(new Dot(x, y, 1, velocityX, velocityY, color));
@@ -37,6 +35,9 @@ function move() {
     if (dots[i].x < 0 || dots[i].x > canvas.width || dots[i].y < 0 || dots[i].y > canvas.height) {
       dots[i].x = rand(0, canvas.width);
       dots[i].y = rand(0, canvas.height);
+      dots[i].velocityX = rand(100, 300) / 100 * (rand(0, 1) == 1 ? 1 : -1);
+      dots[i].velocityY = rand(100, 300) / 100 * (rand(0, 1) == 1 ? 1 : -1);
+
     }
   }
   mouSeDot.color.h = ++mouSeDot.color.h % 361;
