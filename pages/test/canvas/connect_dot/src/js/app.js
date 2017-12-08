@@ -104,3 +104,8 @@ document.body.addEventListener("touchmove", function(evt) {
   dots[dots.length - 1].x = evt.touches[0].clientX - rect.left;
   dots[dots.length - 1].y = evt.touches[0].clientY - rect.top;
 }, false);
+
+document.body.addEventListener("touchend", function(evt) {
+  dots[dots.length - 1].x = Number.MAX_SAFE_INTEGER;
+  dots[dots.length - 1].y = Number.MAX_SAFE_INTEGER;
+}, false);

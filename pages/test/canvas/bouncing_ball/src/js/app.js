@@ -44,7 +44,7 @@ function generate() {
     else
       tryTime++;
   }
-  balls.push(new Ball(NaN, NaN, 20, 0, 0, 0, new ColorHSLA(0, 100, 50, 0.5)));
+  balls.push(new Ball(Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, 20, 0, 0, 0, new ColorHSLA(0, 100, 50, 0.5)));
   render();
 }
 
@@ -128,4 +128,9 @@ document.body.addEventListener("touchmove", function(evt) {
   var rect = canvas.getBoundingClientRect();
   balls[balls.length - 1].x = evt.touches[0].clientX - rect.left;
   balls[balls.length - 1].y = evt.touches[0].clientY - rect.top;
+}, false);
+
+document.body.addEventListener("touchend", function(evt) {
+  balls[balls.length - 1].x = Number.MAX_SAFE_INTEGER;
+  balls[balls.length - 1].y = Number.MAX_SAFE_INTEGER;
 }, false);
