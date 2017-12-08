@@ -16,11 +16,11 @@ function generate() {
   while (balls.length < count && tryTime < 10000) {
     var x = rand(0, canvas.width);
     var y = rand(0, canvas.height);
-    var radius = rand(3, 5);
-    var speed = rand(300, 500) / 100;
-    var direction = angleToDirection(rand(0, 314) / 100);
-    var velocityX = direction.x * speed * (rand(0, 1) == 1 ? 1 : -1);
-    var velocityY = direction.y * speed * (rand(0, 1) == 1 ? 1 : -1);
+    var radius = rand(3, 5, 7);
+    var speed = rand(3, 5, 7);
+    var direction = angleToDirection(rand(0, Math.PI, 7));
+    var velocityX = direction.x * speed * (rand(0, 1) ? 1 : -1);
+    var velocityY = direction.y * speed * (rand(0, 1) ? 1 : -1);
     var color = new ColorHSLA(rand(0, 360));
 
     var ball = new Ball(x, y, radius, velocityX, velocityY, speed, color);
@@ -82,7 +82,7 @@ function move() {
     balls[i].velocityY -= (balls[i].velocityY * 9 + rawVelocity.y) / 10;
   }
 
-  mouSeBall.color.h = ++mouSeBall.color.h % 361;
+  mouSeBall.color.h = mouSeBall.color.h++ % 360;
 }
 
 function render() {
