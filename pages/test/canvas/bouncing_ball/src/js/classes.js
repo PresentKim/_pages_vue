@@ -72,20 +72,8 @@ class Ball extends Circle {
   }
 }
 
-class ColorRGB {
-  constructor(r, g, b) {
-    this.r = r;
-    this.g = g;
-    this.b = b;
-  }
-
-  toString() {
-    return 'rgb(' + [this.r, this.g, this.b] + ')';
-  }
-}
-
 class ColorHSLA {
-  constructor(h, s, l, a) {
+  constructor(h, s = 100, l = 50, a = 1) {
     this.h = h;
     this.s = s;
     this.l = l;
@@ -93,6 +81,6 @@ class ColorHSLA {
   }
 
   toString() {
-    return 'hsla(' + this.h + ',' + this.s + '%,' + this.l + '%,' + (this.a / 255) + ')';
+    return 'hsla(' + this.h + ',' + this.s + '%,' + this.l + '%,' + this.a + ')';
   }
 }
