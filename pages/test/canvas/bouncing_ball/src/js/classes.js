@@ -72,15 +72,27 @@ class Ball extends Circle {
   }
 }
 
-class Color {
-  constructor(r, g, b, a = 255) {
+class ColorRGB {
+  constructor(r, g, b) {
     this.r = r;
     this.g = g;
     this.b = b;
+  }
+
+  toString() {
+    return 'rgb(' + [this.r, this.g, this.b] + ')';
+  }
+}
+
+class ColorHSLA {
+  constructor(h, s, l, a) {
+    this.h = h;
+    this.s = s;
+    this.l = l;
     this.a = a;
   }
 
   toString() {
-    return '#' + intToHex2(this.r) + intToHex2(this.g) + intToHex2(this.b) + intToHex2(this.a) ;
+    return 'hsla(' + this.h + ',' + this.s + '%,' + this.l + '%,' + (this.a / 255) + ')';
   }
 }

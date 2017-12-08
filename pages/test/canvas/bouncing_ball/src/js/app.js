@@ -21,7 +21,7 @@ function generate() {
     var direction = angleToDirection(rand(0, 314) / 100);
     var velocityX = direction.x * speed * (rand(0, 1) == 1 ? 1 : -1);
     var velocityY = direction.y * speed * (rand(0, 1) == 1 ? 1 : -1);
-    var color = new Color(rand(0, 255), rand(0, 255), rand(0, 255));
+    var color = new ColorRGB(rand(0, 255), rand(0, 255), rand(0, 255));
 
     var ball = new Ball(x, y, radius, velocityX, velocityY, speed, color);
 
@@ -38,7 +38,7 @@ function generate() {
     else
       tryTime++;
   }
-  balls.push(new Ball(0, 0, 20, 0, 0, 0, new Color(0, 0, 0, 80)));
+  balls.push(new Ball(0, 0, 20, 0, 0, 0, new ColorHSLA(0, 100, 50, 80)));
   render();
 }
 
@@ -87,6 +87,8 @@ function move() {
     balls[i].velocityX -= (balls[i].velocityX * 9 + rawVelocity.x) / 10;
     balls[i].velocityY -= (balls[i].velocityY * 9 + rawVelocity.y) / 10;
   }
+
+  balls[balls.length - 1].color.h = (balls[balls.length - 1].color.h + 1) % 361;
 }
 
 function render() {

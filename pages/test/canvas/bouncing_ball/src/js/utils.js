@@ -28,7 +28,3 @@ function angleToDirection(angle) {
 function rand(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
-
-function intToHex2(i) {
-  return ("0" + i.toString(16)).slice(-2);
-}
