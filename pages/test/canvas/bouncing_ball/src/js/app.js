@@ -11,7 +11,7 @@ function generate() {
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   balls = [];
-  var count = 3;
+  var count = 30;
   var tryTime = 0;
   while (balls.length < count && tryTime < 10000) {
     var x = rand(0, canvas.clientWidth);
