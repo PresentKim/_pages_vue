@@ -2,7 +2,7 @@
 
 var canvas = document.getElementById('canvas_ball');
 var context = canvas.getContext('2d');
-var timeout = null;
+var handle = null;
 var balls = [];
 
 class Ball extends Circle {
@@ -19,9 +19,6 @@ class Ball extends Circle {
   get relativeRadius() {
     return this.radius * Math.sqrt(canvas.clientWidth * canvas.clientHeight, 2) / 100;
   }
-  get rspeed() {
-    return this.speed / 100;
-  }
 
   colision(ball) {
     return colisionEachCircle(new Circle(this.x, this.y, this.relativeRadius), new Circle(ball.x, ball.y, ball.relativeRadius));
@@ -29,10 +26,9 @@ class Ball extends Circle {
 
   next() {
     var velocity = angleToVec(this.angle);
-    return new Circle(this.x + velocity.x * this.rspeed, this.y + velocity.y * this.rspeed, this.radius);
+    return new Circle(this.x + velocity.x * this.speed, this.y + velocity.y * this.speed, this.radius);
   }
 }
-
 
 function generate() {
   canvas.width = canvas.clientWidth;
@@ -42,11 +38,11 @@ function generate() {
   balls = [];
   var count = 10;
   var tryTime = 0;
-  while (balls.length <= count && tryTime < 10000) {
+  while (balls.length < count && tryTime < 10000) {
     var x = rand(0, canvas.clientWidth);
     var y = rand(0, canvas.clientHeight);
-    var angle = rand(1, 360);
-    var speed = rand(100, 200);
+    var angle = rand(0, 314) / 100;
+    var speed = rand(100, 200) / 100;
     var radius = rand(3, 5);
     var color = 'rgb(' + [rand(0, 255), rand(0, 255), rand(0, 255)] + ')';
 
@@ -79,22 +75,36 @@ function move() {
     for (index in balls) {
       var ball2 = balls[index];
       if (ball != ball2 && ball.colision(ball2)) {
-        ball.angle = vecToAngle(next, ball2);
+        ball.angle = vecToAngle(ball, ball2);
         next = ball.next();
         break;
       }
     }
-    if (next.x < relativeRadius || next.x > canvas.width - relativeRadius) {
+    if (next.x < relativeRadius) {
+      next.x = relativeRadius;
       ball.angle = Math.PI * 2 - ball.angle;
-    }else
-    if (next.y < relativeRadius || next.y > canvas.height - relativeRadius) {
+    }
+    if (next.x > canvas.width - relativeRadius) {
+      next.x = canvas.width - relativeRadius;
+      ball.angle = Math.PI * 2 - ball.angle;
+    }
+    if (next.y < relativeRadius) {
+      next.y = relativeRadius;
       ball.angle = Math.PI - ball.angle;
     }
-    if (!colision)
+    if (next.y > canvas.height - relativeRadius) {
+      next.y = canvas.height - relativeRadius;
+      ball.angle = Math.PI - ball.angle;
+    }
+    if (!colision) {
       ball.from(next);
-        //ball.angle+= 0.1;
+      ball.speed += 2;
+      ball.speed /= 2;
+    } else {
+      ball.speed *= 2;
+    }
+    ball.angle %= Math.PI * 2;
   }
-  timeout = setTimeout(onTick, 1);
 }
 
 function render() {
@@ -108,21 +118,27 @@ function render() {
     context.beginPath();
     context.fillStyle = ball.color;
     context.arc(ball.x, ball.y, ball.relativeRadius, 0, Math.PI * 2, true);
-    context.closePath();
     context.fill();
+    /*
+    context.font = "20px Arial";
+    context.fillStyle = 'red';
+    context.fillText(ball.angle + "º", ball.x, ball.y);
+    */
+    context.closePath();
   }
 }
 
-function onTick() {
+function onUpdate() {
   move();
   render();
+  handle = requestAnimationFrame(onUpdate);
 }
 
 function toggle() {
-  if (timeout)
-    timeout = clearTimeout(timeout);
+  if (handle)
+    handle = cancelAnimationFrame(handle);
   else
-    onTick();
+    onUpdate();
 }
 
 function rand(min, max) {
