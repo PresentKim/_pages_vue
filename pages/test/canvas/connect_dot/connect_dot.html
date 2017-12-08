@@ -13,6 +13,7 @@
     canvas.setAttribute('id', 'connect_dot');
     w3.includeHTML(function() {
       document.getElementById('title-text').innerText = document.title = 'Connect Dot';
+      document.getElementById('intro').innerHTML = '<i class="material-icons"">touch_app</i>Touch it!';
       addButton('Back', '../../canvas.html');
       document.getElementById('grid-container').appendChild(canvas);
       init();

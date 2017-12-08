@@ -13,6 +13,7 @@
     canvas.setAttribute('id', 'canvas_ball');
     w3.includeHTML(function() {
       document.getElementById('title-text').innerText = document.title = 'Bouncing Ball';
+      document.getElementById('intro').innerHTML = '<i class="material-icons"">touch_app</i>Touch it!';
       addButton('Back', '../../canvas.html');
       document.getElementById('grid-container').appendChild(canvas);
       init();

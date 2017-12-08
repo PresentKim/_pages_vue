@@ -87,7 +87,7 @@ function move() {
     balls[i].velocityX -= (balls[i].velocityX * 9 + rawVelocity.x) / 10;
     balls[i].velocityY -= (balls[i].velocityY * 9 + rawVelocity.y) / 10;
   }
-  
+
   mouSeBall.color.h = ++mouSeBall.color.h % 361;
 }
 
@@ -101,11 +101,6 @@ function render() {
     context.fillStyle = balls[i].color.toString();
     context.arc(balls[i].x, balls[i].y, balls[i].relativeRadius, 0, Math.PI * 2, true);
     context.fill();
-    /*
-        context.font = "20px Arial";
-        context.fillStyle = 'red';
-        context.fillText(Math.round(balls[i].velocityX * 100) + ":" + Math.round(balls[i].velocityY * 100), balls[i].x, balls[i].y);
-    */
     context.closePath();
   }
 }
