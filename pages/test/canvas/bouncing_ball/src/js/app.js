@@ -38,6 +38,7 @@ function generate() {
     else
       tryTime++;
   }
+  balls.push(new Ball(0, 0, 20, 0, 0, 0, '#00000050'));
   render();
 }
 
@@ -45,6 +46,7 @@ function move() {
   canvas.width = canvas.clientWidth;
   canvas.height = canvas.clientHeight;
   for (i in balls) {
+    if (i == balls.length - 1) continue;
     var next = balls[i].next();
     var relativeRadius = balls[i].relativeRadius;
     var colision = false;
@@ -123,3 +125,9 @@ function toggle() {
 
 generate();
 toggle();
+
+document.body.addEventListener('mousemove', function(evt) {
+  var rect = canvas.getBoundingClientRect();
+  balls[balls.length - 1].x = evt.clientX - rect.left;
+  balls[balls.length - 1].y = evt.clientY - rect.top;
+}, false);
