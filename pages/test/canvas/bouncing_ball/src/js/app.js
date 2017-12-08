@@ -52,7 +52,7 @@ function move() {
     for (j in balls) {
       if (i != j && balls[i].colision(balls[j])) {
         var direction = angleToDirection(Math.atan2(balls[j].x - balls[i].x, balls[j].y - balls[i].y));
-        var overlap = relativeRadius + balls[j].relativeRadius - getDistance(balls[i], balls[j]);
+        var overlap = relativeRadius + balls[j].relativeRadius - distance(balls[i], balls[j]);
         balls[i].velocityX += direction.x * overlap;
         balls[i].velocityY += direction.y * overlap;
         balls[j].velocityX -= direction.x;

@@ -52,11 +52,11 @@ function render() {
     var dumpDots = dots.concat();
     dumpDots.splice(i, 1);
     dumpDots.sort(function(a, b) {
-      return getDistance(dots[i], a) - getDistance(dots[i], b);
+      return distance(dots[i], a) - distance(dots[i], b);
     });
     context.beginPath();
     for (var j = 0; j < 3; j++) {
-      if (j < i && getDistance(dots[i], dots[j]) < 1000) {
+      if (j < i && distance(dots[i], dots[j]) < 1000) {
         context.moveTo(dots[i].x, dots[i].y);
         context.lineTo(dumpDots[j].x, dumpDots[j].y);
         context.stroke();

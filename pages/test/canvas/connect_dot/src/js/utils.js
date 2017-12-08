@@ -4,7 +4,7 @@ function angleToDirection(angle) {
   return new Vector2(-Math.sin(angle), -Math.cos(angle));
 }
 
-function getDistance(vec1, vec2) {
+function distance(vec1, vec2) {
   /*
   var distX = vec1.x - vec2.x;
   var distY = vec1.y - vec2.y;

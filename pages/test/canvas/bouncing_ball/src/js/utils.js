@@ -2,11 +2,11 @@
 
 function colisionEachCircle(circle1, circle2) {
   /*
-  var distance = getDistance(circle1, circle2)
+  var distance = distance(circle1, circle2)
   var addedRadius = this.radius + controllers[i].radius;
   return distance < addedRadius;
   */
-  return getDistance(circle1, circle2) < (circle1.radius + circle2.radius);
+  return distance(circle1, circle2) < (circle1.radius + circle2.radius);
 }
 
 // vec1 -> vec2 angle
@@ -23,7 +23,7 @@ function angleToDirection(angle) {
   return new Vector2(-Math.sin(angle), -Math.cos(angle));
 }
 
-function getDistance(vec1, vec2) {
+function distance(vec1, vec2) {
   /*
   var distX = vec1.x - vec2.x;
   var distY = vec1.y - vec2.y;
