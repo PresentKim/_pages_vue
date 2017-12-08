@@ -87,8 +87,8 @@ function move() {
     balls[i].velocityX -= (balls[i].velocityX * 9 + rawVelocity.x) / 10;
     balls[i].velocityY -= (balls[i].velocityY * 9 + rawVelocity.y) / 10;
   }
-
-  mouSeBall.color.h = mouSeBall.color.h++ % 360;
+  
+  mouSeBall.color.h = ++mouSeBall.color.h % 361;
 }
 
 function render() {
