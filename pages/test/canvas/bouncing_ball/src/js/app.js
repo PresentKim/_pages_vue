@@ -49,7 +49,6 @@ function move() {
       continue;
     var next = balls[i].next();
     var relativeRadius = balls[i].relativeRadius;
-    var colision = false;
     for (j in balls) {
       if (i != j && balls[i].colision(balls[j])) {
         var distX = balls[j].x - balls[i].x;
@@ -79,9 +78,7 @@ function move() {
       next.y = canvas.height - relativeRadius;
       balls[i].velocityY *= -1;
     }
-    if (!colision) {
-      balls[i].from(next);
-    }
+    balls[i].from(next);
     var rawVelocity = angleToDirection(Math.atan2(balls[i].velocityX, balls[i].velocityY));
     rawVelocity.multiply(new Vector2(balls[i].speed, balls[i].speed));
     balls[i].velocityX -= (balls[i].velocityX * 9 + rawVelocity.x) / 10;
