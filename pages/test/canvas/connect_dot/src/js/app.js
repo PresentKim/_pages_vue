@@ -21,9 +21,9 @@ function generate() {
     var velocityY = direction.y * speed * (rand(0, 1) == 1 ? 1 : -1);
     var color = new ColorHSLA(rand(0, 360));
 
-    dots.push(new Dot(x, y, 10, velocityX, velocityY, color));
+    dots.push(new Dot(x, y, 1, velocityX, velocityY, color));
   }
-  dots.push(new Dot(Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, 30, 0, 0, new ColorHSLA(0)));
+  dots.push(new Dot(Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, 3, 0, 0, new ColorHSLA(0)));
   render();
 }
 
@@ -69,7 +69,7 @@ function render() {
   for (i in dots) {
     context.beginPath();
     context.fillStyle = dots[i].color.toString();
-    context.arc(dots[i].x, dots[i].y, dots[i].size, 0, Math.PI * 2, true);
+    context.arc(dots[i].x, dots[i].y, dots[i].relativeSize, 0, Math.PI * 2, true);
     context.fill();
     context.closePath();
   }
