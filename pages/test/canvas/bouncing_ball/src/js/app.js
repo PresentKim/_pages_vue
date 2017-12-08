@@ -5,29 +5,6 @@ var context = canvas.getContext('2d');
 var handle = null;
 var balls = [];
 
-class Ball extends Circle {
-  constructor(x, y, radius, velocityX, velocityY, speed, color) {
-    super(x, y, radius);
-
-    this.velocityX = velocityX;
-    this.velocityY = velocityY;
-    this.speed = speed;
-    this.color = color;
-  }
-
-  get relativeRadius() {
-    return this.radius * Math.sqrt(canvas.clientWidth * canvas.clientHeight, 2) / 100;
-  }
-
-  colision(ball) {
-    return colisionEachCircle(new Circle(this.x, this.y, this.relativeRadius), new Circle(ball.x, ball.y, ball.relativeRadius));
-  }
-
-  next() {
-    return new Circle(this.x + this.velocityX, this.y + this.velocityY, this.radius);
-  }
-}
-
 function generate() {
   canvas.width = canvas.clientWidth;
   canvas.height = canvas.clientHeight;
