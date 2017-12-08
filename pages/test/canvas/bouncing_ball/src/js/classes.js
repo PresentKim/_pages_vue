@@ -49,27 +49,25 @@ class Circle extends Vector2 {
   }
 }
 
-function colisionEachCircle(circle1, circle2) {
-  /*
-  var distX = circle1.x - circle2.x;
-  var distY = circle1.y - circle2.y;
-  var distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY)
-  var addedRadius = this.radius + controllers[i].radius;
-  return distance < addedRadius;
-  */
-  return Math.sqrt(Math.pow(circle1.x - circle2.x, 2) + Math.pow(circle1.y - circle2.y, 2)) < (circle1.radius + circle2.radius);
-}
+class Ball extends Circle {
+  constructor(x, y, radius, velocityX, velocityY, speed, color) {
+    super(x, y, radius);
 
-// vec1 -> vec2 angle
-function vecToAngle(vec1, vec2) {
-  /*
-  var distX = vec1.x - circle2.x;
-  var distY = vec1.y - circle2.y;
-  return Math.atan2(distX, distY) * 180 / Math.PI;
-  */
-  return Math.atan2(vec1.y - vec2.y, vec1.x - vec2.x) * 180 / Math.PI;
-}
+    this.velocityX = velocityX;
+    this.velocityY = velocityY;
+    this.speed = speed;
+    this.color = color;
+  }
 
-function angleToDirection(angle) {
-  return new Vector2(-Math.sin(angle), -Math.cos(angle));
+  get relativeRadius() {
+    return this.radius * Math.sqrt(canvas.clientWidth * canvas.clientHeight, 2) / 100;
+  }
+
+  colision(ball) {
+    return colisionEachCircle(new Circle(this.x, this.y, this.relativeRadius), new Circle(ball.x, ball.y, ball.relativeRadius));
+  }
+
+  next() {
+    return new Circle(this.x + this.velocityX, this.y + this.velocityY, this.radius);
+  }
 }
