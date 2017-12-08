@@ -11,7 +11,7 @@ function generate() {
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   balls = [];
-  var count = 50;
+  var count = 3;
   var tryTime = 0;
   while (balls.length < count && tryTime < 10000) {
     var x = rand(0, canvas.clientWidth);
@@ -21,7 +21,7 @@ function generate() {
     var direction = angleToDirection(rand(0, 314) / 100);
     var velocityX = direction.x * speed * (rand(0, 1) == 1 ? 1 : -1);
     var velocityY = direction.y * speed * (rand(0, 1) == 1 ? 1 : -1);
-    var color = 'rgb(' + [rand(0, 255), rand(0, 255), rand(0, 255)] + ')';
+    var color = new Color(rand(0, 255), rand(0, 255), rand(0, 255));
 
     var ball = new Ball(x, y, radius, velocityX, velocityY, speed, color);
 
@@ -38,7 +38,7 @@ function generate() {
     else
       tryTime++;
   }
-  balls.push(new Ball(0, 0, 20, 0, 0, 0, '#00000050'));
+  balls.push(new Ball(0, 0, 20, 0, 0, 0, new Color(0, 0, 0, 80)));
   render();
 }
 
@@ -60,8 +60,6 @@ function move() {
 
         balls[i].velocityY = rawVelocity.y * (sumRadius - distance);
         balls[i].velocityX = rawVelocity.x * (sumRadius - distance);
-        //balls[i].velocityY = rawVelocity.y * (relativeRadius + balls[j].relativeRadius) / 10;
-        //balls[i].velocityX = rawVelocity.x * (relativeRadius + balls[j].relativeRadius) / 10;
         break;
       }
     }
@@ -98,7 +96,7 @@ function render() {
 
   for (i in balls) {
     context.beginPath();
-    context.fillStyle = balls[i].color;
+    context.fillStyle = balls[i].color.toString();
     context.arc(balls[i].x, balls[i].y, balls[i].relativeRadius, 0, Math.PI * 2, true);
     context.fill();
     /*

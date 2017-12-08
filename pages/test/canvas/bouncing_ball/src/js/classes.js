@@ -71,3 +71,16 @@ class Ball extends Circle {
     return new Circle(this.x + this.velocityX, this.y + this.velocityY, this.radius);
   }
 }
+
+class Color {
+  constructor(r, g, b, a = 255) {
+    this.r = r;
+    this.g = g;
+    this.b = b;
+    this.a = a;
+  }
+
+  toString() {
+    return '#' + intToHex2(this.r) + intToHex2(this.g) + intToHex2(this.b) + intToHex2(this.a) ;
+  }
+}
