@@ -6,24 +6,32 @@ class Vector2 {
     this.y = y;
   }
 
-  add(vec) {
+  add(vec, newc = false) {
     this.x += vec.x;
     this.y += vec.y;
+    if (newc)
+      return new Vector2(this.x + vec.x, this.y + vec.y);
   }
 
-  subtract(vec) {
+  subtract(vec, newc = false) {
     this.x -= vec.x;
     this.y -= vec.y;
+    if (newc)
+      return new Vector2(this.x - vec.x, this.y - vec.y);
   }
 
-  multiply(vec) {
+  multiply(vec, newc = false) {
     this.x *= vec.x;
     this.y *= vec.y;
+    if (newc)
+      return new Vector2(this.x * vec.x, this.y * vec.y);
   }
 
-  divide(vec) {
+  divide(vec, newc = false) {
     this.x /= vec.x;
     this.y /= vec.y;
+    if (newc)
+      return new Vector2(this.x / vec.x, this.y / vec.y);
   }
 
   from(vec) {
