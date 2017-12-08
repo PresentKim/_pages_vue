@@ -24,3 +24,7 @@ function vecToAngle(vec1, vec2) {
 function angleToDirection(angle) {
   return new Vector2(-Math.sin(angle), -Math.cos(angle));
 }
+
+function rand(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
