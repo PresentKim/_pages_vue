@@ -50,15 +50,16 @@ function move() {
     var colision = false;
     for (j in balls) {
       if (i != j && balls[i].colision(balls[j])) {
-        var distX = balls[i].x - balls[j].x;
-        var distY = balls[i].y - balls[j].y;
-        var avgRadius = (relativeRadius + balls[j].relativeRadius) / 2;
+        var distX = balls[j].x - balls[i].x;
+        var distY = balls[j].y - balls[i].y;
+        var rawVelocity = angleToDirection(Math.atan2(distX, distY));
+        var sumRadius = relativeRadius + balls[j].relativeRadius;
+        var distance = Math.sqrt(Math.pow(Math.abs(distX), 2) + Math.pow(Math.abs(distY), 2));
 
-        balls[i].velocityX = distX / avgRadius;
-        balls[i].velocityY = distY / avgRadius;
-
-        balls[j].velocityX = -distX / avgRadius;
-        balls[j].velocityY = -distY / avgRadius;
+        balls[i].velocityY = rawVelocity.y * (sumRadius - distance);
+        balls[i].velocityX = rawVelocity.x * (sumRadius - distance);
+        //balls[i].velocityY = rawVelocity.y * (relativeRadius + balls[j].relativeRadius) / 10;
+        //balls[i].velocityX = rawVelocity.x * (relativeRadius + balls[j].relativeRadius) / 10;
         break;
       }
     }
@@ -83,8 +84,8 @@ function move() {
     }
     var rawVelocity = angleToDirection(Math.atan2(balls[i].velocityX, balls[i].velocityY));
     rawVelocity.multiply(new Vector2(balls[i].speed, balls[i].speed));
-    balls[i].velocityX -= (balls[i].velocityX + rawVelocity.x) / 2;
-    balls[i].velocityY -= (balls[i].velocityY + rawVelocity.y) / 2;
+    balls[i].velocityX -= (balls[i].velocityX * 9 + rawVelocity.x) / 10;
+    balls[i].velocityY -= (balls[i].velocityY * 9 + rawVelocity.y) / 10;
   }
 }
 
