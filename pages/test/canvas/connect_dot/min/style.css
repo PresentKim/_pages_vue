@@ -1,1 +1,1 @@
-@charset "UTF-8";*{margin:0;padding:0}body,html{width:100%;height:100%}canvas{background:#FFFAF0;display:block}#buttons{margin:0;position:absolute}#buttons button{width:80px;height:20px}
+@charset "UTF-8";*{margin:0;padding:0}body,html{width:100%;height:100%}canvas{display:block}#buttons{margin:0;position:absolute}#buttons button{width:80px;height:20px}

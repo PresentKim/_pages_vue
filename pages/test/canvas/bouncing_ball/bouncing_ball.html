@@ -8,17 +8,6 @@
 </head>
 
 <body w3-include-html="http://web.present.kim/import/pageForm_body.html">
-  <script>
-    var canvas = document.createElement('canvas');
-    canvas.setAttribute('id', 'canvas_ball');
-    w3.includeHTML(function() {
-      document.getElementById('title-text').innerText = document.title = 'Bouncing Ball';
-      document.getElementById('intro').innerHTML = '<i class="material-icons"">touch_app</i>Touch it!';
-      addButton('Back', '../../canvas.html');
-      document.getElementById('grid-container').appendChild(canvas);
-      init();
-    });
-  </script>
   <script src="min/js/utils.js"></script>
   <script src="min/js/classes.js"></script>
   <script src="min/js/app.js"></script>

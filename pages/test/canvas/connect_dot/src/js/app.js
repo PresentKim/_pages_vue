@@ -1,14 +1,26 @@
 // minifyOnSave, filenamePattern: ../../min/js/$1.$2, minifier: gcc, buffer: 8388608, minifierOptions: "charset = utf-8 nomunge language_out=ES5"
 var gridContainer = null;
+var canvas = document.createElement('canvas');
+canvas.setAttribute('id', 'connect_dot');
+canvas.setAttribute('class', 'bordered');
 var context = canvas.getContext('2d');
 var handle = null;
-var balls = [];
+var dots = [];
 
-function init() {
+w3.includeHTML(function() {
+  addButton('Back', '../../canvas.html');
+
   gridContainer = document.getElementById('grid-container');
+
+  document.getElementById('title-text').innerText = document.title = 'Connect Dot';
+  document.getElementById('intro').innerHTML = '<i class="material-icons"">touch_app</i>Touch it!';
+  document.getElementById('grid-container').appendChild(canvas);
+
   generate();
   toggle();
-}
+});
+
+function init() {}
 
 function generate() {
   canvas.width = gridContainer.clientWidth;
