@@ -2,13 +2,11 @@
 
 function colisionEachCircle(circle1, circle2) {
   /*
-  var distX = circle1.x - circle2.x;
-  var distY = circle1.y - circle2.y;
-  var distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY)
+  var distance = getDistance(circle1, circle2)
   var addedRadius = this.radius + controllers[i].radius;
   return distance < addedRadius;
   */
-  return Math.sqrt(Math.pow(circle1.x - circle2.x, 2) + Math.pow(circle1.y - circle2.y, 2)) < (circle1.radius + circle2.radius);
+  return getDistance(circle1, circle2) < (circle1.radius + circle2.radius);
 }
 
 // vec1 -> vec2 angle
@@ -23,6 +21,15 @@ function vecToAngle(vec1, vec2) {
 
 function angleToDirection(angle) {
   return new Vector2(-Math.sin(angle), -Math.cos(angle));
+}
+
+function getDistance(vec1, vec2) {
+  /*
+  var distX = vec1.x - vec2.x;
+  var distY = vec1.y - vec2.y;
+  var distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY)
+  */
+  return Math.sqrt(Math.pow(vec1.x - vec2.x, 2) + Math.pow(vec1.y - vec2.y, 2));
 }
 
 function rand(min, max) {
