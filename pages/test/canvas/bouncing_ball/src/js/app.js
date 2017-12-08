@@ -51,8 +51,8 @@ function generate() {
     var relativeRadius = ball.relativeRadius;
     var colision = ball.x < relativeRadius || ball.x > canvas.width - relativeRadius || ball.y < relativeRadius || ball.y > canvas.height - relativeRadius;
     if (!colision)
-      for (index in balls)
-        if (ball.colision(balls[index])) {
+      for (i in balls)
+        if (ball.colision(balls[i])) {
           colision = true;
           break;
         }
@@ -67,49 +67,47 @@ function generate() {
 function move() {
   canvas.width = canvas.clientWidth;
   canvas.height = canvas.clientHeight;
-  for (index in balls) {
-    var ball = balls[index];
-    var next = ball.next();
-    var relativeRadius = ball.relativeRadius;
+  for (i in balls) {
+    var next = balls[i].next();
+    var relativeRadius = balls[i].relativeRadius;
     var colision = false;
-    for (index in balls) {
-      var ball2 = balls[index];
-      if (ball != ball2 && ball.colision(ball2)) {
-        var distX = ball.x - ball2.x;
-        var distY = ball.y - ball2.y;
-        var avgRadius = (relativeRadius + ball2.relativeRadius) / 2;
+    for (j in balls) {
+      if (i != j && balls[i].colision(balls[j])) {
+        var distX = balls[i].x - balls[j].x;
+        var distY = balls[i].y - balls[j].y;
+        var avgRadius = (relativeRadius + balls[j].relativeRadius) / 2;
 
-        ball.velocityX = distX / avgRadius;
-        ball.velocityY = distY / avgRadius;
+        balls[i].velocityX = distX / avgRadius;
+        balls[i].velocityY = distY / avgRadius;
 
-        ball2.velocityX = -distX / avgRadius;
-        ball2.velocityY = -distY / avgRadius;
+        balls[j].velocityX = -distX / avgRadius;
+        balls[j].velocityY = -distY / avgRadius;
         break;
       }
     }
     if (next.x < relativeRadius) {
       next.x = relativeRadius;
-      ball.velocityX *= -1;
+      balls[i].velocityX *= -1;
     }
     if (next.x > canvas.width - relativeRadius) {
       next.x = canvas.width - relativeRadius;
-      ball.velocityX *= -1;
+      balls[i].velocityX *= -1;
     }
     if (next.y < relativeRadius) {
       next.y = relativeRadius;
-      ball.velocityY *= -1;
+      balls[i].velocityY *= -1;
     }
     if (next.y > canvas.height - relativeRadius) {
       next.y = canvas.height - relativeRadius;
-      ball.velocityY *= -1;
+      balls[i].velocityY *= -1;
     }
     if (!colision) {
-      ball.from(next);
+      balls[i].from(next);
     }
-    var rawVelocity = angleToDirection(Math.atan2(ball.velocityX, ball.velocityY));
-    rawVelocity.multiply(new Vector2(ball.speed, ball.speed));
-    ball.velocityX -= (ball.velocityX + rawVelocity.x) / 2;
-    ball.velocityY -= (ball.velocityY + rawVelocity.y) / 2;
+    var rawVelocity = angleToDirection(Math.atan2(balls[i].velocityX, balls[i].velocityY));
+    rawVelocity.multiply(new Vector2(balls[i].speed, balls[i].speed));
+    balls[i].velocityX -= (balls[i].velocityX + rawVelocity.x) / 2;
+    balls[i].velocityY -= (balls[i].velocityY + rawVelocity.y) / 2;
   }
 }
 
@@ -118,17 +116,15 @@ function render() {
   canvas.height = canvas.clientHeight;
   context.clearRect(0, 0, canvas.width, canvas.height);
 
-  for (index in balls) {
-    var ball = balls[index];
-
+  for (i in balls) {
     context.beginPath();
-    context.fillStyle = ball.color;
-    context.arc(ball.x, ball.y, ball.relativeRadius, 0, Math.PI * 2, true);
+    context.fillStyle = balls[i].color;
+    context.arc(balls[i].x, balls[i].y, balls[i].relativeRadius, 0, Math.PI * 2, true);
     context.fill();
     /*
         context.font = "20px Arial";
         context.fillStyle = 'red';
-        context.fillText(Math.round(ball.velocityX * 100) + ":" + Math.round(ball.velocityY * 100), ball.x, ball.y);
+        context.fillText(Math.round(balls[i].velocityX * 100) + ":" + Math.round(balls[i].velocityY * 100), balls[i].x, balls[i].y);
     */
     context.closePath();
   }
