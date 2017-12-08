@@ -20,8 +20,6 @@ w3.includeHTML(function() {
   toggle();
 });
 
-function init() {}
-
 function generate() {
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
