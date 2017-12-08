@@ -96,3 +96,9 @@ document.body.addEventListener('mousemove', function(evt) {
   dots[dots.length - 1].x = evt.clientX - rect.left;
   dots[dots.length - 1].y = evt.clientY - rect.top;
 }, false);
+
+document.body.addEventListener("touchmove", function(evt) {
+  var rect = canvas.getBoundingClientRect();
+  dots[dots.length - 1].x = evt.touches[0].clientX - rect.left;
+  dots[dots.length - 1].y = evt.touches[0].clientY - rect.top;
+}, false);

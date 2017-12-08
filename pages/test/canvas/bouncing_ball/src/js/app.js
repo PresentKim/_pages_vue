@@ -125,3 +125,9 @@ document.body.addEventListener('mousemove', function(evt) {
   balls[balls.length - 1].x = evt.clientX - rect.left;
   balls[balls.length - 1].y = evt.clientY - rect.top;
 }, false);
+
+document.body.addEventListener("touchmove", function(evt) {
+  var rect = canvas.getBoundingClientRect();
+  balls[balls.length - 1].x = evt.touches[0].clientX - rect.left;
+  balls[balls.length - 1].y = evt.touches[0].clientY - rect.top;
+}, false);
