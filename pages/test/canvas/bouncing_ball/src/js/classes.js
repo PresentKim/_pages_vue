@@ -7,31 +7,35 @@ class Vector2 {
   }
 
   add(vec, newc = false) {
-    this.x += vec.x;
-    this.y += vec.y;
     if (newc)
       return new Vector2(this.x + vec.x, this.y + vec.y);
+
+    this.x += vec.x;
+    this.y += vec.y;
   }
 
   subtract(vec, newc = false) {
-    this.x -= vec.x;
-    this.y -= vec.y;
     if (newc)
       return new Vector2(this.x - vec.x, this.y - vec.y);
+
+    this.x -= vec.x;
+    this.y -= vec.y;
   }
 
   multiply(vec, newc = false) {
-    this.x *= vec.x;
-    this.y *= vec.y;
     if (newc)
       return new Vector2(this.x * vec.x, this.y * vec.y);
+
+    this.x *= vec.x;
+    this.y *= vec.y;
   }
 
   divide(vec, newc = false) {
-    this.x /= vec.x;
-    this.y /= vec.y;
     if (newc)
       return new Vector2(this.x / vec.x, this.y / vec.y);
+
+    this.x /= vec.x;
+    this.y /= vec.y;
   }
 
   from(vec) {
