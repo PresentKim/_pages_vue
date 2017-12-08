@@ -1,13 +1,18 @@
 // minifyOnSave, filenamePattern: ../../min/js/$1.$2, minifier: gcc, buffer: 8388608, minifierOptions: "charset = utf-8 nomunge language_out=ES5"
-
-var canvas = document.getElementById('connect_dot');
+var gridContainer = null;
 var context = canvas.getContext('2d');
 var handle = null;
-var dots = [];
+var balls = [];
+
+function init() {
+  gridContainer = document.getElementById('grid-container');
+  generate();
+  toggle();
+}
 
 function generate() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.width = gridContainer.clientWidth;
+  canvas.height = gridContainer.clientHeight;
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   dots = [];
@@ -43,8 +48,8 @@ function move() {
 }
 
 function render() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.width = gridContainer.clientWidth;
+  canvas.height = gridContainer.clientHeight;
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   // Render connect line
@@ -87,9 +92,6 @@ function toggle() {
   else
     onUpdate();
 }
-
-generate();
-toggle();
 
 document.body.addEventListener('mousemove', function(evt) {
   var rect = canvas.getBoundingClientRect();
