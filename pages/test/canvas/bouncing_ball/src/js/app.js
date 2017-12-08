@@ -6,13 +6,12 @@ var handle = null;
 var balls = [];
 
 class Ball extends Circle {
-  constructor(x = 0, y = 0, radius = 1, angle = 0, speed = 1, color = '') {
+  constructor(x, y, radius, velocityX, velocityY, speed, color) {
     super(x, y, radius);
 
-    this.x = x;
-    this.y = y;
+    this.velocityX = velocityX;
+    this.velocityY = velocityY;
     this.speed = speed;
-    this.angle = angle;
     this.color = color;
   }
 
@@ -25,8 +24,7 @@ class Ball extends Circle {
   }
 
   next() {
-    var velocity = angleToVec(this.angle);
-    return new Circle(this.x + velocity.x * this.speed, this.y + velocity.y * this.speed, this.radius);
+    return new Circle(this.x + this.velocityX, this.y + this.velocityY, this.radius);
   }
 }
 
@@ -36,17 +34,19 @@ function generate() {
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   balls = [];
-  var count = 10;
+  var count = 50;
   var tryTime = 0;
   while (balls.length < count && tryTime < 10000) {
     var x = rand(0, canvas.clientWidth);
     var y = rand(0, canvas.clientHeight);
-    var angle = rand(0, 314) / 100;
-    var speed = rand(100, 200) / 100;
     var radius = rand(3, 5);
+    var speed = rand(300, 500) / 100;
+    var direction = angleToDirection(rand(0, 314) / 100);
+    var velocityX = direction.x * speed * (rand(0, 1) == 1 ? 1 : -1);
+    var velocityY = direction.y * speed * (rand(0, 1) == 1 ? 1 : -1);
     var color = 'rgb(' + [rand(0, 255), rand(0, 255), rand(0, 255)] + ')';
 
-    var ball = new Ball(x, y, radius, angle, speed, color);
+    var ball = new Ball(x, y, radius, velocityX, velocityY, speed, color);
 
     var relativeRadius = ball.relativeRadius;
     var colision = ball.x < relativeRadius || ball.x > canvas.width - relativeRadius || ball.y < relativeRadius || ball.y > canvas.height - relativeRadius;
@@ -75,35 +75,41 @@ function move() {
     for (index in balls) {
       var ball2 = balls[index];
       if (ball != ball2 && ball.colision(ball2)) {
-        ball.angle = vecToAngle(ball, ball2);
-        next = ball.next();
+        var distX = ball.x - ball2.x;
+        var distY = ball.y - ball2.y;
+        var avgRadius = (relativeRadius + ball2.relativeRadius) / 2;
+
+        ball.velocityX = distX / avgRadius;
+        ball.velocityY = distY / avgRadius;
+
+        ball2.velocityX = -distX / avgRadius;
+        ball2.velocityY = -distY / avgRadius;
         break;
       }
     }
     if (next.x < relativeRadius) {
       next.x = relativeRadius;
-      ball.angle = Math.PI * 2 - ball.angle;
+      ball.velocityX *= -1;
     }
     if (next.x > canvas.width - relativeRadius) {
       next.x = canvas.width - relativeRadius;
-      ball.angle = Math.PI * 2 - ball.angle;
+      ball.velocityX *= -1;
     }
     if (next.y < relativeRadius) {
       next.y = relativeRadius;
-      ball.angle = Math.PI - ball.angle;
+      ball.velocityY *= -1;
     }
     if (next.y > canvas.height - relativeRadius) {
       next.y = canvas.height - relativeRadius;
-      ball.angle = Math.PI - ball.angle;
+      ball.velocityY *= -1;
     }
     if (!colision) {
       ball.from(next);
-      ball.speed += 2;
-      ball.speed /= 2;
-    } else {
-      ball.speed *= 2;
     }
-    ball.angle %= Math.PI * 2;
+    var rawVelocity = angleToDirection(Math.atan2(ball.velocityX, ball.velocityY));
+    rawVelocity.multiply(new Vector2(ball.speed, ball.speed));
+    ball.velocityX -= (ball.velocityX + rawVelocity.x) / 2;
+    ball.velocityY -= (ball.velocityY + rawVelocity.y) / 2;
   }
 }
 
@@ -120,9 +126,9 @@ function render() {
     context.arc(ball.x, ball.y, ball.relativeRadius, 0, Math.PI * 2, true);
     context.fill();
     /*
-    context.font = "20px Arial";
-    context.fillStyle = 'red';
-    context.fillText(ball.angle + "º", ball.x, ball.y);
+        context.font = "20px Arial";
+        context.fillStyle = 'red';
+        context.fillText(Math.round(ball.velocityX * 100) + ":" + Math.round(ball.velocityY * 100), ball.x, ball.y);
     */
     context.closePath();
   }

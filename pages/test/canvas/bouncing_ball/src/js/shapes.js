@@ -70,9 +70,6 @@ function vecToAngle(vec1, vec2) {
   return Math.atan2(vec1.y - vec2.y, vec1.x - vec2.x) * 180 / Math.PI;
 }
 
-function angleToVec(angle) {
-  return {
-    x: -Math.sin(angle),
-    y: -Math.cos(angle)
-  }
+function angleToDirection(angle) {
+  return new Vector2(-Math.sin(angle), -Math.cos(angle));
 }
