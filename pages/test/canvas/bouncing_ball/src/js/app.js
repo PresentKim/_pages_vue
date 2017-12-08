@@ -6,16 +6,16 @@ var handle = null;
 var balls = [];
 
 function generate() {
-  canvas.width = canvas.clientWidth;
-  canvas.height = canvas.clientHeight;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   balls = [];
   var count = 30;
   var tryTime = 0;
   while (balls.length < count && tryTime < 10000) {
-    var x = rand(0, canvas.clientWidth);
-    var y = rand(0, canvas.clientHeight);
+    var x = rand(0, canvas.width);
+    var y = rand(0, canvas.height);
     var radius = rand(3, 5);
     var speed = rand(300, 500) / 100;
     var direction = angleToDirection(rand(0, 314) / 100);
@@ -92,8 +92,8 @@ function move() {
 }
 
 function render() {
-  canvas.width = canvas.clientWidth;
-  canvas.height = canvas.clientHeight;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   for (i in balls) {

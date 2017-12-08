@@ -72,7 +72,7 @@ class Ball extends Circle {
   }
 
   get relativeRadius() {
-    return this.radius * Math.sqrt(canvas.clientWidth * canvas.clientHeight, 2) / 100;
+    return this.radius * Math.sqrt(canvas.width * canvas.height, 2) / 100;
   }
 
   colision(ball) {
