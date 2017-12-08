@@ -38,15 +38,15 @@ function generate() {
     else
       tryTime++;
   }
-  balls.push(new Ball(0, 0, 20, 0, 0, 0, new ColorHSLA(0, 100, 50, 0.5)));
+  balls.push(new Ball(NaN, NaN, 20, 0, 0, 0, new ColorHSLA(0, 100, 50, 0.5)));
   render();
 }
 
 function move() {
-  canvas.width = canvas.clientWidth;
-  canvas.height = canvas.clientHeight;
+  var mouSeBall = balls[balls.length - 1];
   for (i in balls) {
-    if (i == balls.length - 1) continue;
+    if (balls[i] == mouSeBall)
+      continue;
     var next = balls[i].next();
     var relativeRadius = balls[i].relativeRadius;
     var colision = false;
@@ -88,7 +88,7 @@ function move() {
     balls[i].velocityY -= (balls[i].velocityY * 9 + rawVelocity.y) / 10;
   }
 
-  balls[balls.length - 1].color.h = (balls[balls.length - 1].color.h + 1) % 361;
+  mouSeBall.color.h = ++mouSeBall.color.h % 361;
 }
 
 function render() {
