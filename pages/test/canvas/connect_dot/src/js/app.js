@@ -20,8 +20,8 @@ function generate() {
   while (dots.length < count) {
     var x = rand(0, canvas.width);
     var y = rand(0, canvas.height);
-    var velocityX = rand(1, 3, 7) * (rand(0, 1) ? 1 : -1);
-    var velocityY = rand(1, 3, 7) * (rand(0, 1) ? 1 : -1);
+    var velocityX = rand(0.5, 1, 7) * (rand(0, 1) ? 1 : -1);
+    var velocityY = rand(0.5, 1, 7) * (rand(0, 1) ? 1 : -1);
     var color = new ColorHSLA(rand(0, 360));
 
     dots.push(new Dot(x, y, 1, velocityX, velocityY, color));
