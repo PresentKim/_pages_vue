@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-  <meta charset="utf-8">
-  <title>Bouncing Ball</title>
-
+<head w3-include-html="http://web.present.kim/import/pageForm_head.html">
+  <script src="http://web.present.kim/import/min/js/pageList.js"></script>
+  <script src="https://www.w3schools.com/lib/w3.js"></script>
   <link href='min/style.css' rel='stylesheet' type='text/css'>
-
 </head>
 
-<body>
-  <div id="buttons">
-    <button onClick="generate()">Gen</button>
-    <button onClick="toggle()">Toggle</button>
-    <button onClick="location.href = '../../canvas.html'">Back</a>
-  </div>
-  <canvas id="canvas_ball"></canvas>
-
+<body w3-include-html="http://web.present.kim/import/pageForm_body.html">
+  <script>
+    var canvas = document.createElement('canvas');
+    canvas.setAttribute('id', 'canvas_ball');
+    w3.includeHTML(function() {
+      document.getElementById('title-text').innerText = document.title = 'Bouncing Ball';
+      addButton('Back', '../../canvas.html');
+      document.getElementById('grid-container').appendChild(canvas);
+      init();
+    });
+  </script>
   <script src="min/js/utils.js"></script>
   <script src="min/js/classes.js"></script>
   <script src="min/js/app.js"></script>
