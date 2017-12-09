@@ -53,10 +53,6 @@ class Dot extends Vector2 {
     this.velocityY = velocityY;
     this.color = color;
   }
-
-  get relativeSize() {
-    return this.size * Math.sqrt(canvas.width * canvas.height, 2) / 100;
-  }
 }
 
 class ColorHSLA {

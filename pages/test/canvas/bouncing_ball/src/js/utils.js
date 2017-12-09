@@ -35,3 +35,7 @@ function distance(vec1, vec2) {
 function rand(min, max, point = 0) {
   return parseFloat((Math.random() * (max - min) + min).toFixed(point));
 }
+
+function getRelativeSize(size) {
+  return size * Math.sqrt(canvas.width * canvas.height, 2) / 100;
+}

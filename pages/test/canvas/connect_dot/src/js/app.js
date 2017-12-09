@@ -84,7 +84,7 @@ function render() {
   for (i in dots) {
     context.beginPath();
     context.fillStyle = dots[i].color.toString();
-    context.arc(dots[i].x, dots[i].y, dots[i].relativeSize, 0, Math.PI * 2, true);
+    context.arc(dots[i].x, dots[i].y, getRelativeSize(dots[i].size), 0, Math.PI * 2, true);
     context.fill();
     context.closePath();
   }

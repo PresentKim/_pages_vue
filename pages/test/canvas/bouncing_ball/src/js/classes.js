@@ -71,12 +71,8 @@ class Ball extends Circle {
     this.color = color;
   }
 
-  get relativeRadius() {
-    return this.radius * Math.sqrt(canvas.width * canvas.height, 2) / 100;
-  }
-
   colision(ball) {
-    return colisionEachCircle(new Circle(this.x, this.y, this.relativeRadius), new Circle(ball.x, ball.y, ball.relativeRadius));
+    return colisionEachCircle(new Circle(this.x, this.y, getRelativeSize(this.radius)), new Circle(ball.x, ball.y, getRelativeSize(ball.radius)));
   }
 
   next() {

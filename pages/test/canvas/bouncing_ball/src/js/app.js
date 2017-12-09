@@ -42,7 +42,7 @@ function generate() {
 
     var ball = new Ball(x, y, radius, velocityX, velocityY, speed, color);
 
-    var relativeRadius = ball.relativeRadius;
+    var relativeRadius = getRelativeSize(ball.radius);
     var colision = ball.x < relativeRadius || ball.x > canvas.width - relativeRadius || ball.y < relativeRadius || ball.y > canvas.height - relativeRadius;
     if (!colision)
       for (i in balls)
@@ -65,11 +65,11 @@ function move() {
     if (balls[i] == mouSeBall)
       continue;
     var next = balls[i].next();
-    var relativeRadius = balls[i].relativeRadius;
+    var relativeRadius = getRelativeSize(balls[i].radius);
     for (j in balls) {
       if (i != j && balls[i].colision(balls[j])) {
         var direction = angleToDirection(Math.atan2(balls[j].x - balls[i].x, balls[j].y - balls[i].y));
-        var overlap = relativeRadius + balls[j].relativeRadius - distance(balls[i], balls[j]);
+        var overlap = relativeRadius + getRelativeSize(balls[j].radius) - distance(balls[i], balls[j]);
         balls[i].velocityX += direction.x * overlap;
         balls[i].velocityY += direction.y * overlap;
         balls[j].velocityX -= direction.x;
@@ -110,7 +110,7 @@ function render() {
   for (i in balls) {
     context.beginPath();
     context.fillStyle = balls[i].color.toString();
-    context.arc(balls[i].x, balls[i].y, balls[i].relativeRadius, 0, Math.PI * 2, true);
+    context.arc(balls[i].x, balls[i].y, getRelativeSize(balls[i].radius), 0, Math.PI * 2, true);
     context.fill();
     context.closePath();
   }
