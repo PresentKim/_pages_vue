@@ -6,6 +6,7 @@ canvas.setAttribute('class', 'bordered');
 var context = canvas.getContext('2d');
 var handle = null;
 var dots = [];
+var lastRelativeSize = 1;
 
 w3.includeHTML(function() {
   addButton('Back', '../../canvas.html');
@@ -15,6 +16,10 @@ w3.includeHTML(function() {
   document.getElementById('title-text').innerText = document.title = 'Connect Dot';
   document.getElementById('intro').innerHTML = '<i class="material-icons"">touch_app</i>Touch it!';
   document.getElementById('grid-container').appendChild(canvas);
+
+  canvas.width = gridContainer.clientWidth;
+  canvas.height = gridContainer.clientHeight;
+  lastRelativeSize = getRelativeSize(1);
 
   generate();
   toggle();
@@ -45,8 +50,8 @@ function move() {
   for (i in dots) {
     if (dots[i] == mouSeDot)
       continue;
-    dots[i].x += dots[i].velocityX;
-    dots[i].y += dots[i].velocityY;
+    dots[i].x += dots[i].velocityX * lastRelativeSize;
+    dots[i].y += dots[i].velocityY * lastRelativeSize;
     if (dots[i].x < 0 || dots[i].x > canvas.width || dots[i].y < 0 || dots[i].y > canvas.height) {
       dots[i].x = rand(0, canvas.width);
       dots[i].y = rand(0, canvas.height);
@@ -60,6 +65,17 @@ function move() {
 function render() {
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
+
+  var currentRelativeSize = getRelativeSize(1);
+  if (lastRelativeSize != currentRelativeSize) {
+    var changedRatio = currentRelativeSize / lastRelativeSize;
+    lastRelativeSize = currentRelativeSize;
+
+    var vecForMultiply = new Vector2(changedRatio, changedRatio);
+    for (i in dots)
+      dots[i].multiply(vecForMultiply);
+  }
+
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   // Render connect line

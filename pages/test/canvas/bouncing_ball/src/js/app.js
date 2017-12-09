@@ -7,6 +7,7 @@ canvas.setAttribute('class', 'bordered');
 var context = canvas.getContext('2d');
 var handle = null;
 var balls = [];
+var lastRelativeSize = 1;
 
 w3.includeHTML(function() {
   addButton('Back', '../../canvas.html');
@@ -16,6 +17,10 @@ w3.includeHTML(function() {
   document.getElementById('title-text').innerText = document.title = 'Bouncing Ball';
   document.getElementById('intro').innerHTML = '<i class="material-icons"">touch_app</i>Touch it!';
   document.getElementById('grid-container').appendChild(canvas);
+
+  canvas.width = gridContainer.clientWidth;
+  canvas.height = gridContainer.clientHeight;
+  lastRelativeSize = getRelativeSize(1);
 
   generate();
   toggle();
@@ -34,7 +39,7 @@ function generate() {
     var x = rand(0, canvas.width);
     var y = rand(0, canvas.height);
     var radius = rand(3, 5, 7);
-    var speed = rand(3, 5, 7);
+    var speed = rand(5 / radius, 10 / radius, 7);
     var direction = angleToDirection(rand(0, Math.PI, 7));
     var velocityX = direction.x * speed * (rand(0, 1) ? 1 : -1);
     var velocityY = direction.y * speed * (rand(0, 1) ? 1 : -1);
@@ -94,7 +99,7 @@ function move() {
     }
     balls[i].from(next);
     var rawVelocity = angleToDirection(Math.atan2(balls[i].velocityX, balls[i].velocityY));
-    rawVelocity.multiply(new Vector2(balls[i].speed, balls[i].speed));
+    rawVelocity.multiply(new Vector2(balls[i].speed * lastRelativeSize, balls[i].speed * lastRelativeSize));
     balls[i].velocityX -= (balls[i].velocityX * 9 + rawVelocity.x) / 10;
     balls[i].velocityY -= (balls[i].velocityY * 9 + rawVelocity.y) / 10;
   }
@@ -105,6 +110,17 @@ function move() {
 function render() {
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
+
+  var currentRelativeSize = getRelativeSize(1);
+  if (lastRelativeSize != currentRelativeSize) {
+    var changedRatio = currentRelativeSize / lastRelativeSize;
+    lastRelativeSize = currentRelativeSize;
+
+    var vecForMultiply = new Vector2(changedRatio, changedRatio);
+    for (i in balls)
+      balls[i].multiply(vecForMultiply);
+  }
+
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   for (i in balls) {

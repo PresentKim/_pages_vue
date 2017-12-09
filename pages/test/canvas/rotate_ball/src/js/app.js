@@ -7,6 +7,7 @@ var context = canvas.getContext('2d');
 var handle = null;
 var dots = [];
 var circles = [];
+var lastRelativeSize = 1;
 
 w3.includeHTML(function() {
   addButton('Back', '../../canvas.html');
@@ -16,6 +17,10 @@ w3.includeHTML(function() {
   document.getElementById('title-text').innerText = document.title = 'Rotate Ball';
   document.getElementById('intro').innerHTML = '';
   document.getElementById('grid-container').appendChild(canvas);
+
+  canvas.width = gridContainer.clientWidth;
+  canvas.height = gridContainer.clientHeight;
+  lastRelativeSize = getRelativeSize(1);
 
   generate();
   toggle();
@@ -65,6 +70,18 @@ function move() {
 function render() {
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
+
+  var currentRelativeSize = getRelativeSize(1);
+  if (lastRelativeSize != currentRelativeSize) {
+    var changedRatio = currentRelativeSize / lastRelativeSize;
+    lastRelativeSize = currentRelativeSize;
+
+    var vecForMultiply = new Vector2(changedRatio, changedRatio);
+    for (i in circles)
+      circles[i].multiply(vecForMultiply);
+    for (i in balls)
+      balls[i].multiply(vecForMultiply);
+  }
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   var center = new Vector2(canvas.width / 2, canvas.height / 2);
