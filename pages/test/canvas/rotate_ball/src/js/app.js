@@ -46,14 +46,13 @@ function move() {
   for (i in circles) {
     if (!circles[i].enable) continue;
 
-    circles[i].angle -= Math.PI / 100;
-    if (circles[i].angle + Math.PI / 5 < circles[i].startAngle)
-      circles[i == 0 ? 11 : i - 1].enable = true;
+    circles[i].angle -= Math.PI / 90;
 
     if (circles[i].angle + Math.PI < circles[i].startAngle) {
       circles[i].angle = circles[i].startAngle;
       circles[i].enable = false;
-    }
+    } else if (circles[i].angle + Math.PI / 5 < circles[i].startAngle)
+      circles[i == 0 ? 11 : i - 1].enable = true;
   }
 }
 
