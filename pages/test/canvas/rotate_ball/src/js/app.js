@@ -74,8 +74,6 @@ function render() {
     var vecForMultiply = new Vector2(changedRatio, changedRatio);
     for (i in circles)
       circles[i].multiply(vecForMultiply);
-    for (i in balls)
-      balls[i].multiply(vecForMultiply);
   }
   context.clearRect(0, 0, canvas.width, canvas.height);
 
