@@ -8,34 +8,66 @@ class Vector2 {
 
   add(vec, newc = false) {
     if (newc)
-      return new Vector2(this.x + vec.x, this.y + vec.y);
+      return new Vector2(this.x, this.y).add(vec);
 
-    this.x += vec.x;
-    this.y += vec.y;
+    if (vec instanceof Vector2) {
+      this.x += vec.x;
+      this.y += vec.y;
+
+    } else if (!isNaN(vec)) {
+      this.x += vec;
+      this.y += vec;
+    } else throw Error(vec + ' is not Vector2 or number');
+
+    return this;
   }
 
   subtract(vec, newc = false) {
     if (newc)
-      return new Vector2(this.x - vec.x, this.y - vec.y);
+      return new Vector2(this.x, this.y).subtract(vec);
 
-    this.x -= vec.x;
-    this.y -= vec.y;
+    if (vec instanceof Vector2) {
+      this.x -= vec.x;
+      this.y -= vec.y;
+
+    } else if (!isNaN(vec)) {
+      this.x -= vec;
+      this.y -= vec;
+    } else throw Error(vec + ' is not Vector2 or number');
+
+    return this;
   }
 
   multiply(vec, newc = false) {
     if (newc)
-      return new Vector2(this.x * vec.x, this.y * vec.y);
+      return new Vector2(this.x, this.y).multiply(vec);
 
-    this.x *= vec.x;
-    this.y *= vec.y;
+    if (vec instanceof Vector2) {
+      this.x *= vec.x;
+      this.y *= vec.y;
+
+    } else if (!isNaN(vec)) {
+      this.x *= vec;
+      this.y *= vec;
+    } else throw Error(vec + ' is not Vector2 or number');
+
+    return this;
   }
 
   divide(vec, newc = false) {
     if (newc)
-      return new Vector2(this.x / vec.x, this.y / vec.y);
+      return new Vector2(this.x, this.y).divide(vec);
 
-    this.x /= vec.x;
-    this.y /= vec.y;
+    if (vec instanceof Vector2) {
+      this.x /= vec.x;
+      this.y /= vec.y;
+
+    } else if (!isNaN(vec)) {
+      this.x /= vec;
+      this.y /= vec;
+    } else throw Error(vec + ' is not Vector2 or number');
+
+    return this;
   }
 
   from(vec) {

@@ -40,7 +40,7 @@ function generate() {
     balls.push(new Circle(0, 0, 3));
 
     var radian = degree * Math.PI / 180;
-    var position = angleToDirection(radian).multiply(new Vector2(lastRelativeSize * 29, lastRelativeSize * 29), true).add(center, true);
+    var position = angleToDirection(radian).multiply(lastRelativeSize * 29).add(center);
     var circle = new Circle(position.x, position.y, 12);
 
     circle.startAngle = Math.PI / 2 + Math.PI / 12 * circles.length;
@@ -51,8 +51,7 @@ function generate() {
 
   for (i in circles) {
     var targetBall = [balls[i * 2 + 1], balls[i * 2 - 2 < 0 ? 24 - i * 2 - 2 : i * 2 - 2]];
-    var relativeRadius = getRelativeSize(circles[i].radius);
-    var velocity = angleToDirection(circles[i].angle + i * Math.PI / 12).multiply(new Vector2(relativeRadius, relativeRadius), true);
+    var velocity = angleToDirection(circles[i].angle + i * Math.PI / 12).multiply(getRelativeSize(circles[i].radius));
 
     targetBall[0].from(circles[i].add(velocity, true));
     targetBall[1].from(circles[i].subtract(velocity, true));
@@ -68,8 +67,7 @@ function move() {
     if (!circles[i].enable) continue;
 
     var targetBall = [balls[i * 2 + 1], balls[i * 2 - 2 < 0 ? 24 - i * 2 - 2 : i * 2 - 2]];
-    var relativeRadius = getRelativeSize(circles[i].radius);
-    var velocity = angleToDirection(circles[i].angle + i * Math.PI / 12).multiply(new Vector2(relativeRadius, relativeRadius), true);
+    var velocity = angleToDirection(circles[i].angle + i * Math.PI / 12).multiply(getRelativeSize(circles[i].radius));
 
 
     targetBall[0].from(circles[i].add(velocity, true));
