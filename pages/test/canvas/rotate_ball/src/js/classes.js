@@ -84,6 +84,16 @@ class Circle extends Vector2 {
   }
 }
 
+class RotateCircle extends Circle {
+  constructor(x = 0, y = 0, radius = 1, startAngle = 0) {
+    super(x, y, radius);
+
+    this.startAngle = startAngle;
+    this.angle = startAngle;
+    this.enable = false;
+  }
+}
+
 class ColorHSLA {
   constructor(h, s = 100, l = 50, a = 1) {
     this.h = h;

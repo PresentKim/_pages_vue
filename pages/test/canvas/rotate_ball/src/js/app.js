@@ -39,13 +39,9 @@ function generate() {
     balls.push(new Circle(0, 0, 3));
     balls.push(new Circle(0, 0, 3));
 
-    var radian = degree * Math.PI / 180;
-    var position = angleToDirection(radian).multiply(lastRelativeSize * 29).add(center);
-    var circle = new Circle(position.x, position.y, 12);
+    var circle = new RotateCircle(0, 0, 12, Math.PI / 2 + Math.PI / 12 * circles.length);
+    circle.from(angleToDirection(degree * Math.PI / 180).multiply(lastRelativeSize * 29).add(center));
 
-    circle.startAngle = Math.PI / 2 + Math.PI / 12 * circles.length;
-    circle.angle = circle.startAngle;
-    circle.enable = false;
     circles.push(circle);
   }
 
