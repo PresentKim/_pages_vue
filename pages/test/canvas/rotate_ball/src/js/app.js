@@ -34,7 +34,7 @@ function generate() {
   balls = [];
   circles = [];
   var center = new Vector2(canvas.width / 2, canvas.height / 2);
-  
+
   for (var degree = 0; degree < 360; degree += 30) {
     balls.push(new Circle(0, 0, 3));
     balls.push(new Circle(0, 0, 3));
@@ -69,8 +69,8 @@ function move() {
     targetBall[0].from(circles[i].add(velocity, true));
     targetBall[1].from(circles[i].subtract(velocity, true));
 
-    circles[i].angle += Math.PI / 100;
-    if (circles[i].angle > Math.PI)
+    circles[i].angle -= Math.PI / 100;
+    if (circles[i].angle + Math.PI < 0)
       circles[i].angle %= Math.PI;
   }
 }
