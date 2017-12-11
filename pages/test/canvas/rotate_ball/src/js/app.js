@@ -44,7 +44,7 @@ function generate() {
       radian = degree * Math.PI / 180;
       position = angleToDirection(radian).multiply(new Vector2(relative, relative), true).add(center, true);
       var circle = new Circle(position.x, position.y, 13);
-      circle.angle = 0;
+      circle.angle = Math.PI / 12 * circles.length;
       circles.push(circle);
     }
   }
