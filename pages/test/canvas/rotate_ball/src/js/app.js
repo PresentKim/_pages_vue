@@ -35,7 +35,7 @@ function generate() {
   var center = new Vector2(canvas.width / 2, canvas.height / 2);
 
   for (var degree = 0; degree < 360; degree += 30)
-    circles.push(new RotateCircle(0, 0, 12, Math.PI / 2 + Math.PI / 12 * circles.length).from(angleToDirection(degree * Math.PI / 180).multiply(lastRelativeSize * 29).add(center)));
+    circles.push(new RotateCircle(0, 0, 12, Math.PI / 2 + Math.PI / 12 * circles.length).from(angleToDirection(degree, true).multiply(lastRelativeSize * 29).add(center)));
 
   circles[0].enable = true;
 

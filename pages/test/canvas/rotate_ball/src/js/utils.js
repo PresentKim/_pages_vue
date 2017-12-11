@@ -1,6 +1,7 @@
 // minifyOnSave, filenamePattern: ../../min/js/$1.$2, minifier: gcc, buffer: 8388608, minifierOptions: "charset = utf-8 nomunge language_out=ES5"
 
-function angleToDirection(angle) {
+function angleToDirection(angle, isRadian = false) {
+  if (isRadian) angle = angle * Math.PI / 180;
   return new Vector2(-Math.sin(angle), -Math.cos(angle));
 }
 
