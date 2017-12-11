@@ -20,7 +20,6 @@ w3.includeHTML(function() {
 
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
-  lastRelativeSize = getRelativeSize(1);
 
   generate();
   toggle();
@@ -29,17 +28,16 @@ w3.includeHTML(function() {
 function generate() {
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
-  context.clearRect(0, 0, canvas.width, canvas.height);
+  lastRelativeSize = updateRelativeSize();
 
   circles = [];
   var center = new Vector2(canvas.width / 2, canvas.height / 2);
 
+  var radius = lastRelativeSize * 29;
   for (var degree = 0; degree < 360; degree += 30)
-    circles.push(new RotateCircle(0, 0, 12, Math.PI / 2 + Math.PI / 12 * circles.length).from(angleToDirection(degree, true).multiply(lastRelativeSize * 29).add(center)));
+    circles.push(new RotateCircle(0, 0, 12, Math.PI / 2 + Math.PI / 12 * circles.length).from(angleToDirection(degree, true).multiply(radius).add(center)));
 
   circles[0].enable = true;
-
-  render();
 }
 
 function move() {
@@ -62,14 +60,13 @@ function render() {
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
 
-  var currentRelativeSize = getRelativeSize(1);
+  var currentRelativeSize = updateRelativeSize();
   if (lastRelativeSize != currentRelativeSize) {
     var changedRatio = currentRelativeSize / lastRelativeSize;
     lastRelativeSize = currentRelativeSize;
 
-    var vecForMultiply = new Vector2(changedRatio, changedRatio);
     for (i in circles)
-      circles[i].multiply(vecForMultiply);
+      circles[i].multiply(changedRatio);
   }
   context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -85,7 +82,6 @@ function render() {
     context.lineWidth = 0.5 * lastRelativeSize;
     context.arc(circles[i].x, circles[i].y, getRelativeSize(circles[i].radius), 0, Math.PI * 2, true);
     context.stroke();
-    context.closePath();
 
     var velocity = angleToDirection(circles[i].angle + i * Math.PI / 12).multiply(getRelativeSize(circles[i].radius));
     var balls = [circles[i].add(velocity, true), circles[i].subtract(velocity, true)];
@@ -114,21 +110,3 @@ function toggle() {
   else
     onUpdate();
 }
-/*
-document.body.addEventListener('mousemove', function(evt) {
-  var rect = canvas.getBoundingClientRect();
-  balls[0].x = evt.clientX - rect.left;
-  balls[0].y = evt.clientY - rect.top;
-}, false);
-/*
-document.body.addEventListener("touchmove", function(evt) {
-  var rect = canvas.getBoundingClientRect();
-  circles[circles.length - 1].x = evt.touches[0].clientX - rect.left;
-  circles[circles.length - 1].y = evt.touches[0].clientY - rect.top;
-}, false);
-
-document.body.addEventListener("touchend", function(evt) {
-  circles[circles.length - 1].x = Number.MAX_SAFE_INTEGER;
-  circles[circles.length - 1].y = Number.MAX_SAFE_INTEGER;
-}, false);
-*/
