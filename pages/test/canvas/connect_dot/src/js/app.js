@@ -89,6 +89,10 @@ function render() {
     for (var j = 0; j < 3; j++) {
       if (j < i && distance(dots[i], dots[j]) < 1000) {
         context.moveTo(dots[i].x, dots[i].y);
+        context.shadowBlur = 1 * lastRelativeSize;
+        context.shadowColor = new ColorHSLA((dots[i].color.h, dots[i].color.h) / 2).toString();
+        context.lineWidth = 0.2 * lastRelativeSize;
+        context.strokeStyle = 'gray';
         context.lineTo(dumpDots[j].x, dumpDots[j].y);
         context.stroke();
       }
@@ -100,6 +104,8 @@ function render() {
   for (i in dots) {
     context.beginPath();
     context.fillStyle = dots[i].color.toString();
+    context.shadowBlur = 2 * lastRelativeSize;
+    context.shadowColor = context.fillStyle;
     context.arc(dots[i].x, dots[i].y, getRelativeSize(dots[i].size), 0, Math.PI * 2, true);
     context.fill();
     context.closePath();

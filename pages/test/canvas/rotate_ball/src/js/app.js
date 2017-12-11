@@ -55,11 +55,12 @@ function move() {
   var center = new Vector2(canvas.width / 2, canvas.height / 2);
   for (i in circles) {
     var targetBall = [balls[i * 2 + 1], balls[i * 2 - 2 < 0 ? 24 - i * 2 - 2 : i * 2 - 2]];
-    var direction = angleToDirection(circles[i].angle + i * Math.PI / 12);
     var relativeRadius = getRelativeSize(circles[i].radius);
+    var velocity = angleToDirection(circles[i].angle + i * Math.PI / 12).multiply(new Vector2(relativeRadius, relativeRadius), true);
 
-    targetBall[0].from(circles[i].add(direction.multiply(new Vector2(relativeRadius, relativeRadius), true), true));
-    targetBall[1].from(circles[i].subtract(direction.multiply(new Vector2(relativeRadius, relativeRadius), true), true));
+
+    targetBall[0].from(circles[i].add(velocity, true));
+    targetBall[1].from(circles[i].subtract(velocity, true));
 
     circles[i].angle += Math.PI / 100;
     if (circles[i].angle > Math.PI * 2)
@@ -89,7 +90,10 @@ function render() {
   // Render circle
   for (i in circles) {
     context.beginPath();
-    context.strokeStyle = new ColorHSLA(vecToAngle(circles[i], center) + 120).toString();
+    context.strokeStyle = new ColorHSLA(vecToAngle(circles[i], center) + 120, 100, 50, 0.5).toString();
+    context.shadowBlur = 10;
+    context.shadowColor = context.strokeStyle;
+    context.lineWidth = 0.5 * lastRelativeSize;
     context.arc(circles[i].x, circles[i].y, getRelativeSize(circles[i].radius), 0, Math.PI * 2, true);
     context.stroke();
     context.closePath();
@@ -99,6 +103,8 @@ function render() {
   for (i in balls) {
     context.beginPath();
     context.fillStyle = new ColorHSLA(vecToAngle(balls[i], center) + 120).toString();
+    context.shadowBlur = 10;
+    context.shadowColor = 'gray';
     context.arc(balls[i].x, balls[i].y, getRelativeSize(balls[i].radius), 0, Math.PI * 2, true);
     context.fill();
     context.closePath();

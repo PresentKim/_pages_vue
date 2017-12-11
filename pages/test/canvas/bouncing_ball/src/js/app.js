@@ -126,6 +126,8 @@ function render() {
   for (i in balls) {
     context.beginPath();
     context.fillStyle = balls[i].color.toString();
+    context.shadowBlur = 2 * lastRelativeSize;
+    context.shadowColor = context.fillStyle;
     context.arc(balls[i].x, balls[i].y, getRelativeSize(balls[i].radius), 0, Math.PI * 2, true);
     context.fill();
     context.closePath();
