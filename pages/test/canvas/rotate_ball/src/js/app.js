@@ -63,8 +63,8 @@ function move() {
     targetBall[1].from(circles[i].subtract(velocity, true));
 
     circles[i].angle += Math.PI / 100;
-    if (circles[i].angle > Math.PI * 2)
-      circles[i].angle %= Math.PI * 2;
+    if (circles[i].angle > Math.PI)
+      circles[i].angle %= Math.PI;
   }
 }
 
