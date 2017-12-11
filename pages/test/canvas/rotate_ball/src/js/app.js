@@ -31,9 +31,10 @@ function generate() {
   lastRelativeSize = updateRelativeSize();
 
   circles = [];
-  var center = new Vector2(canvas.width / 2, canvas.height / 2);
 
+  var center = new Vector2(canvas.width / 2, canvas.height / 2);
   var radius = lastRelativeSize * 29;
+
   for (var degree = 0; degree < 360; degree += 30)
     circles.push(new RotateCircle(0, 0, 12, Math.PI / 2 + Math.PI / 12 * circles.length).from(angleToDirection(degree, true).multiply(radius).add(center)));
 
@@ -68,8 +69,8 @@ function render() {
     for (i in circles)
       circles[i].multiply(changedRatio);
   }
-  context.clearRect(0, 0, canvas.width, canvas.height);
 
+  context.clearRect(0, 0, canvas.width, canvas.height);
   var center = new Vector2(canvas.width / 2, canvas.height / 2);
 
   // Render circle
