@@ -108,7 +108,8 @@ function render() {
   // Render circle
   for (i in circles) {
     context.beginPath();
-    context.strokeStyle = new ColorHSLA(vecToAngle(circles[i], center) + 120, 100, 50, 0.5).toString();
+    var calcAngle = Math.abs(circles[i].angle - circles[i].startAngle + Math.PI / 2);
+    context.strokeStyle = new ColorHSLA(vecToAngle(circles[i], center) + 120, 100, 50, calcAngle < Math.PI / 2 ? 1 - calcAngle / Math.PI * 1.8 : 0).toString();
     context.shadowBlur = 10;
     context.shadowColor = context.strokeStyle;
     context.lineWidth = 0.5 * lastRelativeSize;
