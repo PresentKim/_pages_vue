@@ -42,7 +42,10 @@ function generate() {
     var radian = degree * Math.PI / 180;
     var position = angleToDirection(radian).multiply(new Vector2(lastRelativeSize * 29, lastRelativeSize * 29), true).add(center, true);
     var circle = new Circle(position.x, position.y, 12);
-    circle.angle = Math.PI / 12 * circles.length;
+
+    circle.startAngle = Math.PI / 2 + Math.PI / 12 * circles.length;
+    circle.angle = circle.startAngle;
+    circle.enable = false;
     circles.push(circle);
   }
 
@@ -55,12 +58,15 @@ function generate() {
     targetBall[1].from(circles[i].subtract(velocity, true));
   }
 
+  circles[0].enable = true;
   render();
 }
 
 function move() {
   var center = new Vector2(canvas.width / 2, canvas.height / 2);
   for (i in circles) {
+    if (!circles[i].enable) continue;
+
     var targetBall = [balls[i * 2 + 1], balls[i * 2 - 2 < 0 ? 24 - i * 2 - 2 : i * 2 - 2]];
     var relativeRadius = getRelativeSize(circles[i].radius);
     var velocity = angleToDirection(circles[i].angle + i * Math.PI / 12).multiply(new Vector2(relativeRadius, relativeRadius), true);
@@ -70,8 +76,13 @@ function move() {
     targetBall[1].from(circles[i].subtract(velocity, true));
 
     circles[i].angle -= Math.PI / 100;
-    if (circles[i].angle + Math.PI < 0)
-      circles[i].angle %= Math.PI;
+    if (circles[i].angle + Math.PI / 5 < circles[i].startAngle)
+      circles[i == 0 ? 11 : i - 1].enable = true;
+
+    if (circles[i].angle + Math.PI < circles[i].startAngle) {
+      circles[i].angle = circles[i].startAngle;
+      circles[i].enable = false;
+    }
   }
 }
 
