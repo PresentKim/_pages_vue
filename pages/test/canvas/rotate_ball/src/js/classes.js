@@ -70,9 +70,20 @@ class Vector2 {
     return this;
   }
 
-  from(vec) {
-    this.x = vec.x;
-    this.y = vec.y;
+  from(vec, newc = false) {
+    if (newc)
+      return new Vector2(this.x, this.y);
+
+    if (vec instanceof Vector2) {
+      this.x = vec.x;
+      this.y = vec.y;
+
+    } else if (!isNaN(vec)) {
+      this.x = vec;
+      this.y = vec;
+    } else throw Error(vec + ' is not Vector2 or number');
+
+    return this;
   }
 }
 
