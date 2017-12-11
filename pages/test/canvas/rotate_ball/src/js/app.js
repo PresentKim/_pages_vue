@@ -34,14 +34,14 @@ function generate() {
   balls = [];
   circles = [];
   var center = new Vector2(canvas.width / 2, canvas.height / 2);
-  var relative = Math.sqrt(canvas.width * canvas.height, 2) / 3;
+  
   for (var degree = 0; degree < 360; degree += 30) {
     balls.push(new Circle(0, 0, 3));
     balls.push(new Circle(0, 0, 3));
 
     var radian = degree * Math.PI / 180;
-    var position = angleToDirection(radian).multiply(new Vector2(relative, relative), true).add(center, true);
-    var circle = new Circle(position.x, position.y, 13);
+    var position = angleToDirection(radian).multiply(new Vector2(lastRelativeSize * 29, lastRelativeSize * 29), true).add(center, true);
+    var circle = new Circle(position.x, position.y, 12);
     circle.angle = Math.PI / 12 * circles.length;
     circles.push(circle);
   }
@@ -54,7 +54,7 @@ function generate() {
     targetBall[0].from(circles[i].add(velocity, true));
     targetBall[1].from(circles[i].subtract(velocity, true));
   }
-  
+
   render();
 }
 
