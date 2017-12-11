@@ -31,29 +31,18 @@ function generate() {
   canvas.height = gridContainer.clientHeight;
   context.clearRect(0, 0, canvas.width, canvas.height);
 
-  balls = [];
   circles = [];
   var center = new Vector2(canvas.width / 2, canvas.height / 2);
 
   for (var degree = 0; degree < 360; degree += 30) {
-    balls.push(new Circle(0, 0, 3));
-    balls.push(new Circle(0, 0, 3));
-
     var circle = new RotateCircle(0, 0, 12, Math.PI / 2 + Math.PI / 12 * circles.length);
     circle.from(angleToDirection(degree * Math.PI / 180).multiply(lastRelativeSize * 29).add(center));
 
     circles.push(circle);
   }
 
-  for (i in circles) {
-    var targetBall = [balls[i * 2 + 1], balls[i * 2 - 2 < 0 ? 24 - i * 2 - 2 : i * 2 - 2]];
-    var velocity = angleToDirection(circles[i].angle + i * Math.PI / 12).multiply(getRelativeSize(circles[i].radius));
-
-    targetBall[0].from(circles[i].add(velocity, true));
-    targetBall[1].from(circles[i].subtract(velocity, true));
-  }
-
   circles[0].enable = true;
+
   render();
 }
 
@@ -61,13 +50,6 @@ function move() {
   var center = new Vector2(canvas.width / 2, canvas.height / 2);
   for (i in circles) {
     if (!circles[i].enable) continue;
-
-    var targetBall = [balls[i * 2 + 1], balls[i * 2 - 2 < 0 ? 24 - i * 2 - 2 : i * 2 - 2]];
-    var velocity = angleToDirection(circles[i].angle + i * Math.PI / 12).multiply(getRelativeSize(circles[i].radius));
-
-
-    targetBall[0].from(circles[i].add(velocity, true));
-    targetBall[1].from(circles[i].subtract(velocity, true));
 
     circles[i].angle -= Math.PI / 100;
     if (circles[i].angle + Math.PI / 5 < circles[i].startAngle)
@@ -110,17 +92,19 @@ function render() {
     context.arc(circles[i].x, circles[i].y, getRelativeSize(circles[i].radius), 0, Math.PI * 2, true);
     context.stroke();
     context.closePath();
-  }
 
-  // Render ball
-  for (i in balls) {
-    context.beginPath();
-    context.fillStyle = new ColorHSLA(vecToAngle(balls[i], center) + 120).toString();
-    context.shadowBlur = 10;
-    context.shadowColor = 'gray';
-    context.arc(balls[i].x, balls[i].y, getRelativeSize(balls[i].radius), 0, Math.PI * 2, true);
-    context.fill();
-    context.closePath();
+    var velocity = angleToDirection(circles[i].angle + i * Math.PI / 12).multiply(getRelativeSize(circles[i].radius));
+    var balls = [circles[i].add(velocity, true), circles[i].subtract(velocity, true)];
+
+    for (i in balls) {
+      context.beginPath();
+      context.fillStyle = new ColorHSLA(vecToAngle(balls[i], center) + 120).toString();
+      context.shadowBlur = 10;
+      context.shadowColor = 'gray';
+      context.arc(balls[i].x, balls[i].y, getRelativeSize(2), 0, Math.PI * 2, true);
+      context.fill();
+      context.closePath();
+    }
   }
 }
 
