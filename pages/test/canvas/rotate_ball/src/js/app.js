@@ -7,7 +7,7 @@ var context = canvas.getContext('2d');
 var handle = null;
 var dots = [];
 var circles = [];
-var lastRelativeSize = 1;
+var relativeSize = 1;
 
 w3.includeHTML(function() {
   addButton('Back', '../../canvas.html');
@@ -28,12 +28,12 @@ w3.includeHTML(function() {
 function generate() {
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
-  lastRelativeSize = updateRelativeSize();
+  updateRelativeSize();
 
   circles = [];
 
   var center = new Vector2(canvas.width / 2, canvas.height / 2);
-  var radius = lastRelativeSize * 29;
+  var radius = relativeSize * 29;
 
   for (var degree = 0; degree < 360; degree += 30)
     circles.push(new RotateCircle(0, 0, 12, Math.PI / 2 + Math.PI / 12 * circles.length).from(angleToDirection(degree, true).multiply(radius).add(center)));
@@ -61,10 +61,10 @@ function render() {
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
 
-  var currentRelativeSize = updateRelativeSize();
-  if (lastRelativeSize != currentRelativeSize) {
-    var changedRatio = currentRelativeSize / lastRelativeSize;
-    lastRelativeSize = currentRelativeSize;
+  var lastRelativeSize = relativeSize;
+  updateRelativeSize();
+  if (relativeSize != lastRelativeSize) {
+    var changedRatio = relativeSize / lastRelativeSize;
 
     for (i in circles)
       circles[i].multiply(changedRatio);
@@ -80,7 +80,7 @@ function render() {
     context.strokeStyle = new ColorHSLA(vecToAngle(circles[i], center) + 120, 100, 50, calcAngle < Math.PI / 2 ? 1 - calcAngle / Math.PI * 1.8 : 0).toString();
     context.shadowBlur = 10;
     context.shadowColor = context.strokeStyle;
-    context.lineWidth = 0.5 * lastRelativeSize;
+    context.lineWidth = 0.5 * relativeSize;
     context.arc(circles[i].x, circles[i].y, getRelativeSize(circles[i].radius), 0, Math.PI * 2, true);
     context.stroke();
 
