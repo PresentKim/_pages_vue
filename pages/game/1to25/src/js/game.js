@@ -33,7 +33,7 @@ var Game = function(xSize, ySize) {
   }, false);
 
   this.gobackButton.getElement().addEventListener('click', function() {
-    location.href = '../../game.html';
+    window.history.back();
   }, false);
 
   document.getElementById('cheat-panel').addEventListener('click', function() {

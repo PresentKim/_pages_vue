@@ -14,7 +14,9 @@
       ]);
       renderCell();
       document.getElementById('title-text').innerText = document.title = 'PresentKim\'s Game';
-      addButton('Back', '../index.html');
+      addButton('Back').addEventListener('click', function() {
+        window.history.back();
+      }, false);
     });
   </script>
 </body>

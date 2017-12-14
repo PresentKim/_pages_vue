@@ -32,10 +32,11 @@ function clickCell(index) {
   }
 }
 
-function addButton(innerHTML = '', href = '') {
+function addButton(innerHTML = '', href) {
   var button = document.createElement('a');
   button.setAttribute('class', 'panel bordered');
-  button.setAttribute('href', href);
+  if (href)
+    button.setAttribute('href', href);
   button.innerText = innerHTML;
   document.getElementById('pannels').appendChild(button);
   return button;
