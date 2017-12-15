@@ -1,5 +1,37 @@
 // minifyOnSave, filenamePattern: ../../min/js/$1.$2, minifier: gcc, buffer: 8388608, minifierOptions: "charset = utf-8 nomunge language_out=ES5"
 
+// Forked from https://www.w3schools.com/lib/w3.js
+function includeHTML(callback, targets) {
+  var elements = document.getElementsByTagName("*");
+
+  if (targets) {
+    if (targets.length) {
+      var target = targets.shift();
+      var xhttp = new XMLHttpRequest();
+
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+          if (this.status == 200)
+            target.innerHTML = this.responseText;
+          if (this.status == 404)
+            target.innerHTML = "Page not found.";
+
+          target.removeAttribute("include-html");
+          includeHTML(callback, targets);
+        }
+      }
+      xhttp.open("GET", target.getAttribute("include-html", true));
+      xhttp.send();
+    } else if (callback) callback();
+  } else {
+    targets = [];
+    for (var i = 0; i < elements.length; i++)
+      if (elements[i].getAttribute("include-html"))
+        targets.push(elements[i]);
+    includeHTML(callback, targets);
+  }
+};
+
 var Page = function(name, link, tags) {
   this.name = name;
   this.link = link;

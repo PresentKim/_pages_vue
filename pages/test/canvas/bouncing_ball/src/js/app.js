@@ -4,7 +4,7 @@ var gridContainer = null;
 
 var balls = [];
 
-w3.includeHTML(function() {
+includeHTML(function() {
   addButton('Back', '../../canvas.html');
 
   document.getElementById('title-text').innerText = document.title = 'Bouncing Ball';
