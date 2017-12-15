@@ -7,7 +7,7 @@ canvas.setAttribute('class', 'bordered');
 var context = canvas.getContext('2d');
 var handle = null;
 var balls = [];
-var lastRelativeSize = 1;
+var relativeSize = 1;
 
 w3.includeHTML(function() {
   addButton('Back', '../../canvas.html');
@@ -21,7 +21,7 @@ w3.includeHTML(function() {
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
 
-  lastRelativeSize = getRelativeSize(1);
+  relativeSize = getRelativeSize(1);
 
   generate();
   toggle();
@@ -31,12 +31,11 @@ w3.includeHTML(function() {
 function generate() {
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
-  context.clearRect(0, 0, canvas.width, canvas.height);
+  updateRelativeSize();
 
   balls = [];
-  var count = 30;
   var tryTime = 0;
-  while (balls.length < count && tryTime < 10000) {
+  while (balls.length < 30 && tryTime < 10000) {
     var x = rand(0, canvas.width);
     var y = rand(0, canvas.height);
     var radius = rand(3, 5, 7);
@@ -98,9 +97,9 @@ function move() {
       next.y = canvas.height - relativeRadius;
       balls[i].velocityY *= -1;
     }
-    balls[i].from(next);
+    balls[i].set(next);
     var rawVelocity = angleToDirection(Math.atan2(balls[i].velocityX, balls[i].velocityY));
-    rawVelocity.multiply(new Vector2(balls[i].speed * lastRelativeSize, balls[i].speed * lastRelativeSize));
+    rawVelocity.multiply(balls[i].speed * relativeSize);
     balls[i].velocityX -= (balls[i].velocityX * 9 + rawVelocity.x) / 10;
     balls[i].velocityY -= (balls[i].velocityY * 9 + rawVelocity.y) / 10;
   }
@@ -112,14 +111,13 @@ function render() {
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
 
-  var currentRelativeSize = getRelativeSize(1);
-  if (lastRelativeSize != currentRelativeSize) {
-    var changedRatio = currentRelativeSize / lastRelativeSize;
-    lastRelativeSize = currentRelativeSize;
+  var lastRelativeSize = relativeSize;
+  updateRelativeSize();
+  if (relativeSize != lastRelativeSize) {
+    var changedRatio = relativeSize / lastRelativeSize;
 
-    var vecForMultiply = new Vector2(changedRatio, changedRatio);
     for (i in balls)
-      balls[i].multiply(vecForMultiply);
+      balls[i].multiply(changedRatio);
   }
 
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -127,7 +125,7 @@ function render() {
   for (i in balls) {
     context.beginPath();
     context.fillStyle = balls[i].color.toString();
-    context.shadowBlur = 2 * lastRelativeSize;
+    context.shadowBlur = 2 * relativeSize;
     context.shadowColor = context.fillStyle;
     context.arc(balls[i].x, balls[i].y, getRelativeSize(balls[i].radius), 0, Math.PI * 2, true);
     context.fill();

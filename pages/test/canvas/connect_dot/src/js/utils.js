@@ -14,5 +14,10 @@ function rand(min, max, point = 0) {
 }
 
 function getRelativeSize(size) {
-  return size * Math.sqrt(canvas.width * canvas.height, 2) / 100;
+  return size * relativeSize;
+}
+
+function updateRelativeSize() {
+  relativeSize = Math.sqrt(canvas.width * canvas.height, 2) / 100;
+  return relativeSize;
 }

@@ -21,8 +21,6 @@ w3.includeHTML(function() {
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
 
-  lastRelativeSize = getRelativeSize(1);
-
   generate();
   toggle();
 });
@@ -38,7 +36,7 @@ function generate() {
   var radius = relativeSize * 29;
 
   for (var degree = 0; degree < 360; degree += 30)
-    circles.push(new RotateCircle(0, 0, 12, Math.PI / 2 + Math.PI / 12 * circles.length).from(angleToDirection(degree, true).multiply(radius).add(center)));
+    circles.push(new RotateCircle(0, 0, 12, Math.PI / 2 + Math.PI / 12 * circles.length).set(angleToDirection(degree, true).multiply(radius).add(center)));
 
   circles[0].enable = true;
 }

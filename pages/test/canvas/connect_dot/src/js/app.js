@@ -6,7 +6,7 @@ canvas.setAttribute('class', 'bordered');
 var context = canvas.getContext('2d');
 var handle = null;
 var dots = [];
-var lastRelativeSize = 1;
+var relativeSize = 1;
 
 w3.includeHTML(function() {
   addButton('Back', '../../canvas.html');
@@ -15,12 +15,12 @@ w3.includeHTML(function() {
   document.getElementById('intro').innerHTML = '<i class="material-icons"">touch_app</i>Touch it!';
 
   gridContainer = document.getElementById('grid-container');
-  
+
   gridContainer.appendChild(canvas);
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
 
-  lastRelativeSize = getRelativeSize(1);
+  relativeSize = getRelativeSize(1);
 
   generate();
   toggle();
@@ -29,11 +29,10 @@ w3.includeHTML(function() {
 function generate() {
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
-  context.clearRect(0, 0, canvas.width, canvas.height);
+  updateRelativeSize();
 
   dots = [];
-  var count = 50;
-  while (dots.length < count) {
+  while (dots.length < 50) {
     var x = rand(0, canvas.width);
     var y = rand(0, canvas.height);
     var velocityX = rand(0.1, 0.5, 7) * (rand(0, 1) ? 1 : -1);
@@ -51,8 +50,8 @@ function move() {
   for (i in dots) {
     if (dots[i] == mouSeDot)
       continue;
-    dots[i].x += dots[i].velocityX * lastRelativeSize;
-    dots[i].y += dots[i].velocityY * lastRelativeSize;
+    dots[i].x += dots[i].velocityX * relativeSize;
+    dots[i].y += dots[i].velocityY * relativeSize;
     if (dots[i].x < 0 || dots[i].x > canvas.width || dots[i].y < 0 || dots[i].y > canvas.height) {
       dots[i].x = rand(0, canvas.width);
       dots[i].y = rand(0, canvas.height);
@@ -67,14 +66,13 @@ function render() {
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
 
-  var currentRelativeSize = getRelativeSize(1);
-  if (lastRelativeSize != currentRelativeSize) {
-    var changedRatio = currentRelativeSize / lastRelativeSize;
-    lastRelativeSize = currentRelativeSize;
+  var lastRelativeSize = relativeSize;
+  updateRelativeSize();
+  if (relativeSize != lastRelativeSize) {
+    var changedRatio = relativeSize / lastRelativeSize;
 
-    var vecForMultiply = new Vector2(changedRatio, changedRatio);
     for (i in dots)
-      dots[i].multiply(vecForMultiply);
+      dots[i].multiply(changedRatio);
   }
 
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -90,9 +88,9 @@ function render() {
     for (var j = 0; j < 3; j++) {
       if (j < i && distance(dots[i], dots[j]) < 1000) {
         context.moveTo(dots[i].x, dots[i].y);
-        context.shadowBlur = 1 * lastRelativeSize;
+        context.shadowBlur = 1 * relativeSize;
         context.shadowColor = new ColorHSLA((dots[i].color.h, dots[i].color.h) / 2).toString();
-        context.lineWidth = 0.2 * lastRelativeSize;
+        context.lineWidth = 0.2 * relativeSize;
         context.strokeStyle = 'gray';
         context.lineTo(dumpDots[j].x, dumpDots[j].y);
         context.stroke();
@@ -105,7 +103,7 @@ function render() {
   for (i in dots) {
     context.beginPath();
     context.fillStyle = dots[i].color.toString();
-    context.shadowBlur = 2 * lastRelativeSize;
+    context.shadowBlur = 2 * relativeSize;
     context.shadowColor = context.fillStyle;
     context.arc(dots[i].x, dots[i].y, getRelativeSize(dots[i].size), 0, Math.PI * 2, true);
     context.fill();

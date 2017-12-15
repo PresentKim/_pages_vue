@@ -70,7 +70,7 @@ class Vector2 {
     return this;
   }
 
-  from(vec, newc = false) {
+  set(vec, newc = false) {
     if (newc)
       return new Vector2(this.x, this.y);
 
