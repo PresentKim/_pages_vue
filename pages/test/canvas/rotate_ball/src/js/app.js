@@ -12,14 +12,16 @@ var relativeSize = 1;
 w3.includeHTML(function() {
   addButton('Back', '../../canvas.html');
 
-  gridContainer = document.getElementById('grid-container');
-
   document.getElementById('title-text').innerText = document.title = 'Rotate Ball';
   document.getElementById('intro').innerHTML = '';
-  document.getElementById('grid-container').appendChild(canvas);
 
+  gridContainer = document.getElementById('grid-container');
+
+  gridContainer.appendChild(canvas);
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
+
+  lastRelativeSize = getRelativeSize(1);
 
   generate();
   toggle();
