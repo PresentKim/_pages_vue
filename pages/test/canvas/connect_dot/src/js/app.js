@@ -1,12 +1,7 @@
 // minifyOnSave, filenamePattern: ../../min/js/$1.$2, minifier: gcc, buffer: 8388608, minifierOptions: "charset = utf-8 nomunge language_out=ES5"
 var gridContainer = null;
-var canvas = document.createElement('canvas');
-canvas.setAttribute('id', 'connect_dot');
-canvas.setAttribute('class', 'bordered');
-var context = canvas.getContext('2d');
-var handle = null;
+
 var dots = [];
-var relativeSize = 1;
 
 w3.includeHTML(function() {
   addButton('Back', '../../canvas.html');
@@ -20,10 +15,8 @@ w3.includeHTML(function() {
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
 
-  relativeSize = getRelativeSize(1);
-
   generate();
-  toggle();
+  updateEnable();
 });
 
 function generate() {
@@ -35,8 +28,8 @@ function generate() {
   while (dots.length < 50) {
     var x = rand(0, canvas.width);
     var y = rand(0, canvas.height);
-    var velocityX = rand(0.1, 0.5, 7) * (rand(0, 1) ? 1 : -1);
-    var velocityY = rand(0.1, 0.5, 7) * (rand(0, 1) ? 1 : -1);
+    var velocityX = rand(0.1, 0.5, 7) * plusOrMinus();
+    var velocityY = rand(0.1, 0.5, 7) * plusOrMinus();
     var color = new ColorHSLA(rand(0, 360));
 
     dots.push(new Dot(x, y, 1, velocityX, velocityY, color));
@@ -66,14 +59,7 @@ function render() {
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
 
-  var lastRelativeSize = relativeSize;
-  updateRelativeSize();
-  if (relativeSize != lastRelativeSize) {
-    var changedRatio = relativeSize / lastRelativeSize;
-
-    for (i in dots)
-      dots[i].multiply(changedRatio);
-  }
+  updateRelativeSize(dots);
 
   context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -114,14 +100,6 @@ function render() {
 function onUpdate() {
   move();
   render();
-  handle = requestAnimationFrame(onUpdate);
-}
-
-function toggle() {
-  if (handle)
-    handle = cancelAnimationFrame(handle);
-  else
-    onUpdate();
 }
 
 document.body.addEventListener('mousemove', function(evt) {

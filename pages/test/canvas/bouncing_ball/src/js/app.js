@@ -1,13 +1,8 @@
 // minifyOnSave, filenamePattern: ../../min/js/$1.$2, minifier: gcc, buffer: 8388608, minifierOptions: "charset = utf-8 nomunge language_out=ES5"
 
 var gridContainer = null;
-var canvas = document.createElement('canvas');
-canvas.setAttribute('id', 'canvas_ball');
-canvas.setAttribute('class', 'bordered');
-var context = canvas.getContext('2d');
-var handle = null;
+
 var balls = [];
-var relativeSize = 1;
 
 w3.includeHTML(function() {
   addButton('Back', '../../canvas.html');
@@ -21,12 +16,9 @@ w3.includeHTML(function() {
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
 
-  relativeSize = getRelativeSize(1);
-
   generate();
-  toggle();
+  updateEnable();
 });
-
 
 function generate() {
   canvas.width = gridContainer.clientWidth;
@@ -41,8 +33,8 @@ function generate() {
     var radius = rand(3, 5, 7);
     var speed = rand(5 / radius, 10 / radius, 7);
     var direction = angleToDirection(rand(0, Math.PI, 7));
-    var velocityX = direction.x * speed * (rand(0, 1) ? 1 : -1);
-    var velocityY = direction.y * speed * (rand(0, 1) ? 1 : -1);
+    var velocityX = direction.x * speed * plusOrMinus();
+    var velocityY = direction.y * speed * plusOrMinus();
     var color = new ColorHSLA(rand(0, 360));
 
     var ball = new Ball(x, y, radius, velocityX, velocityY, speed, color);
@@ -111,14 +103,7 @@ function render() {
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
 
-  var lastRelativeSize = relativeSize;
-  updateRelativeSize();
-  if (relativeSize != lastRelativeSize) {
-    var changedRatio = relativeSize / lastRelativeSize;
-
-    for (i in balls)
-      balls[i].multiply(changedRatio);
-  }
+  updateRelativeSize(balls);
 
   context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -136,14 +121,6 @@ function render() {
 function onUpdate() {
   move();
   render();
-  handle = requestAnimationFrame(onUpdate);
-}
-
-function toggle() {
-  if (handle)
-    handle = cancelAnimationFrame(handle);
-  else
-    onUpdate();
 }
 
 document.body.addEventListener('mousemove', function(evt) {

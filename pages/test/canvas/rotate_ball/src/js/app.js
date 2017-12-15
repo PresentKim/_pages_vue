@@ -1,13 +1,8 @@
 // minifyOnSave, filenamePattern: ../../min/js/$1.$2, minifier: gcc, buffer: 8388608, minifierOptions: "charset = utf-8 nomunge language_out=ES5"
 var gridContainer = null;
-var canvas = document.createElement('canvas');
-canvas.setAttribute('id', 'rotate_ball');
-canvas.setAttribute('class', 'bordered');
-var context = canvas.getContext('2d');
-var handle = null;
+
 var dots = [];
 var circles = [];
-var relativeSize = 1;
 
 w3.includeHTML(function() {
   addButton('Back', '../../canvas.html');
@@ -22,7 +17,7 @@ w3.includeHTML(function() {
   canvas.height = gridContainer.clientHeight;
 
   generate();
-  toggle();
+  updateEnable();
 });
 
 function generate() {
@@ -60,14 +55,7 @@ function render() {
   canvas.width = gridContainer.clientWidth;
   canvas.height = gridContainer.clientHeight;
 
-  var lastRelativeSize = relativeSize;
-  updateRelativeSize();
-  if (relativeSize != lastRelativeSize) {
-    var changedRatio = relativeSize / lastRelativeSize;
-
-    for (i in circles)
-      circles[i].multiply(changedRatio);
-  }
+  updateRelativeSize(circles);
 
   context.clearRect(0, 0, canvas.width, canvas.height);
   var center = new Vector2(canvas.width / 2, canvas.height / 2);
@@ -101,12 +89,4 @@ function render() {
 function onUpdate() {
   render();
   move();
-  handle = requestAnimationFrame(onUpdate);
-}
-
-function toggle() {
-  if (handle)
-    handle = cancelAnimationFrame(handle);
-  else
-    onUpdate();
 }
