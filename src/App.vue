@@ -17,7 +17,7 @@
 
   <v-toolbar fixed app clipped-left>
     <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-    <v-btn icon @click.stop="miniVariant = !miniVariant">
+    <v-btn v-show="drawer" icon @click.stop="miniVariant = !miniVariant">
       <v-icon>{{miniVariant ? 'chevron_right' : 'chevron_left'}}</v-icon>
     </v-btn>
     <v-spacer></v-spacer>
