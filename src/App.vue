@@ -21,7 +21,10 @@
       <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
     </v-btn>
     <v-spacer></v-spacer>
-    <v-toolbar-title v-text="title"></v-toolbar-title>
+    <v-toolbar-title>
+      <v-avatar size="36px" slot="activator"><img :src="title.avatar" alt=""></v-avatar>
+      {{title.text}}
+    </v-toolbar-title>
   </v-toolbar>
 
   <v-content>
@@ -58,7 +61,10 @@ export default {
         title: 'Inspire'
       }],
       miniVariant: false,
-      title: 'Vuetify.js'
+      title: {
+        text: 'PresentKim',
+        avatar: '/public/profile.png'
+      }
     }
   }
 }
