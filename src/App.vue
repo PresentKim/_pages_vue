@@ -55,12 +55,12 @@
 export default {
   data() {
     return {
-      drawer: true,
+      drawer: false,
+      miniVariant: false,
       items: [{
         icon: 'bubble_chart',
         title: 'Inspire'
       }],
-      miniVariant: false,
       title: {
         text: 'PresentKim',
         avatar: '/public/profile.png'
