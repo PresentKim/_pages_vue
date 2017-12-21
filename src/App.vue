@@ -2,7 +2,7 @@
 <v-app :light="!themeIsDark" :dark="themeIsDark">
   <v-navigation-drawer fixed app clipped :mini-variant="miniVariant" v-model="drawer">
     <v-list>
-      <v-list-group v-for="item in items" :value="item.active" :key="item.title">
+      <v-list-group v-for="(item, i) in items" :value="i" :key="item.title">
         <v-list-tile slot="item">
           <v-list-tile-action>
             <v-icon>{{ item.action }}</v-icon>
@@ -15,7 +15,7 @@
           </v-list-tile-action>
         </v-list-tile>
 
-        <v-list-tile v-for="subItem in item.items" :key="subItem.title" :href="subItem.href">
+        <v-list-tile v-for="(subItem, si) in item.items" :key="si" :href="subItem.href">
           <v-list-tile-action>
             <v-icon>{{ subItem.action }}</v-icon>
           </v-list-tile-action>
@@ -37,11 +37,6 @@
       <v-avatar size="36px" slot="activator"><img :src="title.avatar" alt=""></v-avatar>
       {{title.text}}
     </v-toolbar-title>
-
-    <v-btn icon @click.stop="changeTheme">
-      <v-icon>format_color_fill</v-icon>
-      <v-icon>{{themeIsDark ? 'chat_bubble' : 'chat_bubble_outline'}}</v-icon>
-    </v-btn>
   </v-toolbar>
 
   <v-content>
@@ -50,12 +45,7 @@
         <v-layout column align-center>
           <img src="/public/v.png" alt="Vuetify.js" class="mb-5" />
           <blockquote>
-            &#8220;First, solve the problem. Then, write the code.&#8221;
-            <footer>
-              <small>
-                <em>&mdash;John Johnson</em>
-              </small>
-            </footer>
+
           </blockquote>
         </v-layout>
       </v-slide-y-transition>
@@ -64,6 +54,13 @@
 
   <v-footer fixed app>
     <span>&copy; 2017</span>
+
+    <v-spacer></v-spacer>
+
+    <v-btn icon @click.stop="changeTheme">
+      <v-icon>format_color_fill</v-icon>
+      <v-icon>{{themeIsDark ? 'chat_bubble' : 'chat_bubble_outline'}}</v-icon>
+    </v-btn>
   </v-footer>
 </v-app>
 </template>
