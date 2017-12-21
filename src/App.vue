@@ -1,6 +1,6 @@
 <template>
 <v-app :light="!themeIsDark" :dark="themeIsDark">
-  <v-navigation-drawer fixed app clipped :mini-variant="miniVariant" v-model="drawer">
+  <v-navigation-drawer fixed app hide-overlay clipped :mini-variant="miniVariant" v-model="drawer">
     <v-list>
       <v-list-group v-for="(item, i) in items" :value="i" :key="item.title">
         <v-list-tile slot="item">
@@ -45,7 +45,6 @@
         <v-layout column align-center>
           <img src="/public/v.png" alt="Vuetify.js" class="mb-5" />
           <blockquote>
-
           </blockquote>
         </v-layout>
       </v-slide-y-transition>
@@ -75,7 +74,7 @@ export default {
       drawer: false,
       miniVariant: false,
       items: [{
-        action: 'pages',
+        action: 'gamepad',
         title: 'Game',
         items: [{
           action: 'grid_on',
