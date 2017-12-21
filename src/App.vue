@@ -1,7 +1,7 @@
 
 
 <template>
-<v-app>
+<v-app dark>
   <v-navigation-drawer fixed :mini-variant="miniVariant" :clipped="clipped" v-model="drawer" app>
     <v-list>
       <v-list-tile value="true" v-for="(item, i) in items" :key="i">
