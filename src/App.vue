@@ -1,5 +1,5 @@
 <template>
-<v-app dark>
+<v-app :light="!themeIsDark" :dark="themeIsDark">
   <v-navigation-drawer fixed app clipped :mini-variant="miniVariant" v-model="drawer">
     <v-list>
       <v-list-group v-for="item in items" :value="item.active" :key="item.title">
@@ -32,13 +32,16 @@
     <v-btn v-show="drawer" icon @click.stop="miniVariant = !miniVariant">
       <v-icon>{{miniVariant ? 'chevron_right' : 'chevron_left'}}</v-icon>
     </v-btn>
-
     <v-spacer></v-spacer>
-
     <v-toolbar-title>
       <v-avatar size="36px" slot="activator"><img :src="title.avatar" alt=""></v-avatar>
       {{title.text}}
     </v-toolbar-title>
+
+    <v-btn icon @click.stop="changeTheme">
+      <v-icon>format_color_fill</v-icon>
+      <v-icon>{{themeIsDark ? 'chat_bubble' : 'chat_bubble_outline'}}</v-icon>
+    </v-btn>
   </v-toolbar>
 
   <v-content>
@@ -66,9 +69,12 @@
 </template>
 
 <script>
+import Cookie from './cookie.js'
+
 export default {
   data() {
     return {
+      themeIsDark: Cookie.getCookie('themeIsDark') != 'false',
       drawer: false,
       miniVariant: false,
       items: [{
@@ -100,6 +106,12 @@ export default {
         text: 'PresentKim',
         avatar: '/public/profile.png'
       }
+    }
+  },
+  methods: {
+    changeTheme: function() {
+      this.themeIsDark = !this.themeIsDark;
+      Cookie.setCookie('themeIsDark', this.themeIsDark);
     }
   }
 }
