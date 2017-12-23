@@ -2,6 +2,14 @@
 <v-app :light="!themeIsDark" :dark="themeIsDark">
   <v-navigation-drawer fixed app hide-overlay clipped :mini-variant="miniVariant" v-model="drawer">
     <v-list>
+      <v-list-tile to="/">
+        <v-list-tile-action>
+          <v-icon>home</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>Main</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
       <v-list-group v-for="(item, i) in items" :value="i" :key="item.title">
         <v-list-tile slot="item">
           <v-list-tile-action>
@@ -28,9 +36,6 @@
   </v-navigation-drawer>
 
   <v-toolbar fixed app clipped-left>
-    <v-btn icon to="/">
-      <v-icon>home</v-icon>
-    </v-btn>
     <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
     <v-btn v-show="drawer" icon @click.stop="miniVariant = !miniVariant">
       <v-icon>{{miniVariant ? 'chevron_right' : 'chevron_left'}}</v-icon>
