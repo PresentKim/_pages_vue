@@ -28,6 +28,9 @@
   </v-navigation-drawer>
 
   <v-toolbar fixed app clipped-left>
+    <v-btn icon to="/">
+      <v-icon>home</v-icon>
+    </v-btn>
     <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
     <v-btn v-show="drawer" icon @click.stop="miniVariant = !miniVariant">
       <v-icon>{{miniVariant ? 'chevron_right' : 'chevron_left'}}</v-icon>

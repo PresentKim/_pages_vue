@@ -6,4 +6,12 @@
 </template>
 
 <script>
+export default {
+  head: {
+    title: {
+      inner: 'Main',
+      separator: ''
+    }
+  }
+}
 </script>
