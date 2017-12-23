@@ -15,7 +15,7 @@
           </v-list-tile-action>
         </v-list-tile>
 
-        <v-list-tile v-for="(subItem, si) in item.items" :key="si" :href="subItem.href">
+        <v-list-tile v-for="(subItem, si) in item.items" :key="si" :to="subItem.to">
           <v-list-tile-action>
             <v-icon>{{ subItem.action }}</v-icon>
           </v-list-tile-action>
@@ -43,9 +43,7 @@
     <v-container fluid>
       <v-slide-y-transition mode="out-in">
         <v-layout column align-center>
-          <img src="public/v.png" alt="Vuetify.js" class="mb-5" />
-          <blockquote>
-          </blockquote>
+          <router-view></router-view>
         </v-layout>
       </v-slide-y-transition>
     </v-container>
@@ -68,6 +66,12 @@
 import Cookie from './cookie.js'
 
 export default {
+  head: {
+    title: {
+      inner: 'PresentKim',
+      complement: 'Main'
+    }
+  },
   data() {
     return {
       themeIsDark: Cookie.getCookie('themeIsDark') != 'false',
@@ -79,7 +83,7 @@ export default {
         items: [{
           action: 'grid_on',
           title: '1to25',
-          href: '#1to25'
+          to: '/1to25'
         }]
       }, {
         action: 'aspect_ratio',
@@ -87,15 +91,15 @@ export default {
         items: [{
           action: 'bubble_chart',
           title: 'Bouncing Ball',
-          href: '#bouncing-ball'
+          to: '/bouncingball'
         }, {
           action: 'timeline',
           title: 'Connect Dot',
-          href: '#connect-dot'
+          to: '/connectdot'
         }, {
           action: 'track_changes',
           title: 'Rotate Ball',
-          href: '#rotate-ball'
+          to: '/rotateball'
         }]
       }],
       title: {
