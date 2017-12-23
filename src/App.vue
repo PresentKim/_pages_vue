@@ -43,7 +43,7 @@
     <v-container fluid>
       <v-slide-y-transition mode="out-in">
         <v-layout column align-center>
-          <img src="/public/v.png" alt="Vuetify.js" class="mb-5" />
+          <img src="public/v.png" alt="Vuetify.js" class="mb-5" />
           <blockquote>
           </blockquote>
         </v-layout>
@@ -100,7 +100,7 @@ export default {
       }],
       title: {
         text: 'PresentKim',
-        avatar: '/public/profile.png'
+        avatar: 'public/profile.png'
       }
     }
   },
