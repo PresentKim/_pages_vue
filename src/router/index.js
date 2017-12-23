@@ -7,6 +7,8 @@ const OneTo25 = () =>
   import ('../pages/1to25.vue')
 const BouncingBall = () =>
   import ('../pages/BouncingBall.vue')
+const ConnectDot = () =>
+  import ('../pages/ConnectDot.vue')
 
 Vue.use(Router)
 
@@ -20,5 +22,8 @@ export default new Router({
   }, {
     path: '/bouncingball',
     component: BouncingBall
+  }, {
+    path: '/connectdot',
+    component: ConnectDot
   }]
 })

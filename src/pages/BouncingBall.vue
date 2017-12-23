@@ -1,5 +1,3 @@
-
-
 <template>
 <div>
   <canvas ref="canvas" :width="canvasWidth" :height="canvasHeight"></canvas>
