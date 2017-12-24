@@ -1,5 +1,5 @@
 <template>
-<v-app :light="!themeIsDark" :dark="themeIsDark">
+<v-app :dark="themeIsDark">
   <v-navigation-drawer fixed app hide-overlay clipped :mini-variant="miniVariant" v-model="drawer">
     <v-list>
       <v-list-tile to="/">
