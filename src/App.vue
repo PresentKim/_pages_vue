@@ -120,7 +120,14 @@ export default {
     changeTheme: function() {
       this.themeIsDark = !this.themeIsDark;
       Cookie.setCookie('themeIsDark', this.themeIsDark);
+    },
+    requestAnimationFrame: function() {
+      this.$store.state.onAnimationFrame();
+      window.requestAnimationFrame(this.requestAnimationFrame)
     }
+  },
+  mounted: function() {
+    this.requestAnimationFrame();
   }
 }
 </script>

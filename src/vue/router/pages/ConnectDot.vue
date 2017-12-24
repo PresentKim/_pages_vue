@@ -49,7 +49,8 @@ export default {
     this.canvas.width = main.clientWidth;
 
     this.generate();
-    this.onUpdate();
+    this.$store.state.onAnimationFrame = this.onUpdate;
+
     var component = this;
     document.body.addEventListener('mousemove', function(evt) {
       var rect = component.canvas.getBoundingClientRect();
@@ -168,8 +169,6 @@ export default {
       //this.canvas.height = main.clientWidth;
       this.move();
       this.render();
-      // loop
-      window.requestAnimationFrame(this.onUpdate)
     }
   },
 }
