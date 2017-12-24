@@ -2,13 +2,13 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 const Main = () =>
-  import ('../pages/Main.vue')
+  import ('./pages/Main.vue')
 const OneTo25 = () =>
-  import ('../pages/1to25.vue')
+  import ('./pages/1to25.vue')
 const BouncingBall = () =>
-  import ('../pages/BouncingBall.vue')
+  import ('./pages/BouncingBall.vue')
 const ConnectDot = () =>
-  import ('../pages/ConnectDot.vue')
+  import ('./pages/ConnectDot.vue')
 
 Vue.use(Router)
 
