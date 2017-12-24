@@ -9,6 +9,8 @@ const BouncingBall = () =>
   import ('./pages/BouncingBall.vue')
 const ConnectDot = () =>
   import ('./pages/ConnectDot.vue')
+const RotateBall = () =>
+  import ('./pages/RotateBall.vue')
 
 Vue.use(Router)
 
@@ -25,5 +27,8 @@ export default new Router({
   }, {
     path: '/connectdot',
     component: ConnectDot
+  }, {
+    path: '/rotateball',
+    component: RotateBall
   }]
 })
