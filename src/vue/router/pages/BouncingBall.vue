@@ -5,15 +5,15 @@
 </template>
 
 <script>
-import Circle from '../../../classes/circle.js'
-import ColorHSLA from '../../../classes/colorHSLA.js'
+import Circle from 'classes/circle.js'
+import ColorHSLA from 'classes/colorHSLA.js'
 
-import rand from '../../../utils/rand.js'
-import plusOrMinus from '../../../utils/plusOrMinus.js'
-import distance from '../../../utils/distance.js'
-import colisionEachCircle from '../../../utils/colisionEachCircle.js'
-import angleToDirection from '../../../utils/angleToDirection.js'
-import vecToAngle from '../../../utils/vecToAngle.js'
+import rand from 'utils/rand.js'
+import plusOrMinus from 'utils/plusOrMinus.js'
+import distance from 'utils/distance.js'
+import colisionEachCircle from 'utils/colisionEachCircle.js'
+import angleToDirection from 'utils/angleToDirection.js'
+import vecToAngle from 'utils/vecToAngle.js'
 
 class Ball extends Circle {
   constructor(x, y, radius, velocityX, velocityY, speed, color) {

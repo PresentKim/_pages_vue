@@ -12,7 +12,9 @@ module.exports = {
     extensions: ['.js', '.vue'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      'public': path.resolve(__dirname, './public')
+      'public': path.resolve(__dirname, './public'),
+      'classes': path.resolve(__dirname, 'src/classes'),
+      'utils': path.resolve(__dirname, 'src/utils')
     }
   },
   module: {

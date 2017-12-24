@@ -5,12 +5,12 @@
 </template>
 
 <script>
-import Vector2 from '../../../classes/vector2.js'
-import ColorHSLA from '../../../classes/colorHSLA.js'
+import Vector2 from 'classes/vector2.js'
+import ColorHSLA from 'classes/colorHSLA.js'
 
-import rand from '../../../utils/rand.js'
-import plusOrMinus from '../../../utils/plusOrMinus.js'
-import distance from '../../../utils/distance.js'
+import rand from 'utils/rand.js'
+import plusOrMinus from 'utils/plusOrMinus.js'
+import distance from 'utils/distance.js'
 
 class Dot extends Vector2 {
   constructor(x, y, size, velocityX, velocityY, color) {
