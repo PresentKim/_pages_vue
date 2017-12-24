@@ -49,25 +49,6 @@ export default {
 
     this.generate();
     this.$store.state.onAnimationFrame = this.onUpdate;
-
-    var component = this;
-    document.body.addEventListener('mousemove', function(evt) {
-      var rect = component.canvas.getBoundingClientRect();
-      component.dots[component.dots.length - 1].x = evt.clientX - rect.left;
-      component.dots[component.dots.length - 1].y = evt.clientY - rect.top;
-    }, false);
-
-    document.body.addEventListener("touchmove", function(evt) {
-      var rect = component.canvas.getBoundingClientRect();
-      component.dots[component.dots.length - 1].x = evt.touches[0].clientX - rect.left;
-      component.dots[component.dots.length - 1].y = evt.touches[0].clientY - rect.top;
-    }, false);
-
-    document.body.addEventListener("touchend", function(evt) {
-      component.dots[component.dots.length - 1].x = Number.MAX_SAFE_INTEGER;
-      component.dots[component.dots.length - 1].y = Number.MAX_SAFE_INTEGER;
-    }, false);
-
   },
   methods: {
     updateRelativeSize: function(vector2Arr) {
