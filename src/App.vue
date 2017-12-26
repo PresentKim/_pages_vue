@@ -1,6 +1,6 @@
 <template>
 <v-app ref="app" :dark="dark">
-  <v-navigation-drawer ref="nav" fixed app hide-overlay clipped :mini-variant="miniVariant" v-model="drawer">
+  <v-navigation-drawer ref="nav" fixed app hide-overlay clipped :mini-variant="miniVariant" v-model="showNav">
     <v-list>
       <v-list-tile to="/">
         <v-list-tile-action>
@@ -36,8 +36,8 @@
   </v-navigation-drawer>
 
   <v-toolbar ref="toolbar" fixed app clipped-left>
-    <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-    <v-btn v-show="drawer" icon @click.stop="miniVariant = !miniVariant">
+    <v-toolbar-side-icon @click.stop="showNav = !showNav"></v-toolbar-side-icon>
+    <v-btn v-show="showNav" icon @click.stop="miniVariant = !miniVariant">
       <v-icon>{{miniVariant ? 'chevron_right' : 'chevron_left'}}</v-icon>
     </v-btn>
     <v-spacer></v-spacer>
@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       dark: Cookie.getCookie('dark') != 'false',
-      drawer: false,
+      showNav: false,
       miniVariant: false,
       items: [{
         action: 'gamepad',
