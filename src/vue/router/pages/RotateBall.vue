@@ -60,15 +60,12 @@ export default {
       var radius = this.relativeSize * 29;
 
       for (var degree = 0; degree < 360; degree += 30)
-        this.circles.push(new RotateCircle(0, 0, 12, Math.PI / 2 + Math.PI / 12 * this.circles.length).set(angleToDirection(degree, true).multiply(radius).add(center)));
+        this.circles.push(new RotateCircle(0, 0, 12, Math.PI / 2 + Math.PI / 12 * this.circles.length).set(angleToDirection(degree, true).multiply(radius)));
 
       this.circles[0].enable = true;
     },
 
     move: function() {
-      var canvas = this.$refs.canvas;
-      var center = new Vector2(canvas.width / 2, canvas.height / 2);
-
       for (var i in this.circles) {
         if (!this.circles[i].enable)
           continue;
@@ -93,16 +90,17 @@ export default {
       // Render circle
       for (var i in this.circles) {
         context.beginPath();
+        var relativePosition = new Vector2(this.circles[i].x + center.x, this.circles[i].y + center.y);
         var calcAngle = Math.abs(this.circles[i].angle - this.circles[i].startAngle + Math.PI / 2);
         context.strokeStyle = new ColorHSLA(vecToAngle(this.circles[i], center) + 120, 100, 50, calcAngle < Math.PI / 2 ? 1 - calcAngle / Math.PI * 1.8 : 0).toString();
         context.shadowBlur = 10;
         context.shadowColor = context.strokeStyle;
         context.lineWidth = 0.5 * this.relativeSize;
-        context.arc(this.circles[i].x, this.circles[i].y, getRelativeSize(this, this.circles[i].radius), 0, Math.PI * 2, true);
+        context.arc(relativePosition.x, relativePosition.y, getRelativeSize(this, this.circles[i].radius), 0, Math.PI * 2, true);
         context.stroke();
 
         var velocity = angleToDirection(this.circles[i].angle + i * Math.PI / 12).multiply(getRelativeSize(this, this.circles[i].radius));
-        var balls = [this.circles[i].add(velocity, true), this.circles[i].subtract(velocity, true)];
+        var balls = [relativePosition.add(velocity, true), relativePosition.subtract(velocity, true)];
 
         for (var j in balls) {
           context.beginPath();
