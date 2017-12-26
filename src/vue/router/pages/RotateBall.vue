@@ -1,6 +1,6 @@
 <template>
 <v-layout column align-center>
-  <canvas ref="canvas" :width="canvasWidth" :height="canvasHeight"></canvas>
+  <canvas ref="canvas"></canvas>
 </v-layout>
 </template>
 
@@ -10,6 +10,12 @@ import ColorHSLA from 'classes/colorHSLA.js'
 
 import angleToDirection from 'utils/angleToDirection.js'
 import vecToAngle from 'utils/vecToAngle.js'
+
+import {
+  updateRelativeSize,
+  getRelativeSize,
+  fitCanvasSize
+} from 'utils/canvasUtils'
 
 class RotateCircle extends Vector2 {
   constructor(x = 0, y = 0, radius = 1, startAngle = 0) {
@@ -31,67 +37,41 @@ export default {
   },
   data() {
     return {
-      canvas: {},
-      context: {},
-      canvasHeight: 350,
-      canvasWidth: 450,
-      relativeSize: 1,
-      dots: [],
+      relativeSize: null,
+      circles: [],
     }
   },
   mounted() {
-    RotateCircle.prototype.getRelativeSize = this.getRelativeSize;
-    this.canvas = this.$refs.canvas;
-    this.context = this.canvas.getContext('2d')
-
-    var main = document.getElementsByClassName('content')[0];
-    var min = Math.min(main.clientWidth, document.documentElement.clientHeight - 56 - 48);
-    this.canvas.width = min;
-    this.canvas.height = min;
-
+    this.fitCanvasSize();
     this.generate();
-    this.$store.state.onAnimationFrame = this.onUpdate;
+    this.registerEvents(this);
   },
   methods: {
-    updateRelativeSize: function(vector2Arr) {
-      if (vector2Arr) {
-        var lastRelativeSize = this.relativeSize;
-        this.updateRelativeSize();
-        if (this.relativeSize != lastRelativeSize) {
-          var changedRatio = this.relativeSize / lastRelativeSize;
-
-          for (var i in vector2Arr)
-            vector2Arr[i].multiply(changedRatio);
-        }
-      } else
-        this.relativeSize = Math.sqrt(this.canvas.width * this.canvas.height, 2) / 100;
-      return this.relativeSize;
-    },
-
-    getRelativeSize: function(size) {
-      return size * this.relativeSize;
+    registerEvents: function(component) {
+      component.$store.state.onAnimationFrame = component.onUpdate;
     },
 
     generate: function() {
-      this.updateRelativeSize();
+      updateRelativeSize(this);
 
       this.circles = [];
-
-      var center = new Vector2(this.canvas.width / 2, this.canvas.height / 2);
+      var canvas = this.$refs.canvas;
+      var center = new Vector2(canvas.width / 2, canvas.height / 2);
       var radius = this.relativeSize * 29;
 
       for (var degree = 0; degree < 360; degree += 30)
         this.circles.push(new RotateCircle(0, 0, 12, Math.PI / 2 + Math.PI / 12 * this.circles.length).set(angleToDirection(degree, true).multiply(radius).add(center)));
 
       this.circles[0].enable = true;
-
-      this.render();
     },
 
     move: function() {
-      var center = new Vector2(this.canvas.width / 2, this.canvas.height / 2);
+      var canvas = this.$refs.canvas;
+      var center = new Vector2(canvas.width / 2, canvas.height / 2);
+
       for (var i in this.circles) {
-        if (!this.circles[i].enable) continue;
+        if (!this.circles[i].enable)
+          continue;
 
         this.circles[i].angle -= Math.PI / 90;
 
@@ -104,42 +84,50 @@ export default {
     },
 
     render: function() {
-      this.updateRelativeSize(this.circles);
-      var center = new Vector2(this.canvas.width / 2, this.canvas.height / 2);
+      updateRelativeSize(this, this.balls);
+
+      var canvas = this.$refs.canvas;
+      var context = canvas.getContext('2d');
+      var center = new Vector2(canvas.width / 2, canvas.height / 2);
 
       // Render circle
       for (var i in this.circles) {
-        this.context.beginPath();
+        context.beginPath();
         var calcAngle = Math.abs(this.circles[i].angle - this.circles[i].startAngle + Math.PI / 2);
-        this.context.strokeStyle = new ColorHSLA(vecToAngle(this.circles[i], center) + 120, 100, 50, calcAngle < Math.PI / 2 ? 1 - calcAngle / Math.PI * 1.8 : 0).toString();
-        this.context.shadowBlur = 10;
-        this.context.shadowColor = this.context.strokeStyle;
-        this.context.lineWidth = 0.5 * this.relativeSize;
-        this.context.arc(this.circles[i].x, this.circles[i].y, this.getRelativeSize(this.circles[i].radius), 0, Math.PI * 2, true);
-        this.context.stroke();
+        context.strokeStyle = new ColorHSLA(vecToAngle(this.circles[i], center) + 120, 100, 50, calcAngle < Math.PI / 2 ? 1 - calcAngle / Math.PI * 1.8 : 0).toString();
+        context.shadowBlur = 10;
+        context.shadowColor = context.strokeStyle;
+        context.lineWidth = 0.5 * this.relativeSize;
+        context.arc(this.circles[i].x, this.circles[i].y, getRelativeSize(this, this.circles[i].radius), 0, Math.PI * 2, true);
+        context.stroke();
 
-        var velocity = angleToDirection(this.circles[i].angle + i * Math.PI / 12).multiply(this.getRelativeSize(this.circles[i].radius));
+        var velocity = angleToDirection(this.circles[i].angle + i * Math.PI / 12).multiply(getRelativeSize(this, this.circles[i].radius));
         var balls = [this.circles[i].add(velocity, true), this.circles[i].subtract(velocity, true)];
 
         for (var j in balls) {
-          this.context.beginPath();
-          this.context.fillStyle = new ColorHSLA(vecToAngle(balls[j], center) + 120).toString();
-          this.context.shadowBlur = 10;
-          this.context.shadowColor = 'gray';
-          this.context.arc(balls[j].x, balls[j].y, this.getRelativeSize(2), 0, Math.PI * 2, true);
-          this.context.fill();
-          this.context.closePath();
+          context.beginPath();
+          context.fillStyle = new ColorHSLA(vecToAngle(balls[j], center) + 120).toString();
+          context.shadowBlur = 10;
+          context.shadowColor = 'gray';
+          context.arc(balls[j].x, balls[j].y, getRelativeSize(this, 2), 0, Math.PI * 2, true);
+          context.fill();
+          context.closePath();
         }
       }
     },
 
     onUpdate: function() {
-      var main = document.getElementsByClassName('content')[0];
-      var min = Math.min(main.clientWidth, document.documentElement.clientHeight - 56 - 48);
-      this.canvas.width = min;
-      this.canvas.height = min;
+      this.fitCanvasSize();
       this.move();
       this.render();
+    },
+
+    fitCanvasSize: function() {
+      fitCanvasSize(this);
+      var canvas = this.$refs.canvas;
+      var min = Math.min(canvas.height, canvas.width);
+      canvas.width = min;
+      canvas.height = min;
     }
   }
 }

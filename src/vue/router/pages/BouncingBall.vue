@@ -1,6 +1,6 @@
 <template>
 <v-layout>
-  <canvas ref="canvas" :width="canvasWidth" :height="canvasHeight"></canvas>
+  <canvas ref="canvas"></canvas>
 </v-layout>
 </template>
 
@@ -15,6 +15,12 @@ import colisionEachCircle from 'utils/colisionEachCircle.js'
 import angleToDirection from 'utils/angleToDirection.js'
 import vecToAngle from 'utils/vecToAngle.js'
 
+import {
+  updateRelativeSize,
+  getRelativeSize,
+  fitCanvasSize
+} from 'utils/canvasUtils'
+
 class Ball extends Circle {
   constructor(x, y, radius, velocityX, velocityY, speed, color) {
     super(x, y, radius);
@@ -23,10 +29,6 @@ class Ball extends Circle {
     this.velocityY = velocityY;
     this.speed = speed;
     this.color = color;
-  }
-
-  colision(ball) {
-    return colisionEachCircle(new Circle(this.x, this.y, this.getRelativeSize(this.radius)), new Circle(ball.x, ball.y, this.getRelativeSize(ball.radius)));
   }
 
   next() {
@@ -43,110 +45,94 @@ export default {
   },
   data() {
     return {
-      canvas: {},
-      context: {},
-      canvasHeight: 350,
-      canvasWidth: 450,
-      relativeSize: 1,
+      relativeSize: null,
       balls: [],
     }
   },
   mounted() {
-    Ball.prototype.getRelativeSize = this.getRelativeSize;
-    this.canvas = this.$refs.canvas;
-    this.context = this.canvas.getContext('2d')
-
-    var main = document.getElementsByClassName('content')[0];
-    this.canvas.width = main.clientWidth;
-    this.canvas.height = document.documentElement.clientHeight - 56 - 48;
-
+    fitCanvasSize(this);
     this.generate();
-    this.$store.state.onAnimationFrame = this.onUpdate;
-
-    var component = this;
-    document.body.addEventListener('mousemove', function(evt) {
-      var rect = component.canvas.getBoundingClientRect();
-      component.balls[component.balls.length - 1].x = evt.clientX - rect.left;
-      component.balls[component.balls.length - 1].y = evt.clientY - rect.top;
-    }, false);
-
-    document.body.addEventListener("touchmove", function(evt) {
-      var rect = component.canvas.getBoundingClientRect();
-      component.balls[component.balls.length - 1].x = evt.touches[0].clientX - rect.left;
-      component.balls[component.balls.length - 1].y = evt.touches[0].clientY - rect.top;
-    }, false);
-
-    document.body.addEventListener("touchend", function(evt) {
-      component.balls[component.balls.length - 1].x = Number.MAX_SAFE_INTEGER;
-      component.balls[component.balls.length - 1].y = Number.MAX_SAFE_INTEGER;
-    }, false);
-
+    this.registerEvents(this);
   },
   methods: {
-    updateRelativeSize: function(vector2Arr) {
-      if (vector2Arr) {
-        var lastRelativeSize = this.relativeSize;
-        this.updateRelativeSize();
-        if (this.relativeSize != lastRelativeSize) {
-          var changedRatio = this.relativeSize / lastRelativeSize;
+    registerEvents: function(component) {
+      component.$store.state.onAnimationFrame = component.onUpdate;
 
-          for (var i in vector2Arr)
-            vector2Arr[i].multiply(changedRatio);
+      var canvas = component.$refs.canvas;
+      var mouseBall = this.balls[this.balls.length - 1];
+
+      // mouseEventListener
+      document.documentElement.addEventListener('mousedown', function(evt) {
+        var rect = canvas.getBoundingClientRect();
+        mouseBall.x = evt.clientX - rect.left;
+        mouseBall.y = evt.clientY - rect.top;
+      }, false);
+      document.documentElement.addEventListener('mousemove', function(evt) {
+        if (mouseBall.x != Number.MAX_SAFE_INTEGER) {
+          var rect = canvas.getBoundingClientRect();
+          mouseBall.x = evt.clientX - rect.left;
+          mouseBall.y = evt.clientY - rect.top;
         }
-      } else
-        this.relativeSize = Math.sqrt(this.canvas.width * this.canvas.height, 2) / 100;
-      return this.relativeSize;
-    },
+      }, false);
+      document.documentElement.addEventListener('mouseup', function(evt) {
+        mouseBall.x = Number.MAX_SAFE_INTEGER;
+      }, false);
 
-    getRelativeSize: function(size) {
-      return size * this.relativeSize;
-    },
+      //touchEventListener
+      document.documentElement.addEventListener("touchmove", function(evt) {
+        var rect = canvas.getBoundingClientRect();
+        mouseBall.x = evt.touches[0].clientX - rect.left;
+        mouseBall.y = evt.touches[0].clientY - rect.top;
+      }, false);
 
+      document.documentElement.addEventListener("touchend", function(evt) {
+        mouseBall.x = Number.MAX_SAFE_INTEGER;
+      }, false);
+    },
     generate: function() {
-      this.updateRelativeSize();
+      updateRelativeSize(this);
 
+      var canvas = this.$refs.canvas;
       this.balls = [];
-      var tryTime = 0;
-      while (this.balls.length < 30 && tryTime < 10000) {
-        var x = rand(0, this.canvas.width);
-        var y = rand(0, this.canvas.height);
-        var radius = rand(3, 5, 7);
-        var speed = rand(3 / radius, 5 / radius, 7);
+
+      while (this.balls.length < 30) {
+        var ball = new Ball();
+        ball.radius = rand(3, 5, 7);
+        var relativeRadius = getRelativeSize(this, ball.radius);
+        ball.x = rand(relativeRadius, canvas.width - relativeRadius);
+        ball.y = rand(relativeRadius, canvas.height - relativeRadius);
+        ball.speed = rand(3 / ball.radius, 5 / ball.radius, 7);
         var direction = angleToDirection(rand(0, Math.PI, 7));
-        var velocityX = direction.x * speed * plusOrMinus();
-        var velocityY = direction.y * speed * plusOrMinus();
-        var color = new ColorHSLA(rand(0, 360));
+        ball.velocityX = direction.x * plusOrMinus();
+        ball.velocityY = direction.y * plusOrMinus();
+        ball.color = new ColorHSLA(rand(0, 360));
 
-        var ball = new Ball(x, y, radius, velocityX, velocityY, speed, color);
-
-        var relativeRadius = this.getRelativeSize(ball.radius);
-        var colision = ball.x < relativeRadius || ball.x > this.canvas.width - relativeRadius || ball.y < relativeRadius || ball.y > this.canvas.height - relativeRadius;
-        if (!colision)
-          for (var i in this.balls)
-            if (ball.colision(this.balls[i])) {
-              colision = true;
-              break;
-            }
+        var colision = false;
+        for (var i in this.balls)
+          if (this.colisionEachBall(ball, this.balls[i])) {
+            colision = true;
+            break;
+          }
         if (!colision)
           this.balls.push(ball);
-        else
-          tryTime++;
       }
+      // add mouseBall
       this.balls.push(new Ball(Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, 20, 0, 0, 0, new ColorHSLA(0, 100, 50, 0.5)));
-      this.render();
     },
 
     move: function() {
-      var mouSeBall = this.balls[this.balls.length - 1];
+      var canvas = this.$refs.canvas;
+      var mouseBall = this.balls[this.balls.length - 1];
+
       for (var i in this.balls) {
-        if (this.balls[i] == mouSeBall)
+        if (this.balls[i] == mouseBall)
           continue;
         var next = this.balls[i].next();
-        var relativeRadius = this.getRelativeSize(this.balls[i].radius);
+        var relativeRadius = getRelativeSize(this, this.balls[i].radius);
         for (var j in this.balls) {
-          if (i != j && this.balls[i].colision(this.balls[j])) {
+          if (i != j && this.colisionEachBall(this.balls[i], this.balls[j])) {
             var direction = angleToDirection(Math.atan2(this.balls[j].x - this.balls[i].x, this.balls[j].y - this.balls[i].y));
-            var overlap = relativeRadius + this.getRelativeSize(this.balls[j].radius) - distance(this.balls[i], this.balls[j]);
+            var overlap = relativeRadius + getRelativeSize(this, this.balls[j].radius) - distance(this.balls[i], this.balls[j]);
             this.balls[i].velocityX += direction.x * overlap;
             this.balls[i].velocityY += direction.y * overlap;
             this.balls[j].velocityX -= direction.x;
@@ -157,16 +143,16 @@ export default {
           next.x = relativeRadius;
           this.balls[i].velocityX *= -1;
         }
-        if (next.x > this.canvas.width - relativeRadius) {
-          next.x = this.canvas.width - relativeRadius;
+        if (next.x > canvas.width - relativeRadius) {
+          next.x = canvas.width - relativeRadius;
           this.balls[i].velocityX *= -1;
         }
         if (next.y < relativeRadius) {
           next.y = relativeRadius;
           this.balls[i].velocityY *= -1;
         }
-        if (next.y > this.canvas.height - relativeRadius) {
-          next.y = this.canvas.height - relativeRadius;
+        if (next.y > canvas.height - relativeRadius) {
+          next.y = canvas.height - relativeRadius;
           this.balls[i].velocityY *= -1;
         }
         this.balls[i].set(next);
@@ -176,31 +162,34 @@ export default {
         this.balls[i].velocityY -= (this.balls[i].velocityY * 9 + rawVelocity.y) / 10;
       }
 
-      mouSeBall.color.h = ++mouSeBall.color.h % 361;
+      mouseBall.color.h = ++mouseBall.color.h % 361;
     },
 
     render: function() {
-      this.updateRelativeSize(this.balls);
+      updateRelativeSize(this, this.balls);
 
-      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      var canvas = this.$refs.canvas;
+      var context = canvas.getContext('2d');
 
       for (var i in this.balls) {
-        this.context.beginPath();
-        this.context.fillStyle = this.balls[i].color.toString();
-        this.context.shadowBlur = 2 * this.relativeSize;
-        this.context.shadowColor = this.context.fillStyle;
-        this.context.arc(this.balls[i].x, this.balls[i].y, this.getRelativeSize(this.balls[i].radius), 0, Math.PI * 2, true);
-        this.context.fill();
-        this.context.closePath();
+        context.beginPath();
+        context.fillStyle = this.balls[i].color.toString();
+        context.shadowBlur = 2 * this.relativeSize;
+        context.shadowColor = context.fillStyle;
+        context.arc(this.balls[i].x, this.balls[i].y, getRelativeSize(this, this.balls[i].radius), 0, Math.PI * 2, true);
+        context.fill();
+        context.closePath();
       }
     },
 
     onUpdate: function() {
-      var main = document.getElementsByClassName('content')[0];
-      this.canvas.width = main.clientWidth;
-      this.canvas.height = document.documentElement.clientHeight - 56 - 48;
+      fitCanvasSize(this);
       this.move();
       this.render();
+    },
+
+    colisionEachBall: function(ball, ball2) {
+      return colisionEachCircle(new Circle(ball.x, ball.y, getRelativeSize(this, ball.radius)), new Circle(ball2.x, ball2.y, getRelativeSize(this, ball2.radius)));
     }
   }
 }
