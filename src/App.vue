@@ -56,7 +56,7 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn icon @click.stop="changeTheme">
+    <v-btn icon @click.stop="themeIsDark = !themeIsDark">
       <v-icon>format_color_fill</v-icon>
       <v-icon>{{themeIsDark ? 'chat_bubble' : 'chat_bubble_outline'}}</v-icon>
     </v-btn>
@@ -111,18 +111,19 @@ export default {
     }
   },
   methods: {
-    changeTheme: function() {
-      this.themeIsDark = !this.themeIsDark;
-      Cookie.setCookie('themeIsDark', this.themeIsDark);
-    },
     requestAnimationFrame: function() {
       this.$store.state.onAnimationFrame();
       window.requestAnimationFrame(this.requestAnimationFrame)
     }
   },
+  watch: {
+    themeIsDark: function(val) {
+      Cookie.setCookie('themeIsDark', val);
+    }
+  },
   mounted: function() {
     this.requestAnimationFrame();
-    for(var name in this.$refs)
+    for (var name in this.$refs)
       this.$store.state.elements[name] = this.$refs[name];
   }
 }
