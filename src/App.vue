@@ -1,6 +1,6 @@
 <template>
-<v-app :dark="themeIsDark">
-  <v-navigation-drawer fixed app hide-overlay clipped :mini-variant="miniVariant" v-model="drawer">
+<v-app ref="app" :dark="themeIsDark">
+  <v-navigation-drawer ref="nav" fixed app hide-overlay clipped :mini-variant="miniVariant" v-model="drawer">
     <v-list>
       <v-list-tile to="/">
         <v-list-tile-action>
@@ -35,7 +35,7 @@
     </v-list>
   </v-navigation-drawer>
 
-  <v-toolbar fixed app clipped-left>
+  <v-toolbar ref="toolbar" fixed app clipped-left>
     <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
     <v-btn v-show="drawer" icon @click.stop="miniVariant = !miniVariant">
       <v-icon>{{miniVariant ? 'chevron_right' : 'chevron_left'}}</v-icon>
@@ -47,11 +47,11 @@
     </v-toolbar-title>
   </v-toolbar>
 
-  <v-content>
+  <v-content ref="content">
     <router-view></router-view>
   </v-content>
 
-  <v-footer fixed app>
+  <v-footer ref="footer" fixed app>
     <span>&copy; 2017</span>
 
     <v-spacer></v-spacer>
@@ -122,6 +122,8 @@ export default {
   },
   mounted: function() {
     this.requestAnimationFrame();
+    for(var name in this.$refs)
+      this.$store.state.elements[name] = this.$refs[name];
   }
 }
 </script>
