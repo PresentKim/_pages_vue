@@ -1,7 +1,7 @@
 <template>
-<div>
+<v-layout>
   <canvas ref="canvas" :width="canvasWidth" :height="canvasHeight"></canvas>
-</div>
+</v-layout>
 </template>
 
 <script>
@@ -58,6 +58,7 @@ export default {
 
     var main = document.getElementsByClassName('content')[0];
     this.canvas.width = main.clientWidth;
+    this.canvas.height = document.documentElement.clientHeight - 56 - 48;
 
     this.generate();
     this.$store.state.onAnimationFrame = this.onUpdate;
@@ -197,17 +198,10 @@ export default {
     onUpdate: function() {
       var main = document.getElementsByClassName('content')[0];
       this.canvas.width = main.clientWidth;
-      //this.canvas.height = main.clientWidth;
+      this.canvas.height = document.documentElement.clientHeight - 56 - 48;
       this.move();
       this.render();
     }
-  },
+  }
 }
 </script>
-
-<style>
-canvas {
-  width: 100%;
-  border: 1px solid;
-}
-</style>
