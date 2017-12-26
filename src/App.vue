@@ -1,5 +1,5 @@
 <template>
-<v-app ref="app" :dark="themeIsDark">
+<v-app ref="app" :dark="dark">
   <v-navigation-drawer ref="nav" fixed app hide-overlay clipped :mini-variant="miniVariant" v-model="drawer">
     <v-list>
       <v-list-tile to="/">
@@ -56,9 +56,9 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn icon @click.stop="themeIsDark = !themeIsDark">
+    <v-btn icon @click.stop="dark = !dark">
       <v-icon>format_color_fill</v-icon>
-      <v-icon>{{themeIsDark ? 'chat_bubble' : 'chat_bubble_outline'}}</v-icon>
+      <v-icon>{{dark ? 'chat_bubble' : 'chat_bubble_outline'}}</v-icon>
     </v-btn>
   </v-footer>
 </v-app>
@@ -76,7 +76,7 @@ export default {
   },
   data() {
     return {
-      themeIsDark: Cookie.getCookie('themeIsDark') != 'false',
+      dark: Cookie.getCookie('dark') != 'false',
       drawer: false,
       miniVariant: false,
       items: [{
@@ -117,8 +117,8 @@ export default {
     }
   },
   watch: {
-    themeIsDark: function(val) {
-      Cookie.setCookie('themeIsDark', val);
+    dark: function(val) {
+      Cookie.setCookie('dark', val);
     }
   },
   mounted: function() {
