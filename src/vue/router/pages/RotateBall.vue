@@ -108,7 +108,7 @@ export default {
           context.beginPath();
           context.fillStyle = new ColorHSLA(vecToAngle(balls[j], center) + 120).toString();
           context.shadowBlur = 10;
-          context.shadowColor = 'gray';
+          context.shadowColor = context.fillStyle;
           context.arc(balls[j].x, balls[j].y, getRelativeSize(this, 2), 0, Math.PI * 2, true);
           context.fill();
           context.closePath();
