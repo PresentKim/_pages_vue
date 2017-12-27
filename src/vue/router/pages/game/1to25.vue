@@ -1,18 +1,29 @@
 <template>
 <v-container fluid>
   <v-container ref="title">
-    <v-layout row>
-      <v-btn color="green">
-        <v-icon>alarm_add</v-icon>TIME {{ playtimeText }}</v-btn>
-      <v-btn color="green">
-        <v-icon>alarm_on</v-icon>BEST {{ besttimeText }}</v-btn>
+    <v-layout grid-list-xs row>
+      <v-flex>
+        <v-btn color="green">
+          <v-icon>alarm_add</v-icon>TIME {{ playtimeText }}
+        </v-btn>
+      </v-flex>
+      <v-flex>
+        <v-btn color="green">
+          <v-icon>alarm_on</v-icon>BEST {{ besttimeText }}
+        </v-btn>
+      </v-flex>
     </v-layout>
     <v-layout row>
-      <v-btn color="blue" @click.stop="clickGoal()">
-        <v-icon>done_all</v-icon>TARGET {{ target }} / {{ goal }}</v-btn>
-      <v-btn color="red" @click.stop="clickStartButton()">
-        <v-icon>{{ target ? 'stop' : 'play_arrow' }}</v-icon>
-      </v-btn>
+      <v-flex>
+        <v-btn color="blue" @click.stop="clickGoal()">
+          <v-icon>done_all</v-icon>TARGET {{ target }} / {{ goal }}
+        </v-btn>
+      </v-flex>
+      <v-flex>
+        <v-btn color="red" @click.stop="clickStartButton()">
+          <v-icon>{{ target ? 'stop' : 'play_arrow' }}</v-icon>
+        </v-btn>
+      </v-flex>
     </v-layout>
   </v-container>
 
