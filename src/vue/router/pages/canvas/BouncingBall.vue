@@ -15,11 +15,7 @@ import colisionEachCircle from 'utils/colisionEachCircle.js'
 import angleToDirection from 'utils/angleToDirection.js'
 import vecToAngle from 'utils/vecToAngle.js'
 
-import {
-  updateRelativeSize,
-  getRelativeSize,
-  fitCanvasSize
-} from 'utils/canvasUtils'
+import FitCanvasMixin from 'vueMixin/fitCanvasMixin'
 
 class Ball extends Circle {
   constructor(x, y, radius, velocityX, velocityY, speed, color) {
@@ -37,6 +33,7 @@ class Ball extends Circle {
 }
 
 export default {
+  mixins: [FitCanvasMixin],
   head: {
     title: {
       inner: 'Canvas',
@@ -45,12 +42,11 @@ export default {
   },
   data() {
     return {
-      relativeSize: null,
       balls: [],
     }
   },
   mounted() {
-    fitCanvasSize(this);
+    this.fitCanvasSize();
     this.generate();
     this.registerEvents(this);
   },
@@ -90,7 +86,7 @@ export default {
       }, false);
     },
     generate: function() {
-      updateRelativeSize(this);
+      this.updateRelativeSize();
 
       var canvas = this.$refs.canvas;
       this.balls = [];
@@ -98,7 +94,7 @@ export default {
       while (this.balls.length < 30) {
         var ball = new Ball();
         ball.radius = rand(3, 5, 7);
-        var relativeRadius = getRelativeSize(this, ball.radius);
+        var relativeRadius = this.getRelativeSize(ball.radius);
         ball.x = rand(relativeRadius, canvas.width - relativeRadius);
         ball.y = rand(relativeRadius, canvas.height - relativeRadius);
         ball.speed = rand(3 / ball.radius, 5 / ball.radius, 7);
@@ -128,11 +124,11 @@ export default {
         if (this.balls[i] == mouseBall)
           continue;
         var next = this.balls[i].next();
-        var relativeRadius = getRelativeSize(this, this.balls[i].radius);
+        var relativeRadius = this.getRelativeSize(this.balls[i].radius);
         for (var j in this.balls) {
           if (i != j && this.colisionEachBall(this.balls[i], this.balls[j])) {
             var direction = angleToDirection(Math.atan2(this.balls[j].x - this.balls[i].x, this.balls[j].y - this.balls[i].y));
-            var overlap = relativeRadius + getRelativeSize(this, this.balls[j].radius) - distance(this.balls[i], this.balls[j]);
+            var overlap = relativeRadius + this.getRelativeSize(this.balls[j].radius) - distance(this.balls[i], this.balls[j]);
             this.balls[i].velocityX += direction.x * overlap;
             this.balls[i].velocityY += direction.y * overlap;
             this.balls[j].velocityX -= direction.x;
@@ -166,7 +162,7 @@ export default {
     },
 
     render: function() {
-      updateRelativeSize(this, this.balls);
+      this.updateRelativeSize(this.balls);
 
       var canvas = this.$refs.canvas;
       var context = canvas.getContext('2d');
@@ -176,20 +172,20 @@ export default {
         context.fillStyle = this.balls[i].color.toString();
         context.shadowBlur = 2 * this.relativeSize;
         context.shadowColor = context.fillStyle;
-        context.arc(this.balls[i].x, this.balls[i].y, getRelativeSize(this, this.balls[i].radius), 0, Math.PI * 2, true);
+        context.arc(this.balls[i].x, this.balls[i].y, this.getRelativeSize(this.balls[i].radius), 0, Math.PI * 2, true);
         context.fill();
         context.closePath();
       }
     },
 
     onUpdate: function() {
-      fitCanvasSize(this);
+      this.fitCanvasSize();
       this.move();
       this.render();
     },
 
     colisionEachBall: function(ball, ball2) {
-      return colisionEachCircle(new Circle(ball.x, ball.y, getRelativeSize(this, ball.radius)), new Circle(ball2.x, ball2.y, getRelativeSize(this, ball2.radius)));
+      return colisionEachCircle(new Circle(ball.x, ball.y, this.getRelativeSize(ball.radius)), new Circle(ball2.x, ball2.y, this.getRelativeSize(ball2.radius)));
     }
   }
 }

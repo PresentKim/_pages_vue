@@ -12,11 +12,7 @@ import rand from 'utils/rand.js'
 import plusOrMinus from 'utils/plusOrMinus.js'
 import distance from 'utils/distance.js'
 
-import {
-  updateRelativeSize,
-  getRelativeSize,
-  fitCanvasSize
-} from 'utils/canvasUtils'
+import FitCanvasMixin from 'vueMixin/fitCanvasMixin'
 
 class Dot extends Vector2 {
   constructor(x, y, size, velocityX, velocityY, color) {
@@ -30,6 +26,7 @@ class Dot extends Vector2 {
 }
 
 export default {
+  mixins: [FitCanvasMixin],
   head: {
     title: {
       inner: 'Canvas',
@@ -38,12 +35,11 @@ export default {
   },
   data() {
     return {
-      relativeSize: null,
       dots: [],
     }
   },
   mounted() {
-    fitCanvasSize(this);
+    this.fitCanvasSize();
     this.generate();
     this.registerEvents(this);
   },
@@ -84,7 +80,7 @@ export default {
     },
 
     generate: function() {
-      updateRelativeSize(this);
+      this.updateRelativeSize();
 
       var canvas = this.$refs.canvas;
       this.dots = [];
@@ -124,7 +120,7 @@ export default {
     },
 
     render: function() {
-      updateRelativeSize(this, this.dots);
+      this.updateRelativeSize(this.dots);
 
       var canvas = this.$refs.canvas;
       var context = canvas.getContext('2d');
@@ -166,14 +162,14 @@ export default {
         context.fillStyle = this.dots[i].color.toString();
         context.shadowBlur = 2 * this.relativeSize;
         context.shadowColor = context.fillStyle;
-        context.arc(this.dots[i].x, this.dots[i].y, getRelativeSize(this, this.dots[i].size), 0, Math.PI * 2, true);
+        context.arc(this.dots[i].x, this.dots[i].y, this.getRelativeSize(this.dots[i].size), 0, Math.PI * 2, true);
         context.fill();
         context.closePath();
       }
     },
 
     onUpdate: function() {
-      fitCanvasSize(this);
+      this.fitCanvasSize();
       this.move();
       this.render();
     }

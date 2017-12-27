@@ -11,11 +11,7 @@ import ColorHSLA from 'classes/colorHSLA.js'
 import angleToDirection from 'utils/angleToDirection.js'
 import vecToAngle from 'utils/vecToAngle.js'
 
-import {
-  updateRelativeSize,
-  getRelativeSize,
-  fitCanvasSize
-} from 'utils/canvasUtils'
+import FitCanvasMixin from 'vueMixin/fitCanvasMixin'
 
 class RotateCircle extends Vector2 {
   constructor(x = 0, y = 0, radius = 1, startAngle = 0) {
@@ -29,6 +25,7 @@ class RotateCircle extends Vector2 {
 }
 
 export default {
+  mixins: [FitCanvasMixin],
   head: {
     title: {
       inner: 'Canvas',
@@ -37,7 +34,6 @@ export default {
   },
   data() {
     return {
-      relativeSize: null,
       circles: [],
     }
   },
@@ -52,7 +48,7 @@ export default {
     },
 
     generate: function() {
-      updateRelativeSize(this);
+      this.updateRelativeSize();
 
       this.circles = [];
       var canvas = this.$refs.canvas;
@@ -81,7 +77,7 @@ export default {
     },
 
     render: function() {
-      updateRelativeSize(this, this.circles);
+      this.updateRelativeSize(this.circles);
 
       var canvas = this.$refs.canvas;
       var context = canvas.getContext('2d');
@@ -96,10 +92,10 @@ export default {
         context.shadowBlur = 10;
         context.shadowColor = context.strokeStyle;
         context.lineWidth = 0.5 * this.relativeSize;
-        context.arc(relativePosition.x, relativePosition.y, getRelativeSize(this, this.circles[i].radius), 0, Math.PI * 2, true);
+        context.arc(relativePosition.x, relativePosition.y, this.getRelativeSize(this.circles[i].radius), 0, Math.PI * 2, true);
         context.stroke();
 
-        var velocity = angleToDirection(this.circles[i].angle + i * Math.PI / 12).multiply(getRelativeSize(this, this.circles[i].radius));
+        var velocity = angleToDirection(this.circles[i].angle + i * Math.PI / 12).multiply(this.getRelativeSize(this.circles[i].radius));
         var balls = [relativePosition.add(velocity, true), relativePosition.subtract(velocity, true)];
 
         for (var j in balls) {
@@ -107,7 +103,7 @@ export default {
           context.fillStyle = new ColorHSLA(vecToAngle(balls[j], center) + 120).toString();
           context.shadowBlur = 10;
           context.shadowColor = context.fillStyle;
-          context.arc(balls[j].x, balls[j].y, getRelativeSize(this, 2), 0, Math.PI * 2, true);
+          context.arc(balls[j].x, balls[j].y, this.getRelativeSize(2), 0, Math.PI * 2, true);
           context.fill();
           context.closePath();
         }
@@ -121,9 +117,9 @@ export default {
     },
 
     fitCanvasSize: function() {
-      fitCanvasSize(this);
       var canvas = this.$refs.canvas;
-      var min = Math.min(canvas.height, canvas.width);
+      var elements = this.$store.state.elements;
+      var min = Math.min(elements.footer.$el.getBoundingClientRect().top - elements.toolbar.$el.clientHeight, elements.app.$el.clientWidth);
       canvas.width = min;
       canvas.height = min;
     }
