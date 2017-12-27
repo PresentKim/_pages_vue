@@ -10,7 +10,7 @@
           <v-list-tile-title>Main</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-list-group v-for="(item, i) in items" :value="i" :key="item.title">
+      <v-list-group v-for="(item, i) in items" :key="item.title">
         <v-list-tile slot="item">
           <v-list-tile-action @click.stop="$router.replace(item.to)">
             <v-icon>{{ item.action }}</v-icon>
