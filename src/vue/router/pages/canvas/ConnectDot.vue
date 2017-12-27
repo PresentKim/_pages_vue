@@ -8,9 +8,8 @@
 import Vector2 from 'classes/vector2.js'
 import ColorHSLA from 'classes/colorHSLA.js'
 
-import rand from 'utils/rand.js'
-import plusOrMinus from 'utils/plusOrMinus.js'
-import distance from 'utils/distance.js'
+import * as Random from 'utils/Random'
+import {distance} from 'utils/Vector'
 
 import FitCanvasMixin from 'vueMixin/fitCanvasMixin'
 
@@ -87,12 +86,12 @@ export default {
 
       while (this.dots.length < 50) {
         var dot = new Dot();
-        dot.size = rand(1, 2, 7);
-        dot.x = rand(0, canvas.width);
-        dot.y = rand(0, canvas.height);
-        dot.velocityX = rand(0.1, 0.5, 7) * plusOrMinus();
-        dot.velocityY = rand(0.1, 0.5, 7) * plusOrMinus();
-        dot.color = new ColorHSLA(rand(0, 360));
+        dot.size = Random.rand(1, 2, 7);
+        dot.x = Random.rand(0, canvas.width);
+        dot.y = Random.rand(0, canvas.height);
+        dot.velocityX = Random.rand(0.1, 0.5, 7) * Random.plusOrMinus();
+        dot.velocityY = Random.rand(0.1, 0.5, 7) * Random.plusOrMinus();
+        dot.color = new ColorHSLA(Random.rand(0, 360));
 
         this.dots.push(dot);
       }
@@ -110,10 +109,10 @@ export default {
         this.dots[i].x += this.dots[i].velocityX * this.relativeSize;
         this.dots[i].y += this.dots[i].velocityY * this.relativeSize;
         if (this.dots[i].x < 0 || this.dots[i].x > canvas.width || this.dots[i].y < 0 || this.dots[i].y > canvas.height) {
-          this.dots[i].x = rand(0, canvas.width);
-          this.dots[i].y = rand(0, canvas.height);
-          this.dots[i].velocityX = rand(0.1, 0.5, 7) * (rand(0, 1) ? 1 : -1);
-          this.dots[i].velocityY = rand(0.1, 0.5, 7) * (rand(0, 1) ? 1 : -1);
+          this.dots[i].x = Random.rand(0, canvas.width);
+          this.dots[i].y = Random.rand(0, canvas.height);
+          this.dots[i].velocityX = Random.rand(0.1, 0.5, 7) * (Random.rand(0, 1) ? 1 : -1);
+          this.dots[i].velocityY = Random.rand(0.1, 0.5, 7) * (Random.rand(0, 1) ? 1 : -1);
         }
       }
       mouseDot.color.h = ++mouseDot.color.h % 361;

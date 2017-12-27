@@ -8,12 +8,8 @@
 import Circle from 'classes/circle.js'
 import ColorHSLA from 'classes/colorHSLA.js'
 
-import rand from 'utils/rand.js'
-import plusOrMinus from 'utils/plusOrMinus.js'
-import distance from 'utils/distance.js'
-import colisionEachCircle from 'utils/colisionEachCircle.js'
-import angleToDirection from 'utils/angleToDirection.js'
-import vecToAngle from 'utils/vecToAngle.js'
+import * as Random from 'utils/Random'
+import * as Vector from 'utils/Vector'
 
 import FitCanvasMixin from 'vueMixin/fitCanvasMixin'
 
@@ -93,15 +89,15 @@ export default {
 
       while (this.balls.length < 30) {
         var ball = new Ball();
-        ball.radius = rand(3, 5, 7);
+        ball.radius = Random.rand(3, 5, 7);
         var relativeRadius = this.getRelativeSize(ball.radius);
-        ball.x = rand(relativeRadius, canvas.width - relativeRadius);
-        ball.y = rand(relativeRadius, canvas.height - relativeRadius);
-        ball.speed = rand(3 / ball.radius, 5 / ball.radius, 7);
-        var direction = angleToDirection(rand(0, Math.PI, 7));
-        ball.velocityX = direction.x * plusOrMinus();
-        ball.velocityY = direction.y * plusOrMinus();
-        ball.color = new ColorHSLA(rand(0, 360));
+        ball.x = Random.rand(relativeRadius, canvas.width - relativeRadius);
+        ball.y = Random.rand(relativeRadius, canvas.height - relativeRadius);
+        ball.speed = Random.rand(3 / ball.radius, 5 / ball.radius, 7);
+        var direction = Vector.angleToDirection(Random.rand(0, Math.PI, 7));
+        ball.velocityX = direction.x * Random.plusOrMinus();
+        ball.velocityY = direction.y * Random.plusOrMinus();
+        ball.color = new ColorHSLA(Random.rand(0, 360));
 
         var colision = false;
         for (var i in this.balls)
@@ -127,8 +123,8 @@ export default {
         var relativeRadius = this.getRelativeSize(this.balls[i].radius);
         for (var j in this.balls) {
           if (i != j && this.colisionEachBall(this.balls[i], this.balls[j])) {
-            var direction = angleToDirection(Math.atan2(this.balls[j].x - this.balls[i].x, this.balls[j].y - this.balls[i].y));
-            var overlap = relativeRadius + this.getRelativeSize(this.balls[j].radius) - distance(this.balls[i], this.balls[j]);
+            var direction = Vector.angleToDirection(Math.atan2(this.balls[j].x - this.balls[i].x, this.balls[j].y - this.balls[i].y));
+            var overlap = relativeRadius + this.getRelativeSize(this.balls[j].radius) - Vector.distance(this.balls[i], this.balls[j]);
             this.balls[i].velocityX += direction.x * overlap;
             this.balls[i].velocityY += direction.y * overlap;
             this.balls[j].velocityX -= direction.x;
@@ -152,7 +148,7 @@ export default {
           this.balls[i].velocityY *= -1;
         }
         this.balls[i].set(next);
-        var rawVelocity = angleToDirection(Math.atan2(this.balls[i].velocityX, this.balls[i].velocityY));
+        var rawVelocity = Vector.angleToDirection(Math.atan2(this.balls[i].velocityX, this.balls[i].velocityY));
         rawVelocity.multiply(this.balls[i].speed * this.relativeSize);
         this.balls[i].velocityX -= (this.balls[i].velocityX * 9 + rawVelocity.x) / 10;
         this.balls[i].velocityY -= (this.balls[i].velocityY * 9 + rawVelocity.y) / 10;
@@ -185,7 +181,7 @@ export default {
     },
 
     colisionEachBall: function(ball, ball2) {
-      return colisionEachCircle(new Circle(ball.x, ball.y, this.getRelativeSize(ball.radius)), new Circle(ball2.x, ball2.y, this.getRelativeSize(ball2.radius)));
+      return Vector.colisionEachCircle(new Circle(ball.x, ball.y, this.getRelativeSize(ball.radius)), new Circle(ball2.x, ball2.y, this.getRelativeSize(ball2.radius)));
     }
   }
 }

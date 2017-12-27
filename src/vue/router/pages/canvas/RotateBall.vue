@@ -8,8 +8,7 @@
 import Vector2 from 'classes/vector2.js'
 import ColorHSLA from 'classes/colorHSLA.js'
 
-import angleToDirection from 'utils/angleToDirection.js'
-import vecToAngle from 'utils/vecToAngle.js'
+import * as Vector from 'utils/Vector'
 
 import FitCanvasMixin from 'vueMixin/fitCanvasMixin'
 
@@ -56,7 +55,7 @@ export default {
       var radius = this.relativeSize * 29;
 
       for (var degree = 0; degree < 360; degree += 30)
-        this.circles.push(new RotateCircle(0, 0, 12, Math.PI / 2 + Math.PI / 12 * this.circles.length).set(angleToDirection(degree, true).multiply(radius)));
+        this.circles.push(new RotateCircle(0, 0, 12, Math.PI / 2 + Math.PI / 12 * this.circles.length).set(Vector.angleToDirection(degree, true).multiply(radius)));
 
       this.circles[0].enable = true;
     },
@@ -88,19 +87,19 @@ export default {
         context.beginPath();
         var relativePosition = new Vector2(this.circles[i].x + center.x, this.circles[i].y + center.y);
         var calcAngle = Math.abs(this.circles[i].angle - this.circles[i].startAngle + Math.PI / 2);
-        context.strokeStyle = new ColorHSLA(vecToAngle(this.circles[i], center) + 120, 100, 50, calcAngle < Math.PI / 2 ? 1 - calcAngle / Math.PI * 1.8 : 0).toString();
+        context.strokeStyle = new ColorHSLA(Vector.vecToAngle(this.circles[i], center) + 120, 100, 50, calcAngle < Math.PI / 2 ? 1 - calcAngle / Math.PI * 1.8 : 0).toString();
         context.shadowBlur = 10;
         context.shadowColor = context.strokeStyle;
         context.lineWidth = 0.5 * this.relativeSize;
         context.arc(relativePosition.x, relativePosition.y, this.getRelativeSize(this.circles[i].radius), 0, Math.PI * 2, true);
         context.stroke();
 
-        var velocity = angleToDirection(this.circles[i].angle + i * Math.PI / 12).multiply(this.getRelativeSize(this.circles[i].radius));
+        var velocity = Vector.angleToDirection(this.circles[i].angle + i * Math.PI / 12).multiply(this.getRelativeSize(this.circles[i].radius));
         var balls = [relativePosition.add(velocity, true), relativePosition.subtract(velocity, true)];
 
         for (var j in balls) {
           context.beginPath();
-          context.fillStyle = new ColorHSLA(vecToAngle(balls[j], center) + 120).toString();
+          context.fillStyle = new ColorHSLA(Vector.vecToAngle(balls[j], center) + 120).toString();
           context.shadowBlur = 10;
           context.shadowColor = context.fillStyle;
           context.arc(balls[j].x, balls[j].y, this.getRelativeSize(2), 0, Math.PI * 2, true);
