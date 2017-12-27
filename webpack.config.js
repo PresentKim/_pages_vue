@@ -12,9 +12,16 @@ module.exports = {
     extensions: ['.js', '.vue'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
+
       'public': path.resolve(__dirname, './public'),
-      'classes': path.resolve(__dirname, 'src/classes'),
-      'utils': path.resolve(__dirname, 'src/utils')
+
+      'src': path.resolve(__dirname, './src'),
+      'classes': path.resolve(__dirname, './src/classes'),
+      'utils': path.resolve(__dirname, './src/utils'),
+
+      'vueMixin': path.resolve(__dirname, './src/vue/mixin'),
+      'vueRouter': path.resolve(__dirname, './src/vue/router'),
+      'vueStore': path.resolve(__dirname, './src/vue/store')
     }
   },
   module: {
