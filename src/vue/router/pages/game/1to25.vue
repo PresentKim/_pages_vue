@@ -1,22 +1,22 @@
 <template>
-<v-container fluid>
-  <v-container ref="title">
-    <v-layout grid-list-xs row>
+<v-layout column align-center>
+  <v-layout ref="title" row align-center>
+    <v-layout grid-list-xs column align-center>
       <v-flex>
         <v-btn color="green">
           <v-icon>alarm_add</v-icon>TIME {{ playtimeText }}
         </v-btn>
       </v-flex>
       <v-flex>
-        <v-btn color="green">
-          <v-icon>alarm_on</v-icon>BEST {{ besttimeText }}
+        <v-btn color="blue" @click.stop="clickGoal()">
+          <v-icon>done_all</v-icon>TARGET {{ target }} / {{ goal }}
         </v-btn>
       </v-flex>
     </v-layout>
-    <v-layout row>
+    <v-layout grid-list-xs column>
       <v-flex>
-        <v-btn color="blue" @click.stop="clickGoal()">
-          <v-icon>done_all</v-icon>TARGET {{ target }} / {{ goal }}
+        <v-btn color="green">
+          <v-icon>alarm_on</v-icon>BEST {{ besttimeText }}
         </v-btn>
       </v-flex>
       <v-flex>
@@ -25,12 +25,11 @@
         </v-btn>
       </v-flex>
     </v-layout>
-  </v-container>
-
+  </v-layout>
   <v-container ref="grid">
 
   </v-container>
-</v-container>
+</v-layout>
 </template>
 
 <script>
