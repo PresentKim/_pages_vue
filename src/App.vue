@@ -10,25 +10,25 @@
           <v-list-tile-title>Main</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-list-group v-for="(item, i) in items" :key="item.title">
+      <v-list-group v-for="category in $store.state.categories" :key="category.title">
         <v-list-tile slot="item">
-          <v-list-tile-action @click.stop="$router.replace(item.to)">
-            <v-icon>{{ item.action }}</v-icon>
+          <v-list-tile-action @click.stop="$router.replace(category.to)">
+            <v-icon>{{ category.icon }}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            <v-list-tile-title>{{ category.title }}</v-list-tile-title>
           </v-list-tile-content>
           <v-list-tile-action>
             <v-icon>keyboard_arrow_down</v-icon>
           </v-list-tile-action>
         </v-list-tile>
 
-        <v-list-tile v-for="(subItem, si) in item.items" :key="si" :to="subItem.to">
+        <v-list-tile v-for="page in category.pages" :key="page.title" :to="page.to">
           <v-list-tile-action>
-            <v-icon>{{ subItem.action }}</v-icon>
+            <v-icon>{{ page.icon }}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
+            <v-list-tile-title>{{ page.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list-group>
@@ -79,33 +79,6 @@ export default {
       dark: Cookie.getCookie('dark') != 'false',
       showNav: false,
       miniVariant: false,
-      items: [{
-        action: 'gamepad',
-        title: 'Game',
-        to: '/game',
-        items: [{
-          action: 'grid_on',
-          title: '1to25',
-          to: '/1to25'
-        }]
-      }, {
-        action: 'aspect_ratio',
-        title: 'Canvas',
-        to: '/canvas',
-        items: [{
-          action: 'bubble_chart',
-          title: 'Bouncing Ball',
-          to: '/bouncingball'
-        }, {
-          action: 'timeline',
-          title: 'Connect Dot',
-          to: '/connectdot'
-        }, {
-          action: 'track_changes',
-          title: 'Rotate Ball',
-          to: '/rotateball'
-        }]
-      }],
       title: {
         text: 'PresentKim',
         avatar: 'public/profile.png'
