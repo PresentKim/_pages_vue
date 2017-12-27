@@ -8,7 +8,7 @@ export default {
     updateRelativeSize: function(vector2Arr) {
       if (vector2Arr) {
         var lastRelativeSize = this.relativeSize;
-        this.updateRelativeSize(this);
+        this.updateRelativeSize();
         if (this.relativeSize != lastRelativeSize) {
           var changedRatio = this.relativeSize / lastRelativeSize;
 
