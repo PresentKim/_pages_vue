@@ -81,7 +81,7 @@ export default {
     },
 
     render: function() {
-      updateRelativeSize(this, this.balls);
+      updateRelativeSize(this, this.circles);
 
       var canvas = this.$refs.canvas;
       var context = canvas.getContext('2d');
