@@ -1,9 +1,24 @@
 <template>
 <v-container fluid>
-  <v-layout column align-center>
-    <img src="public/v.png" alt="main.png" class="mb-5" />
-    <h1>1To25</h1>
-  </v-layout>
+  <v-container ref="title">
+    <v-layout row>
+      <v-btn color="green">
+        <v-icon>alarm_add</v-icon>TIME {{ playtimeText }}</v-btn>
+      <v-btn color="green">
+        <v-icon>alarm_on</v-icon>BEST {{ besttimeText }}</v-btn>
+    </v-layout>
+    <v-layout row>
+      <v-btn color="blue" @click.stop="clickGoal()">
+        <v-icon>done_all</v-icon>TARGET {{ target }} / {{ goal }}</v-btn>
+      <v-btn color="red" @click.stop="clickStartButton()">
+        <v-icon>{{ target ? 'stop' : 'play_arrow' }}</v-icon>
+      </v-btn>
+    </v-layout>
+  </v-container>
+
+  <v-container ref="grid">
+
+  </v-container>
 </v-container>
 </template>
 
@@ -15,8 +30,46 @@ export default {
       complement: '1to25'
     }
   },
+  data() {
+    return {
+      playtime: 0,
+      besttime: 0,
+      goal: 25,
+      target: 0
+    }
+  },
+  computed: {
+    playtimeText: function() {
+      return this.paddingTime(this.playtime);
+    },
+    besttimeText: function() {
+      return this.paddingTime(this.besttime);
+    }
+  },
+  methods: {
+    paddingTime: function(time) {
+      function pad(number) {
+        return number < 10 ? '0' + number : number;
+      }
+
+      return pad(Math.floor((time % 3600000) / 60000)) +
+        ":" + pad(Math.floor((time % 60000) / 1000)) +
+        ":" + pad(Math.floor((time % 1000) / 10));
+    },
+    clickGoal: function() {},
+    clickStartButton: function() {},
+    fitCanvasSize: function() {
+      var grid = this.$refs.grid;
+      var elements = this.$store.state.elements;
+      grid.height = elements.footer.$el.getBoundingClientRect().top - this.$refs.title.clientHeight;
+      grid.width = this.$refs.title.clientWidth;
+    },
+    onUpdate: function() {
+      this.fitCanvasSize();
+    }
+  },
   mounted() {
-    this.$store.state.onAnimationFrame = function() {};
+    this.$store.state.onAnimationFrame = this.onUpdate;
   }
 }
 </script>
