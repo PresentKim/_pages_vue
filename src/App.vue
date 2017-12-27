@@ -38,12 +38,12 @@
   <v-toolbar ref="toolbar" fixed app clipped-left>
     <v-toolbar-side-icon @click.stop="showNav = !showNav"></v-toolbar-side-icon>
     <v-btn v-show="showNav" icon @click.stop="miniVariant = !miniVariant">
-      <v-icon>{{miniVariant ? 'chevron_right' : 'chevron_left'}}</v-icon>
+      <v-icon>{{ miniVariant ? 'chevron_right' : 'chevron_left' }}</v-icon>
     </v-btn>
     <v-spacer></v-spacer>
     <v-toolbar-title>
       <v-avatar size="36px" slot="activator"><img :src="title.avatar" alt=""></v-avatar>
-      {{title.text}}
+      {{ title.text }}
     </v-toolbar-title>
   </v-toolbar>
 
@@ -58,7 +58,7 @@
 
     <v-btn icon @click.stop="dark = !dark">
       <v-icon>format_color_fill</v-icon>
-      <v-icon>{{dark ? 'chat_bubble' : 'chat_bubble_outline'}}</v-icon>
+      <v-icon>{{ dark ? 'chat_bubble' : 'chat_bubble_outline' }}</v-icon>
     </v-btn>
   </v-footer>
 </v-app>

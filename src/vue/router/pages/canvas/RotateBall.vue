@@ -36,11 +36,6 @@ export default {
       circles: [],
     }
   },
-  mounted() {
-    this.fitCanvasSize();
-    this.generate();
-    this.registerEvents(this);
-  },
   methods: {
     registerEvents: function(component) {
       component.$store.state.onAnimationFrame = component.onUpdate;
@@ -122,6 +117,11 @@ export default {
       canvas.width = min;
       canvas.height = min;
     }
+  },
+  mounted() {
+    this.fitCanvasSize();
+    this.generate();
+    this.registerEvents(this);
   }
 }
 </script>

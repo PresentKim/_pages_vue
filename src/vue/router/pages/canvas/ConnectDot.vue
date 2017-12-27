@@ -9,7 +9,10 @@ import Vector2 from 'classes/vector2.js'
 import ColorHSLA from 'classes/colorHSLA.js'
 
 import * as Random from 'utils/Random'
-import {distance} from 'utils/Vector'
+import {
+  distance
+}
+from 'utils/Vector'
 
 import FitCanvasMixin from 'vueMixin/fitCanvasMixin'
 
@@ -36,11 +39,6 @@ export default {
     return {
       dots: [],
     }
-  },
-  mounted() {
-    this.fitCanvasSize();
-    this.generate();
-    this.registerEvents(this);
   },
   methods: {
     registerEvents: function(component) {
@@ -172,6 +170,11 @@ export default {
       this.move();
       this.render();
     }
+  },
+  mounted() {
+    this.fitCanvasSize();
+    this.generate();
+    this.registerEvents(this);
   }
 }
 </script>

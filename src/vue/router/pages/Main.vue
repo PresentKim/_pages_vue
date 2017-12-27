@@ -1,3 +1,11 @@
+<style scoped>
+img {
+  border-radius: 50%;
+  height: 120px;
+  width: 120px;
+}
+</style>
+
 <template>
 <v-container fluid>
   <v-layout column align-center>
@@ -5,8 +13,7 @@
     <img src="public/profile.png" alt="main.png" class="mb-5" />
     <v-layout row align-center>
       <v-layout v-for="category in $store.state.categories" :key="category.title">
-        <v-icon x-large @click="$router.replace(category.to)">{{category.icon}}</v-icon>
-        &nbsp;
+        <v-icon x-large @click="$router.replace(category.to)">{{ category.icon }}</v-icon>
       </v-layout>
     </v-layout>
   </v-layout>
@@ -26,11 +33,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-img {
-  border-radius: 50%;
-  height: 120px;
-  width: 120px;
-}
-</style>

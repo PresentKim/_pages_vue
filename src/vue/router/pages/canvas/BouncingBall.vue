@@ -41,11 +41,6 @@ export default {
       balls: [],
     }
   },
-  mounted() {
-    this.fitCanvasSize();
-    this.generate();
-    this.registerEvents(this);
-  },
   methods: {
     registerEvents: function(component) {
       component.$store.state.onAnimationFrame = component.onUpdate;
@@ -183,6 +178,11 @@ export default {
     colisionEachBall: function(ball, ball2) {
       return Vector.colisionEachCircle(new Circle(ball.x, ball.y, this.getRelativeSize(ball.radius)), new Circle(ball2.x, ball2.y, this.getRelativeSize(ball2.radius)));
     }
+  },
+  mounted() {
+    this.fitCanvasSize();
+    this.generate();
+    this.registerEvents(this);
   }
 }
 </script>
