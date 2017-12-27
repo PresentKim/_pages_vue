@@ -45,7 +45,8 @@ export default {
       playtime: 0,
       besttime: 0,
       goal: 25,
-      target: 0
+      target: 0,
+      timedown: null
     }
   },
   computed: {
@@ -67,7 +68,18 @@ export default {
         ":" + pad(Math.floor((time % 1000) / 10));
     },
     clickGoal: function() {},
-    clickStartButton: function() {},
+    clickStartButton: function() {
+      if (this.target == 0) {
+        this.timedown = new Date().getTime();
+        this.target = 1;
+      } else {
+        this.target = 0;
+      }
+    },
+    clickCell: function(index) {
+      if (this.target == index + 1)
+        ++this.target;
+    },
     fitCanvasSize: function() {
       var grid = this.$refs.grid;
       var elements = this.$store.state.elements;
@@ -76,6 +88,8 @@ export default {
     },
     onUpdate: function() {
       this.fitCanvasSize();
+      if (this.target !== 0)
+        this.playtime = new Date().getTime() - this.timedown;
     }
   },
   mounted() {
