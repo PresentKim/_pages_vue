@@ -87,7 +87,7 @@ export default {
         context.beginPath();
         var relativePosition = new Vector2(this.circles[i].x + center.x, this.circles[i].y + center.y);
         var calcAngle = Math.abs(this.circles[i].angle - this.circles[i].startAngle + Math.PI / 2);
-        context.strokeStyle = new ColorHSLA(Vector.vecToAngle(this.circles[i], center) + 120, 100, 50, calcAngle < Math.PI / 2 ? 1 - calcAngle / Math.PI * 1.8 : 0).toString();
+        context.strokeStyle = new ColorHSLA(Vector.vecToAngle(relativePosition, center) + 120, 100, 50, calcAngle < Math.PI / 2 ? 1 - calcAngle / Math.PI * 1.8 : 0).toString();
         context.shadowBlur = 10;
         context.shadowColor = context.strokeStyle;
         context.lineWidth = 0.5 * this.relativeSize;
