@@ -4,9 +4,10 @@
     <h1>Main Page</h1>
     <img src="public/profile.png" alt="main.png" class="mb-5" />
     <v-layout row align-center>
-      <v-icon x-large @click="$router.replace('/game')">gamepad</v-icon>
-      &nbsp;
-      <v-icon x-large @click="$router.replace('/canvas')">aspect_ratio</v-icon>
+      <v-layout v-for="category in $store.state.categories" :key="category.title">
+        <v-icon x-large @click="$router.replace(category.to)">{{category.icon}}</v-icon>
+        &nbsp;
+      </v-layout>
     </v-layout>
   </v-layout>
 </v-container>
