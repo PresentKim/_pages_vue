@@ -12,7 +12,7 @@
       </v-list-tile>
       <v-list-group v-for="(item, i) in items" :value="i" :key="item.title">
         <v-list-tile slot="item">
-          <v-list-tile-action>
+          <v-list-tile-action @click.stop="$router.replace(item.to)">
             <v-icon>{{ item.action }}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
@@ -82,6 +82,7 @@ export default {
       items: [{
         action: 'gamepad',
         title: 'Game',
+        to: '/game',
         items: [{
           action: 'grid_on',
           title: '1to25',
@@ -90,6 +91,7 @@ export default {
       }, {
         action: 'aspect_ratio',
         title: 'Canvas',
+        to: '/canvas',
         items: [{
           action: 'bubble_chart',
           title: 'Bouncing Ball',
