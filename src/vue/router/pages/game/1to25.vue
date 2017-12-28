@@ -10,15 +10,15 @@
         </v-btn>
       </v-flex>
       <v-flex>
-        <v-btn color="blue" @click.stop="clickGoal()">
-          <v-icon>done_all</v-icon>TARGET {{ target }} / {{ goal }}
+        <v-btn color="green">
+          <v-icon>alarm_on</v-icon>BEST {{ besttimeText }}
         </v-btn>
       </v-flex>
     </v-layout>
     <v-layout grid-list-xs column>
       <v-flex>
-        <v-btn color="green">
-          <v-icon>alarm_on</v-icon>BEST {{ besttimeText }}
+        <v-btn color="blue" @click.stop="clickGoal()">
+          <v-icon>done_all</v-icon>TARGET {{ target }} / {{ goal }}
         </v-btn>
       </v-flex>
       <v-flex>
