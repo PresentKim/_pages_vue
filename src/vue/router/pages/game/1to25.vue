@@ -76,8 +76,8 @@ export default {
         this.target = 0;
       }
     },
-    clickCell: function(index) {
-      if (this.target == index + 1)
+    clickCell: function(number) {
+      if (this.target == number)
         ++this.target;
     },
     onUpdate: function() {
