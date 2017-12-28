@@ -96,12 +96,32 @@ export default {
     clickCell: function(i, num) {
       if (this.target) {
         if (this.target == num) {
+          let targetGoal = Math.floor((this.target - 1) / 25 + 1) * 25;
+          if (targetGoal == this.goal) {
+            this.cells[i] = 'c';
+          } else {
+            let complete = false;
+            while (!complete) {
+              var newNum = targetGoal + Math.ceil(Math.random() * 25);
+              if (this.cells.indexOf(newNum) == -1) {
+                this.cells[i] = newNum;
+                complete = true;
+                break;
+              }
+            }
+          }
           ++this.target;
+        }
+
+        if (this.target > this.goal) {
+          this.target = 0;
+          if (this.besttime == 0 || this.besttime > this.playtime)
+            this.besttime = this.playtime;
         }
       }
     },
     onUpdate: function() {
-      if (this.target !== 0)
+      if (this.target)
         this.playtime = new Date().getTime() - this.timedown;
     }
   },
