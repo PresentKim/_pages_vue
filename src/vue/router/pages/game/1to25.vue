@@ -29,7 +29,7 @@
     </v-layout>
   </v-layout>
   <v-layout ref="grid" row id="grid">
-    <div v-for="i in 25" ref="cells" :key="i" @click="clickCell(i)">{{ i }}</div>
+    <div v-for="(num, i) in cells" ref="cells" :key="i" @click="clickCell(i)">{{ num }}</div>
   </v-layout>
 </v-layout>
 </template>
@@ -48,7 +48,8 @@ export default {
       besttime: 0,
       goal: 25,
       target: 0,
-      timedown: null
+      timedown: null,
+      cells: new Array(25)
     }
   },
   computed: {
@@ -78,8 +79,8 @@ export default {
         this.target = 0;
       }
     },
-    clickCell: function(number) {
-      if (this.target == number)
+    clickCell: function(i) {
+      if (this.target == i)
         ++this.target;
     },
     onUpdate: function() {
