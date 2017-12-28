@@ -29,7 +29,7 @@
     </v-layout>
   </v-layout>
   <v-layout ref="grid" row id="grid">
-    <div v-for="(num, i) in cells" ref="cells" :key="i" @click="clickCell(i)">{{ num }}</div>
+    <div v-for="(num, i) in cells" ref="cells" :key="i" @click="clickCell(i, num)">{{ num }}</div>
   </v-layout>
 </v-layout>
 </template>
@@ -93,9 +93,12 @@ export default {
         this.target = 0;
       }
     },
-    clickCell: function(i) {
-      if (this.target == i)
-        ++this.target;
+    clickCell: function(i, num) {
+      if (this.target) {
+        if (this.target == num) {
+          ++this.target;
+        }
+      }
     },
     onUpdate: function() {
       if (this.target !== 0)
