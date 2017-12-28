@@ -80,14 +80,7 @@ export default {
       if (this.target == index + 1)
         ++this.target;
     },
-    fitCanvasSize: function() {
-      var grid = this.$refs.grid;
-      var elements = this.$store.state.elements;
-      grid.height = elements.footer.$el.getBoundingClientRect().top - this.$refs.title.clientHeight;
-      grid.width = this.$refs.title.clientWidth;
-    },
     onUpdate: function() {
-      this.fitCanvasSize();
       if (this.target !== 0)
         this.playtime = new Date().getTime() - this.timedown;
     }
