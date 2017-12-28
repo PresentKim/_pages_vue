@@ -75,6 +75,16 @@ export default {
       if (this.target == 0) {
         this.timedown = new Date().getTime();
         this.target = 1;
+
+        this.cells = new Array(25);
+        var count = 0;
+        while (count < 25) {
+          var number = Math.ceil(Math.random() * 25);
+          if (this.cells.indexOf(number) == -1) {
+            this.cells[count] = number;
+            ++count;
+          }
+        }
       } else {
         this.target = 0;
       }
