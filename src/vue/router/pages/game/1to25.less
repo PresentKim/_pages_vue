@@ -1,0 +1,99 @@
+@big-size: 95px;
+@midium-size: 75px;
+@small-size: 55px;
+@keyframes cell-hover {
+  from {
+    border-radius: 40% 40% 20% 40%;
+  }
+
+  25% {
+    border-radius: 40% 40% 40% 20%;
+  }
+
+  50% {
+    border-radius: 20% 40% 40% 40%;
+  }
+
+  75% {
+    border-radius: 40% 20% 40% 40%;
+  }
+
+  to {
+    border-radius: 40% 40% 20% 40%;
+  }
+}
+
+.bordered {
+  border-radius: 10px;
+}
+
+.flex-row {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+#grid div {
+  .bordered;
+  background: darkgray;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  cursor: pointer;
+  margin: 5px;
+  width: @big-size;
+  height: @big-size;
+  font-size: @big-size * 0.7;
+  font-weight: bold;
+
+  &:hover {
+    box-shadow: 0 0 10vmin rgba(255, 255, 255, 0.7);
+    animation-name: cell-hover;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+  }
+
+  &:active {
+    box-shadow: 0 0 10vmin rgba(255, 255, 0, 0.2);
+  }
+}
+
+#grid {
+  .bordered;
+  .flex-row;
+  background: gray;
+  width: @big-size*5+50;
+  height: @big-size*5+50;
+  margin: auto;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+@media screen and (max-width: 720px), screen and(max-height: 720px) {
+  #grid div {
+    width: @midium-size;
+    height: @midium-size;
+    font-size: @midium-size * 0.7;
+    font-weight: bold;
+    line-height: 15vw;
+  }
+
+  #grid {
+    height: @midium-size*5+50;
+    width: @midium-size*5+50;
+  }
+}
+@media screen and (max-width: 480px), screen and(max-height: 480px) {
+  #grid div {
+    width: @small-size;
+    height: @small-size;
+    font-size: @small-size * 0.7;
+    font-weight: bold;
+    line-height: 15vw;
+  }
+
+  #grid {
+    height: @small-size*5+50;
+    width: @small-size*5+50;
+  }
+}

@@ -1,3 +1,5 @@
+<style src="./1to25.less" lang="less" scoped ></style>
+
 <template>
 <v-layout column align-center>
   <v-layout ref="title" row align-center>
@@ -26,9 +28,9 @@
       </v-flex>
     </v-layout>
   </v-layout>
-  <v-container ref="grid">
-
-  </v-container>
+  <v-layout ref="grid" row id="grid">
+    <div v-for="i in 25" ref="cells" :key="i" @click="clickCell(i)">{{ i }}</div>
+  </v-layout>
 </v-layout>
 </template>
 
