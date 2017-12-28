@@ -5,7 +5,7 @@
   <v-layout ref="title" row align-center>
     <v-layout grid-list-xs column align-center>
       <v-flex>
-        <v-btn color="green">
+        <v-btn color="green" @click.stop="cheat()">
           <v-icon>alarm_add</v-icon>TIME {{ playtimeText }}
         </v-btn>
       </v-flex>
@@ -61,6 +61,14 @@ export default {
     }
   },
   methods: {
+    cheat() {
+      for (var i in this.cells) {
+        if (this.cells[i] == this.target) {
+          this.clickCell(i, this.cells[i])
+          break;
+        }
+      }
+    },
     paddingTime: function(time) {
       function pad(number) {
         return number < 10 ? '0' + number : number;
