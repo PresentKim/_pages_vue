@@ -106,7 +106,7 @@ export default {
         if (this.target == num) {
           let targetGoal = Math.floor((this.target - 1) / 25 + 1) * 25;
           if (targetGoal == this.goal) {
-            this.cells[i] = 'c';
+            this.cells[i] = '';
           } else {
             let complete = false;
             while (!complete) {
