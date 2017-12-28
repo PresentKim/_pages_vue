@@ -70,9 +70,13 @@ export default {
         ":" + pad(Math.floor((time % 60000) / 1000)) +
         ":" + pad(Math.floor((time % 1000) / 10));
     },
-    clickGoal: function() {},
+    clickGoal: function() {
+      if (!this.target) {
+        this.goal = this.goal >= 100 ? 25 : this.goal + 25;
+      }
+    },
     clickStartButton: function() {
-      if (this.target == 0) {
+      if (!this.target) {
         this.timedown = new Date().getTime();
         this.target = 1;
 
