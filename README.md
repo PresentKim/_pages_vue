@@ -1,7 +1,18 @@
-# [PresentKim.github.io](http://web.present.kim)
+# presentkim.github.io
 
-| Game | Test |
-| ---- | ---- |
-| [1to25](http://web.present.kim/pages/game/1to25/1to25) | [Bouncing Ball](http://web.present.kim/pages/test/canvas/bouncing_ball/bouncing_ball) |
-|                                                        |   [Connect Dot](http://web.present.kim/pages/test/canvas/connect_dot/connect_dot) |
-|                                                        |   [Rotate Ball](http://web.present.kim/pages/test/canvas/rotate_ball/rotate_ball) |
+> A Vue.js project
+
+## Build Setup
+
+``` bash
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:8080
+npm run dev
+
+# build for production with minification
+npm run build
+```
+
+For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).

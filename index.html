@@ -1,20 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
-<head include-html="http://web.present.kim/import/pageForm_head.html">
-  <script src="http://web.present.kim/import/min/js/pageForm.js"></script>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet" type="text/css">
+  <link rel="icon" type="image/png" href="public/favicon-32x32.png" sizes="32x32">
 </head>
 
-<body include-html="http://web.present.kim/import/pageForm_body.html">
-  <script>
-    includeHTML(function() {
-      addCell([
-        ['Game', 'pages/game.html', '<i class="material-icons">mouse</i>'],
-        ['Test', 'pages/test.html']
-      ]);
-      renderCell();
-    });
-  </script>
+<body>
+  <div id="app"></div>
+  <script src="./dist/build.js"></script>
 </body>
 
 </html>
