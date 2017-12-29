@@ -10,7 +10,7 @@ img {
 <v-container fluid>
   <v-layout column align-center>
     <h1>Main Page</h1>
-    <img src="public/profile.png" alt="main.png" class="mb-5" />
+    <img src="assets/profile.png" alt="main.png" class="mb-5" />
     <v-layout row align-center>
       <v-layout v-for="category in $store.state.categories" :key="category.title">
         <v-icon x-large @click="$router.replace(category.to)">{{ category.icon }}</v-icon>

@@ -81,7 +81,7 @@ export default {
       miniVariant: false,
       title: {
         text: 'PresentKim',
-        avatar: 'public/profile.png'
+        avatar: 'assets/profile.png'
       }
     }
   },
